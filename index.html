@@ -885,9 +885,42 @@ function printLabel() {
   win.document.close();
 }
 
-function saveID() {
+async function saveID() {
   const id = document.getElementById('res-id-display').textContent;
-  showToast('✅', 'Saved!', `Home ID ${id} saved.`);
+  const street = document.getElementById('r-disp-street').textContent;
+  const unit = document.getElementById('r-disp-unit').textContent;
+  const city = document.getElementById('r-disp-city').textContent;
+  const sz = document.getElementById('r-disp-sz').textContent;
+
+  showToast('⏳', 'Saving...', 'Connecting to database...');
+
+  try {
+    const res = await fetch('https://kpnqaexdqnljzhxnplor.supabase.co/rest/v1/home_codes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'sb_publishable_3fWrBDNrUmwkrlpF3uG0lQ_29_rh',
+        'Authorization': 'Bearer sb_publishable_3fWrBDNrUmwkrlpF3uG0lQ_29_rh',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        code: id,
+        street: street,
+        unit: unit,
+        city: city,
+        state_zip: sz
+      })
+    });
+
+    if (res.ok) {
+      showToast('✅', 'Saved!', `Home ID ${id} saved successfully!`);
+    } else {
+      const err = await res.json();
+      showToast('❌', 'Error', err.message || 'Could not save. Try again.');
+    }
+  } catch(e) {
+    showToast('❌', 'Error', 'Network error. Please try again.');
+  }
 }
 
 // ── MODAL ──
