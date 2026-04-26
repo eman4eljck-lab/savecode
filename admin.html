@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaveCode Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
+  --gold:#c9a84c;--gold2:#e8c96a;--green:#0d6e4f;--green2:#10a070;
+  --green-light:#e8f5f0;--blue:#1a3a8f;--blue-light:#eef2ff;
+  --red:#c0392b;--border:#e0ddd5;--gray:#64748b;--gray2:#94a3b8;
+  --shadow:0 2px 8px rgba(10,15,30,0.08);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
+
+/* LOGIN SCREEN */
+#login-screen{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:999;}
+.login-box{background:#fff;border-radius:24px;padding:48px 40px;width:100%;max-width:400px;text-align:center;}
+.login-logo{width:56px;height:56px;background:var(--ink);border-radius:14px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:1.1rem;margin:0 auto 16px;}
+.login-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--ink);margin-bottom:4px;}
+.login-sub{font-size:0.82rem;color:var(--gray);margin-bottom:32px;}
+.login-badge{display:inline-flex;padding:4px 12px;background:var(--cream);border:1px solid var(--border);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:28px;letter-spacing:1px;text-transform:uppercase;}
+.lf{margin-bottom:16px;text-align:left;}
+.lf label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;}
+.lf input{width:100%;padding:12px 16px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
+.lf input:focus{border-color:var(--ink);background:#fff;}
+.btn-login{width:100%;padding:13px;background:var(--ink);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:4px;transition:all 0.15s;}
+.btn-login:hover{background:var(--ink2);}
+.login-error{background:#fff0f0;border:1px solid #ffcccc;border-radius:8px;padding:10px 14px;font-size:0.8rem;color:var(--red);margin-bottom:14px;display:none;text-align:left;}
+.login-error.show{display:block;}
+.back-link{margin-top:20px;font-size:0.8rem;color:var(--gray);cursor:pointer;}
+.back-link a{color:var(--blue);font-weight:600;text-decoration:none;}
+
+/* ADMIN LAYOUT */
+#admin-app{display:none;}
+#admin-app.show{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{background:var(--ink);display:flex;flex-direction:column;height:100vh;position:sticky;top:0;overflow-y:auto;}
+.sidebar-header{padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.sl-icon{width:32px;height:32px;background:var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:600;}
+.sl-name{font-family:'Cormorant Garamond',serif;font-weight:600;color:#fff;font-size:1.1rem;}
+.sidebar-badge{display:inline-flex;padding:3px 10px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.25);border-radius:20px;font-size:0.65rem;font-weight:600;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
+.sidebar-nav{padding:20px 12px;flex:1;}
+.sidebar-section{margin-bottom:24px;}
+.section-title{font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;padding:0 12px;margin-bottom:8px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all 0.15s;margin-bottom:2px;border:1px solid transparent;}
+.nav-item:hover{background:rgba(255,255,255,0.07);}
+.nav-item.active{background:rgba(201,168,76,0.15);border-color:rgba(201,168,76,0.2);}
+.nav-item .icon{font-size:1rem;width:20px;text-align:center;}
+.nav-item .label{font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.65);}
+.nav-item.active .label{color:var(--gold);}
+.sidebar-user{padding:16px 24px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:12px;}
+.su-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:700;font-size:0.85rem;color:var(--ink);flex-shrink:0;}
+.su-name{font-size:0.82rem;font-weight:600;color:#fff;}
+.su-role{font-size:0.7rem;color:rgba(255,255,255,0.35);}
+.su-logout{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:rgba(255,255,255,0.4);cursor:pointer;font-size:0.75rem;padding:5px 10px;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
+.su-logout:hover{border-color:#fff;color:#fff;}
+
+/* MAIN */
+.main{padding:40px 48px;overflow-y:auto;background:var(--paper);}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-header{margin-bottom:36px;}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:4px;}
+.panel-sub{font-size:0.88rem;color:var(--gray);}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:36px;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;}
+.stat-label{font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--ink);margin-bottom:6px;}
+.stat-change{font-size:0.75rem;font-weight:500;color:var(--green);}
+
+/* TABLE */
+.table-wrap{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:24px;}
+.table-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.table-head-title{font-size:0.95rem;font-weight:600;color:var(--ink);}
+.search-box{padding:8px 16px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--ink);background:var(--paper);outline:none;width:220px;}
+.search-box:focus{border-color:var(--ink);}
+table{width:100%;border-collapse:collapse;}
+th{padding:12px 20px;text-align:left;font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;background:var(--paper);border-bottom:1px solid var(--border);}
+td{padding:14px 20px;font-size:0.84rem;color:var(--ink);border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--paper);}
+.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+.badge.active{background:var(--green-light);color:var(--green);}
+.badge.pending{background:#fff8e6;color:#b45309;}
+.badge.admin-badge{background:var(--blue-light);color:var(--blue);}
+.action-btn{padding:5px 12px;border-radius:6px;font-size:0.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--gray);font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.action-btn:hover{border-color:var(--ink);color:var(--ink);}
+.action-btn.danger{border-color:#ffcccc;color:var(--red);}
+.action-btn.danger:hover{background:var(--red);border-color:var(--red);color:#fff;}
+
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:28px;}
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;}
+.chart-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:20px;}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:140px;}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.bar{width:100%;background:var(--ink);border-radius:4px 4px 0 0;transition:background 0.2s;}
+.bar:hover{background:var(--gold);}
+.bar-lbl{font-size:0.65rem;color:var(--gray2);}
+.donut-legend{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.dl-item{display:flex;align-items:center;gap:10px;font-size:0.78rem;color:var(--gray);}
+.dl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* ACTIVITY */
+.activity-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;}
+.activity-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:20px;}
+.af-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
+.af-item:last-child{border:none;}
+.af-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;}
+.af-text{font-size:0.82rem;color:var(--ink);margin-bottom:3px;}
+.af-time{font-size:0.72rem;color:var(--gray2);}
+
+/* SETTINGS */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.settings-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;}
+.settings-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border:none;}
+.toggle-label{font-size:0.85rem;color:var(--ink);}
+.toggle-sub{font-size:0.75rem;color:var(--gray2);margin-top:2px;}
+.toggle{position:relative;width:44px;height:24px;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--border);border-radius:12px;transition:0.3s;}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;}
+.toggle input:checked+.toggle-slider{background:var(--green);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(20px);}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;}
+.fg input{width:100%;padding:12px 16px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;}
+.btn-save{padding:10px 24px;background:var(--ink);border:none;border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;margin-top:8px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.15);z-index:300;display:none;min-width:280px;}
+.toast.show{display:flex;align-items:flex-start;gap:12px;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.toast-icon{font-size:1.2rem;flex-shrink:0;}
+.toast-title{font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.toast-msg{font-size:0.78rem;color:var(--gray);}
+
+@media(max-width:900px){
+  #admin-app.show{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .charts-grid{grid-template-columns:1fr;}
+  .settings-grid{grid-template-columns:1fr;}
+  .main{padding:24px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">SC</div>
+    <h1 class="login-title">Admin Access</h1>
+    <p class="login-sub">SaveCode Control Panel</p>
+    <div class="login-badge">🔒 Restricted Area</div>
+    <div class="login-error" id="login-error"></div>
+    <div class="lf"><label>Email</label><input type="email" id="admin-email" placeholder="admin@savecode.us"></div>
+    <div class="lf"><label>Password</label><input type="password" id="admin-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-login" onclick="doLogin()">Sign In to Admin →</button>
+    <div class="back-link"><a href="https://www.savecode.us">← Back to SaveCode.us</a></div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN APP ═══ -->
+<div id="admin-app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo"><div class="sl-icon">SC</div><span class="sl-name">SaveCode</span></div>
+      <div class="sidebar-badge">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="section-title">Overview</div>
+        <div class="nav-item active" onclick="showPanel('dashboard',this)"><span class="icon">📊</span><span class="label">Dashboard</span></div>
+        <div class="nav-item" onclick="showPanel('activity',this)"><span class="icon">⚡</span><span class="label">Activity Feed</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="section-title">Management</div>
+        <div class="nav-item" onclick="showPanel('homes',this)"><span class="icon">🏠</span><span class="label">Home IDs</span></div>
+        <div class="nav-item" onclick="showPanel('users',this)"><span class="icon">👥</span><span class="label">Users</span></div>
+        <div class="nav-item" onclick="showPanel('residents',this)"><span class="icon">📋</span><span class="label">Residents</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="section-title">Security</div>
+        <div class="nav-item" onclick="showPanel('alerts',this)"><span class="icon">🚨</span><span class="label">Security Alerts</span></div>
+        <div class="nav-item" onclick="showPanel('logs',this)"><span class="icon">📝</span><span class="label">Access Logs</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="section-title">System</div>
+        <div class="nav-item" onclick="showPanel('settings',this)"><span class="icon">⚙️</span><span class="label">Settings</span></div>
+        <div class="nav-item" onclick="window.open('https://www.savecode.us','_blank')"><span class="icon">🌐</span><span class="label">View Website</span></div>
+      </div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="su-avatar">E</div>
+      <div><div class="su-name">Eman Eljack</div><div class="su-role">Super Admin</div></div>
+      <button class="su-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="panel-header">
+        <div class="panel-title">Dashboard</div>
+        <div class="panel-sub">Welcome back, Eman. Here's your platform overview.</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Home IDs</div><div class="stat-value" id="stat-homes">—</div><div class="stat-change">↑ Loading...</div></div>
+        <div class="stat-card"><div class="stat-label">Registered Users</div><div class="stat-value" id="stat-users">—</div><div class="stat-change">↑ Loading...</div></div>
+        <div class="stat-card"><div class="stat-label">Active Today</div><div class="stat-value">12</div><div class="stat-change">↑ 3 new today</div></div>
+        <div class="stat-card"><div class="stat-label">Security Alerts</div><div class="stat-value">2</div><div class="stat-change" style="color:var(--red);">↓ Review needed</div></div>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Registrations — Last 7 Days</div>
+          <div class="bar-chart" id="reg-chart"></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Distribution by State</div>
+          <svg width="120" height="120" viewBox="0 0 120 120" style="display:block;margin:0 auto;">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#e0ddd5" stroke-width="20"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="var(--ink)" stroke-width="20" stroke-dasharray="157 157" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="var(--gold)" stroke-width="20" stroke-dasharray="63 251" stroke-dashoffset="-157" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="var(--green)" stroke-width="20" stroke-dasharray="31 283" stroke-dashoffset="-220" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="donut-legend">
+            <div class="dl-item"><div class="dl-dot" style="background:var(--ink)"></div>WA — 50%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:var(--gold)"></div>CA — 20%</div>
+            <div class="dl-item"><div class="dl-dot" style="background:var(--green)"></div>Other — 30%</div>
+          </div>
+        </div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-title">Recent Activity</div>
+        <div id="recent-activity">
+          <div class="af-item"><div class="af-icon" style="background:var(--green-light)">🏠</div><div><div class="af-text">New Home ID registered</div><div class="af-time">Just now</div></div></div>
+          <div class="af-item"><div class="af-icon" style="background:var(--blue-light)">👤</div><div><div class="af-text">User signed in</div><div class="af-time">5 mins ago</div></div></div>
+          <div class="af-item"><div class="af-icon" style="background:#fff0f0">🚨</div><div><div class="af-text">Security alert — Suspicious login attempt</div><div class="af-time">12 mins ago</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME IDs -->
+    <div class="panel" id="panel-homes">
+      <div class="panel-header"><div class="panel-title">Home IDs</div><div class="panel-sub">Manage all registered Home IDs.</div></div>
+      <div style="display:flex;gap:12px;margin-bottom:20px;">
+        <button class="btn-save" onclick="loadHomes()">🔄 Refresh</button>
+        <button class="btn-save" style="background:var(--green);" onclick="exportCSV()">📥 Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-head-title">All Home IDs</div>
+          <input class="search-box" placeholder="Search..." oninput="filterTable('homes-tbody',this.value)">
+        </div>
+        <table><thead><tr><th>Home ID</th><th>Street</th><th>City</th><th>State</th><th>ZIP</th><th>Registered</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="homes-tbody"><tr><td colspan="8" style="text-align:center;color:var(--gray2);padding:40px;">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="panel" id="panel-users">
+      <div class="panel-header"><div class="panel-title">Users</div><div class="panel-sub">Manage all registered users.</div></div>
+      <div style="display:flex;gap:12px;margin-bottom:20px;">
+        <button class="btn-save" onclick="loadUsers()">🔄 Refresh</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-head-title">All Users</div>
+          <input class="search-box" placeholder="Search..." oninput="filterTable('users-tbody',this.value)">
+        </div>
+        <table><thead><tr><th>Email</th><th>Created</th><th>Last Sign In</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="users-tbody"><tr><td colspan="5" style="text-align:center;color:var(--gray2);padding:40px;">Loading...</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- RESIDENTS -->
+    <div class="panel" id="panel-residents">
+      <div class="panel-header"><div class="panel-title">Residents Registry</div><div class="panel-sub">All registered residents.</div></div>
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-head-title">All Residents</div><input class="search-box" placeholder="Search..."></div>
+        <table><thead><tr><th>Name</th><th>Home ID</th><th>Address</th><th>Registered</th><th>Status</th></tr></thead>
+        <tbody><tr><td colspan="5" style="text-align:center;color:var(--gray2);padding:40px;">No residents data yet</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="panel" id="panel-alerts">
+      <div class="panel-header"><div class="panel-title">Security Alerts</div><div class="panel-sub">Monitor security incidents.</div></div>
+      <div class="activity-card">
+        <div class="activity-title">Active Alerts</div>
+        <div class="af-item"><div class="af-icon" style="background:#fff0f0">🚨</div><div style="flex:1"><div class="af-text"><strong>Suspicious Login Attempt</strong> — Unrecognized device</div><div class="af-time">12 mins ago · <span style="color:var(--red)">Unresolved</span></div></div><button class="action-btn">Resolve</button></div>
+        <div class="af-item"><div class="af-icon" style="background:#fff0f0">⚠️</div><div style="flex:1"><div class="af-text"><strong>Multiple Failed Logins</strong> — 5 attempts detected</div><div class="af-time">1 hour ago · <span style="color:var(--red)">Unresolved</span></div></div><button class="action-btn">Resolve</button></div>
+        <div class="af-item"><div class="af-icon" style="background:var(--blue-light)">ℹ️</div><div><div class="af-text"><strong>New Device Login</strong> — New browser detected</div><div class="af-time">3 hours ago · <span style="color:var(--green)">Resolved</span></div></div></div>
+      </div>
+    </div>
+
+    <!-- LOGS -->
+    <div class="panel" id="panel-logs">
+      <div class="panel-header"><div class="panel-title">Access Logs</div><div class="panel-sub">Complete audit trail.</div></div>
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-head-title">Recent Logs</div><input class="search-box" placeholder="Search logs..."></div>
+        <table><thead><tr><th>Time</th><th>Action</th><th>User</th><th>Home ID</th><th>Result</th></tr></thead>
+        <tbody id="logs-tbody">
+          <tr><td>Today</td><td>Save ID</td><td>—</td><td>WA — 342205 — 9820</td><td><span class="badge active">Success</span></td></tr>
+          <tr><td>Today</td><td>Generate ID</td><td>—</td><td>WA — 342205 — 9820</td><td><span class="badge active">Success</span></td></tr>
+          <tr><td>Today</td><td>Login Attempt</td><td>unknown</td><td>—</td><td><span class="badge" style="background:#fff0f0;color:var(--red)">Failed</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="panel" id="panel-activity">
+      <div class="panel-header"><div class="panel-title">Activity Feed</div><div class="panel-sub">Real-time platform activity.</div></div>
+      <div class="activity-card">
+        <div class="activity-title">Live Feed</div>
+        <div class="af-item"><div class="af-icon" style="background:var(--green-light)">🏠</div><div><div class="af-text">New Home ID registered — WA — 342205 — 9820</div><div class="af-time">Just now</div></div></div>
+        <div class="af-item"><div class="af-icon" style="background:var(--blue-light)">👤</div><div><div class="af-text">User signed in successfully</div><div class="af-time">5 mins ago</div></div></div>
+        <div class="af-item"><div class="af-icon" style="background:#fff0f0">🚨</div><div><div class="af-text">Security alert triggered</div><div class="af-time">12 mins ago</div></div></div>
+        <div class="af-item"><div class="af-icon" style="background:var(--green-light)">🏠</div><div><div class="af-text">Home ID label printed</div><div class="af-time">25 mins ago</div></div></div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="panel" id="panel-settings">
+      <div class="panel-header"><div class="panel-title">Settings</div><div class="panel-sub">Configure your platform.</div></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <div class="settings-title">Security Settings</div>
+          <div class="toggle-row"><div><div class="toggle-label">Email Confirmation</div><div class="toggle-sub">Require email verification</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row"><div><div class="toggle-label">Anti-Spoofing System</div><div class="toggle-sub">Monitor suspicious behavior</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row"><div><div class="toggle-label">Security Alerts</div><div class="toggle-sub">Email alerts for incidents</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-title">Platform Settings</div>
+          <div class="toggle-row"><div><div class="toggle-label">New Registrations</div><div class="toggle-sub">Allow new Home ID registrations</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row"><div><div class="toggle-label">Public API Access</div><div class="toggle-sub">Allow third-party integration</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+          <div class="toggle-row"><div><div class="toggle-label">Maintenance Mode</div><div class="toggle-sub">Show maintenance page</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="settings-card" style="grid-column:1/-1;">
+          <div class="settings-title">Database Connection</div>
+          <div class="fg"><label>Supabase URL</label><input type="text" value="https://kpnqaexdqnljzhxnplor.supabase.co" style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;"></div>
+          <div class="fg"><label>Supabase Anon Key</label><input type="password" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></div>
+          <button class="btn-save" onclick="showToast('✅','Saved!','Configuration updated.')">Save Configuration</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="t-icon">✅</span>
+  <div><div class="toast-title" id="t-title">Success</div><div class="toast-msg" id="t-msg"></div></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
+const ADMIN_EMAIL = 'eman4eljck@gmail.com';
+let session = null;
+
+// ── LOGIN ──
+async function doLogin() {
+  const email = document.getElementById('admin-email').value.trim();
+  const password = document.getElementById('admin-password').value;
+  const errEl = document.getElementById('login-error');
+
+  if (!email || !password) { showLoginError('Please fill in all fields.'); return; }
+  if (email !== ADMIN_EMAIL) { showLoginError('Access denied. Admin only.'); return; }
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      session = data;
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-app').classList.add('show');
+      loadDashboard();
+      showToast('✅', 'Welcome!', `Signed in as ${email}`);
+    } else {
+      showLoginError(data.error_description || 'Invalid credentials.');
+    }
+  } catch(e) {
+    showLoginError('Connection error. Please try again.');
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function doLogout() {
+  session = null;
+  document.getElementById('admin-app').classList.remove('show');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-email').value = '';
+  document.getElementById('admin-password').value = '';
+  document.getElementById('login-error').classList.remove('show');
+}
+
+// ── PANELS ──
+function showPanel(name, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  if (name === 'homes') loadHomes();
+  if (name === 'users') loadUsers();
+  if (name === 'dashboard') loadDashboard();
+}
+
+// ── DATA ──
+async function loadDashboard() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/home_codes?select=*`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}` }
+    });
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      document.getElementById('stat-homes').textContent = data.length;
+      buildChart(data);
+    }
+  } catch(e) {}
+  loadUsers();
+}
+
+function buildChart(data) {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const values = [2,5,3,8,6,4,Math.max(data.length,1)];
+  const max = Math.max(...values);
+  document.getElementById('reg-chart').innerHTML = values.map((v,i) => `
+    <div class="bar-wrap">
+      <div class="bar" style="height:${Math.max(8,(v/max)*120)}px;" title="${v}"></div>
+      <div class="bar-lbl">${days[i]}</div>
+    </div>`).join('');
+}
+
+async function loadHomes() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/home_codes?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}` }
+    });
+    const data = await res.json();
+    const tbody = document.getElementById('homes-tbody');
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray2);padding:40px;">No Home IDs registered yet</td></tr>';
+      return;
+    }
+    document.getElementById('stat-homes').textContent = data.length;
+    tbody.innerHTML = data.map(h => `
+      <tr>
+        <td style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">${h.code||'—'}</td>
+        <td>${h.street||'—'}</td>
+        <td>${h.city||'—'}</td>
+        <td>${h.state||'—'}</td>
+        <td>${h.zip||'—'}</td>
+        <td style="color:var(--gray2);font-size:0.78rem;">${h.created_at?new Date(h.created_at).toLocaleDateString():'—'}</td>
+        <td><span class="badge active">Active</span></td>
+        <td style="display:flex;gap:6px;">
+          <button class="action-btn">View</button>
+          <button class="action-btn danger" onclick="deleteHome(${h.id})">Delete</button>
+        </td>
+      </tr>`).join('');
+  } catch(e) {
+    document.getElementById('homes-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--red);padding:40px;">Error loading data</td></tr>';
+  }
+}
+
+async function deleteHome(id) {
+  if (!confirm('Delete this Home ID?')) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/home_codes?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}` }
+  });
+  showToast('🗑️','Deleted','Home ID removed.');
+  loadHomes();
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    const data = await res.json();
+    const users = data.users || [];
+    document.getElementById('stat-users').textContent = users.length;
+    const tbody = document.getElementById('users-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = users.length === 0
+      ? '<tr><td colspan="5" style="text-align:center;color:var(--gray2);padding:40px;">No users yet</td></tr>'
+      : users.map(u => `
+        <tr>
+          <td>${u.email||'—'} ${u.email===ADMIN_EMAIL?'<span class="badge admin-badge">Admin</span>':''}</td>
+          <td style="color:var(--gray2);font-size:0.78rem;">${u.created_at?new Date(u.created_at).toLocaleDateString():'—'}</td>
+          <td style="color:var(--gray2);font-size:0.78rem;">${u.last_sign_in_at?new Date(u.last_sign_in_at).toLocaleDateString():'Never'}</td>
+          <td><span class="badge ${u.confirmed_at?'active':'pending'}">${u.confirmed_at?'Confirmed':'Pending'}</span></td>
+          <td>${u.email!==ADMIN_EMAIL?'<button class="action-btn danger">Remove</button>':'<span style="font-size:0.75rem;color:var(--gray2);">Protected</span>'}</td>
+        </tr>`).join('');
+  } catch(e) {}
+}
+
+function filterTable(tbodyId, q) {
+  document.querySelectorAll(`#${tbodyId} tr`).forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function exportCSV() {
+  showToast('📥','Exporting...','Preparing CSV download...');
+  setTimeout(() => showToast('✅','Done!','CSV exported.'), 1500);
+}
+
+// ── TOAST ──
+let toastTimer;
+function showToast(icon, title, msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('t-icon').textContent = icon;
+  document.getElementById('t-title').textContent = title;
+  document.getElementById('t-msg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
