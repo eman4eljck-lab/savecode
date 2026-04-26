@@ -72,6 +72,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,
 .hf-title{font-size:0.8rem;font-weight:600;color:var(--ink);}
 .hf-sub{font-size:0.7rem;color:var(--gray2);}
 
+/* PHOTO SECTIONS */
+.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;height:320px;overflow:hidden;margin:0;}
+.photo-strip-item{position:relative;overflow:hidden;}
+.photo-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.photo-strip-item:hover img{transform:scale(1.05);}
+.photo-strip-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.7),transparent);display:flex;align-items:flex-end;padding:24px;}
+.photo-strip-label{color:#fff;font-size:0.85rem;font-weight:600;letter-spacing:0.5px;}
+
+.photo-banner{position:relative;height:400px;overflow:hidden;}
+.photo-banner img{width:100%;height:100%;object-fit:cover;}
+.photo-banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,15,30,0.85),rgba(10,15,30,0.4));display:flex;align-items:center;padding:80px;}
+.photo-banner-content{max-width:600px;}
+.photo-banner-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
+.photo-banner-content p{font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:28px;}
+
+.img-section{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
+.img-section-photo{position:relative;min-height:450px;overflow:hidden;}
+.img-section-photo img{width:100%;height:100%;object-fit:cover;}
+.img-section-content{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;background:var(--cream);}
+.img-section-content.dark{background:var(--ink);}
+.img-section-content.dark h2{color:#fff;}
+.img-section-content.dark p{color:rgba(255,255,255,0.6);}
+.img-section-content.dark .sec-tag{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);}
+
 /* STATS */
 .stats-bar{background:var(--ink);padding:40px 48px;}
 .stats-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
@@ -400,7 +424,119 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
 
 <!-- ═══ HOME ═══ -->
 <div class="page active" id="page-home">
-  <div class="hero">
+
+  <!-- HERO WITH FLAG BACKGROUND -->
+  <div style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;">
+    <!-- American Flag Background SVG -->
+    <div style="position:absolute;inset:0;z-index:0;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+        <!-- Stripes -->
+        <rect width="100%" height="100%" fill="#B22234"/>
+        <rect y="7.69%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="15.38%" width="100%" height="7.69%" fill="#B22234"/>
+        <rect y="23.07%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="30.76%" width="100%" height="7.69%" fill="#B22234"/>
+        <rect y="38.45%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="46.14%" width="100%" height="7.69%" fill="#B22234"/>
+        <rect y="53.83%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="61.52%" width="100%" height="7.69%" fill="#B22234"/>
+        <rect y="69.21%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="76.90%" width="100%" height="7.69%" fill="#B22234"/>
+        <rect y="84.59%" width="100%" height="7.69%" fill="#fff"/>
+        <rect y="92.28%" width="100%" height="7.72%" fill="#B22234"/>
+        <!-- Blue canton -->
+        <rect width="40%" height="53.85%" fill="#3C3B6E"/>
+        <!-- Stars row 1 -->
+        <g fill="white" font-size="18">
+          <text x="3.6%" y="7%">★</text><text x="10.8%" y="7%">★</text><text x="18%" y="7%">★</text><text x="25.2%" y="7%">★</text><text x="32.4%" y="7%">★</text><text x="39.6%" y="7%">★</text>
+          <text x="7.2%" y="14%">★</text><text x="14.4%" y="14%">★</text><text x="21.6%" y="14%">★</text><text x="28.8%" y="14%">★</text><text x="36%" y="14%">★</text>
+          <text x="3.6%" y="21%">★</text><text x="10.8%" y="21%">★</text><text x="18%" y="21%">★</text><text x="25.2%" y="21%">★</text><text x="32.4%" y="21%">★</text><text x="39.6%" y="21%">★</text>
+          <text x="7.2%" y="28%">★</text><text x="14.4%" y="28%">★</text><text x="21.6%" y="28%">★</text><text x="28.8%" y="28%">★</text><text x="36%" y="28%">★</text>
+          <text x="3.6%" y="35%">★</text><text x="10.8%" y="35%">★</text><text x="18%" y="35%">★</text><text x="25.2%" y="35%">★</text><text x="32.4%" y="35%">★</text><text x="39.6%" y="35%">★</text>
+          <text x="7.2%" y="42%">★</text><text x="14.4%" y="42%">★</text><text x="21.6%" y="42%">★</text><text x="28.8%" y="42%">★</text><text x="36%" y="42%">★</text>
+          <text x="3.6%" y="49%">★</text><text x="10.8%" y="49%">★</text><text x="18%" y="49%">★</text><text x="25.2%" y="49%">★</text><text x="32.4%" y="49%">★</text><text x="39.6%" y="49%">★</text>
+          <text x="7.2%" y="56%">★</text><text x="14.4%" y="56%">★</text><text x="21.6%" y="56%">★</text><text x="28.8%" y="56%">★</text><text x="36%" y="56%">★</text>
+        </g>
+      </svg>
+      <!-- Dark overlay for readability -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,15,30,0.82) 0%,rgba(10,15,30,0.65) 50%,rgba(10,15,30,0.75) 100%);"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:140px 48px 100px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;margin-bottom:28px;background:rgba(255,255,255,0.1);">
+          <span style="width:6px;height:6px;border-radius:50%;background:#10a070;animation:pulse 2s ease-in-out infinite;display:inline-block;"></span>
+          <span style="font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:1px;text-transform:uppercase;">Patent Pending · US 63/808,302</span>
+        </div>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-1.5px;margin-bottom:24px;color:#fff;">Every Home<br>Deserves an<br><em style="color:var(--gold);">Identity</em></h1>
+        <p style="font-size:1rem;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:40px;font-weight:300;max-width:480px;">A permanent, unique Home ID for every US address — eliminating delivery errors, protecting your privacy, and building the infrastructure for the future of shipping.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="cta-main" onclick="showPage('register')" style="background:var(--gold);color:var(--ink);">Register Your Home — Free</button>
+          <button style="padding:15px 32px;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.3);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px);" onclick="showPage('how')">See How It Works →</button>
+        </div>
+        <!-- American tagline -->
+        <div style="margin-top:48px;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:1.5rem;">🇺🇸</span>
+          <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;">Building the address identity infrastructure for every American home</span>
+        </div>
+      </div>
+      <div style="position:relative;display:flex;justify-content:center;align-items:center;">
+        <!-- Simple stats visual instead of card -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:400px;">
+          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">142M+</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">US Homes</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">100%</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">Unique IDs</div>
+          </div>
+          <div style="background:rgba(13,110,79,0.3);backdrop-filter:blur(12px);border:1px solid rgba(13,110,79,0.4);border-radius:16px;padding:24px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#10a070;">Free</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">To Register</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">2026</div>
+            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">Integration</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AMERICAN HOMES PHOTO STRIP -->
+  <div style="background:var(--ink);padding:20px 48px 0;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <p style="font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center;">142 Million American Homes — Each One Deserves an Identity</p>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);height:260px;overflow:hidden;">
+    <div style="position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&auto=format&fit=crop" alt="American home 1" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
+        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏠 Suburban Home</span>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&auto=format&fit=crop" alt="American home 2" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
+        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏡 Family House</span>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&auto=format&fit=crop" alt="American home 3" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
+        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏘️ Neighborhood</span>
+      </div>
+    </div>
+    <div style="position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop" alt="American home 4" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
+        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏠 Modern Home</span>
+      </div>
+    </div>
+  </div>
     <div>
       <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span><span class="hero-eyebrow-text">Patent Pending · US 63/808,302</span></div>
       <h1 class="hero-title">Every Home<br>Deserves an<br><em>Identity</em></h1>
@@ -431,6 +567,22 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
     <div class="stat-item"><div class="stat-n">Free</div><div class="stat-l">To Register</div></div>
     <div class="stat-item"><div class="stat-n">2026</div><div class="stat-l">Carrier Integration</div></div>
   </div></div>
+  <!-- PHOTO STRIP -->
+  <div class="photo-strip">
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&auto=format&fit=crop" alt="Beautiful home">
+      <div class="photo-strip-overlay"><span class="photo-strip-label">🏠 Every Home Has an Identity</span></div>
+    </div>
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&auto=format&fit=crop" alt="Package delivery">
+      <div class="photo-strip-overlay"><span class="photo-strip-label">📦 Verified Delivery</span></div>
+    </div>
+    <div class="photo-strip-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop" alt="Secure neighborhood">
+      <div class="photo-strip-overlay"><span class="photo-strip-label">🔒 Protected Community</span></div>
+    </div>
+  </div>
+
   <div class="sec-wrap">
     <div class="sec-tag">Core Features</div>
     <h2 class="sec-title">Built for the Future<br>of Delivery</h2>
@@ -444,6 +596,50 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
       <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">Autonomous Delivery</div><p class="feat-desc">Compatible with drones, robots, and self-driving vehicles.</p></div>
     </div>
   </div>
+
+  <!-- IMAGE SECTION 1 -->
+  <div class="img-section">
+    <div class="img-section-photo">
+      <img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=900&auto=format&fit=crop" alt="Delivery courier on bike" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="img-section-content">
+      <div class="sec-tag">Last-Mile Verification</div>
+      <h2 class="sec-title" style="font-size:2rem;">No More Wrong<br>Door Deliveries</h2>
+      <p style="font-size:0.9rem;color:var(--gray);line-height:1.75;font-weight:300;margin-bottom:24px;">Every package is confirmed at your exact door before placement. Drivers scan your Home ID label and the system verifies the match in real time.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--green-light);display:grid;place-items:center;font-size:0.8rem;">✅</div><span style="font-size:0.83rem;color:var(--ink);">Real-time QR code scanning at your door</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--blue-light);display:grid;place-items:center;font-size:0.8rem;">📦</div><span style="font-size:0.83rem;color:var(--ink);">Instant address match confirmation</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-size:0.8rem;">🚴</div><span style="font-size:0.83rem;color:var(--ink);">Works with all delivery services</span></div>
+      </div>
+      <button class="cta-main" onclick="showPage('features')" style="width:fit-content;">Learn More →</button>
+    </div>
+  </div>
+
+  <!-- IMAGE SECTION 2 -->
+  <div class="img-section">
+    <div class="img-section-content dark">
+      <div class="sec-tag">Privacy Protection</div>
+      <h2 class="sec-title" style="font-size:2rem;color:#fff;">Your Address.<br>Your Privacy.</h2>
+      <p style="font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.75;font-weight:300;margin-bottom:24px;">Shipping labels display only your Home ID — never your name or physical address. Your personal information stays private at every stage.</p>
+      <button class="btn-white" onclick="showPage('features')" style="width:fit-content;padding:12px 24px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;">Explore Privacy Features</button>
+    </div>
+    <div class="img-section-photo">
+      <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900&auto=format&fit=crop" alt="Privacy security">
+    </div>
+  </div>
+
+  <!-- PHOTO BANNER -->
+  <div class="photo-banner">
+    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop" alt="American neighborhood">
+    <div class="photo-banner-overlay">
+      <div class="photo-banner-content">
+        <h2>142 Million Homes<br>Deserve an Identity</h2>
+        <p>Join the movement to create a universal address standard for every home in America. Register your home today — free, forever.</p>
+        <button class="btn-white" onclick="showPage('register')" style="padding:14px 32px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;width:fit-content;">Register Your Home — Free</button>
+      </div>
+    </div>
+  </div>
+
   <div class="hiw-bg"><div class="sec-wrap">
     <div class="sec-tag">Simple Process</div>
     <h2 class="sec-title">How It Works</h2>
@@ -452,6 +648,93 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
       <div class="hiw-step"><div class="hiw-num">2</div><div class="hiw-title">Place Your Label</div><p class="hiw-desc">Print and place your official SaveCode label on your door.</p></div>
       <div class="hiw-step"><div class="hiw-num">3</div><div class="hiw-title">Add Residents</div><p class="hiw-desc">Register all household members for mail verification.</p></div>
       <div class="hiw-step"><div class="hiw-num">4</div><div class="hiw-title">Deliveries Verified</div><p class="hiw-desc">Every delivery confirmed at your exact door.</p></div>
+    </div>
+    <!-- ILLUSTRATION -->
+    <div style="margin-top:60px;background:#fff;border-radius:24px;padding:40px;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+      <div>
+        <div class="sec-tag">Last-Mile Verification</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:16px;line-height:1.2;">Scan. Verify.<br>Deliver with Confidence.</h3>
+        <p style="font-size:0.9rem;color:var(--gray);line-height:1.75;font-weight:300;margin-bottom:20px;">The delivery driver scans the Home ID QR code on your door using our app. The system instantly verifies the address match and confirms it's the right delivery point — before placing any package.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">✅</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Real-time address verification</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--blue-light);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">📱</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Works with any smartphone</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">🔒</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Anti-spoofing protection active</span></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" style="max-width:500px;border-radius:16px;">
+          <rect width="600" height="400" fill="#f5f0e8"/>
+          <rect x="0" y="0" width="600" height="400" fill="#f0ece4"/>
+          <rect x="320" y="40" width="180" height="320" rx="4" fill="#d4c9b0"/>
+          <rect x="330" y="50" width="160" height="300" rx="3" fill="#e8e0d0"/>
+          <rect x="340" y="60" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
+          <rect x="415" y="60" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
+          <rect x="340" y="200" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
+          <rect x="415" y="200" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
+          <circle cx="330" cy="210" r="6" fill="#c9a84c"/>
+          <rect x="270" y="160" width="50" height="60" rx="8" fill="#0a0f1e"/>
+          <rect x="275" y="165" width="40" height="40" rx="4" fill="white"/>
+          <rect x="278" y="168" width="8" height="8" rx="1" fill="#0a0f1e"/>
+          <rect x="288" y="168" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="294" y="168" width="8" height="8" rx="1" fill="#0a0f1e"/>
+          <rect x="278" y="178" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="284" y="174" width="8" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="294" y="176" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="278" y="184" width="8" height="8" rx="1" fill="#0a0f1e"/>
+          <rect x="288" y="186" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="294" y="184" width="8" height="8" rx="1" fill="#0a0f1e"/>
+          <circle cx="295" cy="220" r="10" fill="none" stroke="#10a070" stroke-width="3" opacity="0.8"/>
+          <circle cx="295" cy="220" r="6" fill="#10a070" opacity="0.3"/>
+          <line x1="275" y1="185" x2="315" y2="185" stroke="#c9a84c" stroke-width="2" opacity="0.8"><animate attributeName="y1" values="168;205;168" dur="2s" repeatCount="indefinite"/><animate attributeName="y2" values="168;205;168" dur="2s" repeatCount="indefinite"/></line>
+          <rect x="148" y="290" width="20" height="80" rx="10" fill="#1a3a8f"/>
+          <rect x="182" y="290" width="20" height="80" rx="10" fill="#1a3a8f"/>
+          <ellipse cx="158" cy="368" rx="14" ry="8" fill="#0a0f1e"/>
+          <ellipse cx="192" cy="368" rx="14" ry="8" fill="#0a0f1e"/>
+          <rect x="130" y="190" width="90" height="110" rx="16" fill="#1a3a8f"/>
+          <rect x="148" y="210" width="24" height="16" rx="3" fill="#c9a84c"/>
+          <text x="160" y="221" font-family="monospace" font-size="7" fill="#0a0f1e" text-anchor="middle" font-weight="bold">SC</text>
+          <rect x="218" y="200" width="20" height="70" rx="10" fill="#1a3a8f" transform="rotate(-20 228 235)"/>
+          <rect x="110" y="200" width="20" height="60" rx="10" fill="#1a3a8f"/>
+          <rect x="80" y="240" width="50" height="40" rx="6" fill="#c9a84c"/>
+          <rect x="80" y="255" width="50" height="2" fill="#b8962a"/>
+          <rect x="103" y="240" width="2" height="40" fill="#b8962a"/>
+          <circle cx="175" cy="160" r="35" fill="#f5d5b0"/>
+          <ellipse cx="175" cy="132" rx="33" ry="18" fill="#3d2b1f"/>
+          <circle cx="163" cy="158" r="4" fill="#3d2b1f"/>
+          <circle cx="187" cy="158" r="4" fill="#3d2b1f"/>
+          <circle cx="164" cy="157" r="1.5" fill="white"/>
+          <circle cx="188" cy="157" r="1.5" fill="white"/>
+          <path d="M 165 170 Q 175 178 185 170" stroke="#3d2b1f" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="175" cy="128" rx="36" ry="10" fill="#0a0f1e"/>
+          <rect x="139" y="118" width="72" height="14" rx="4" fill="#0a0f1e"/>
+          <rect x="139" y="118" width="72" height="6" rx="3" fill="#1a3a8f"/>
+          <rect x="225" y="185" width="55" height="95" rx="8" fill="#0a0f1e"/>
+          <rect x="229" y="190" width="47" height="82" rx="5" fill="#1a2340"/>
+          <rect x="232" y="195" width="41" height="70" rx="3" fill="#0d1829"/>
+          <rect x="238" y="202" width="28" height="28" rx="2" fill="white" opacity="0.9"/>
+          <rect x="240" y="204" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
+          <rect x="249" y="204" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
+          <rect x="254" y="204" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
+          <rect x="240" y="213" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
+          <rect x="244" y="210" width="7" height="3" rx="0.5" fill="#0a0f1e"/>
+          <rect x="254" y="211" width="3" height="4" rx="0.5" fill="#0a0f1e"/>
+          <rect x="240" y="218" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
+          <rect x="249" y="220" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
+          <rect x="254" y="218" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
+          <line x1="236" y1="216" x2="268" y2="216" stroke="#c9a84c" stroke-width="1.5" opacity="0.9"><animate attributeName="y1" values="202;228;202" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="202;228;202" dur="1.5s" repeatCount="indefinite"/></line>
+          <rect x="232" y="237" width="41" height="20" rx="4" fill="#0d6e4f"/>
+          <text x="252" y="251" font-family="sans-serif" font-size="8" fill="white" text-anchor="middle" font-weight="bold">✓ VERIFIED</text>
+          <rect x="247" y="276" width="13" height="3" rx="1.5" fill="#2a3a5a"/>
+          <circle cx="350" cy="130" r="22" fill="#0d6e4f" opacity="0.9"><animate attributeName="r" values="20;23;20" dur="2s" repeatCount="indefinite"/></circle>
+          <path d="M 340 130 L 348 138 L 362 122" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="330" y="95" width="130" height="26" rx="13" fill="white" opacity="0.95"/>
+          <text x="395" y="112" font-family="sans-serif" font-size="10" fill="#0d6e4f" text-anchor="middle" font-weight="600">Address Verified ✓</text>
+          <rect x="100" y="50" width="160" height="55" rx="12" fill="white" opacity="0.95"/>
+          <rect x="100" y="50" width="160" height="4" rx="12" fill="#c9a84c"/>
+          <text x="180" y="75" font-family="monospace" font-size="11" fill="#0a0f1e" text-anchor="middle" font-weight="600">WA — 293847 — 9820</text>
+          <text x="180" y="92" font-family="sans-serif" font-size="9" fill="#0d6e4f" text-anchor="middle">✓ Home ID Confirmed</text>
+        </svg>
+      </div>
     </div>
   </div></div>
   <div class="cta-strip"><div class="cta-strip-inner">
@@ -651,8 +934,8 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
 </div>
 
 <!-- ═══ ADMIN ═══ -->
-<div class="page" id="page-admin">
-  <div class="admin-layout">
+<div class="page" id="page-admin" style="display:none;">
+  <div class="admin-layout" id="admin-layout-content" style="display:none;">
     <aside class="admin-sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo"><div class="sl-icon">SC</div><span class="sl-name">SaveCode</span></div>
@@ -1331,8 +1614,24 @@ function showAdminPanel(name, el) {
 // NAVIGATION
 // ══════════════════════════════════════
 function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+  // 🔒 SECURITY: Block admin without login
+  if (name === 'admin') {
+    if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
+      showToast('🔒', 'Access Denied', 'Please sign in as admin.');
+      openModal('login');
+      return;
+    }
+    document.getElementById('admin-layout-content').style.display = 'grid';
+  }
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  const target = document.getElementById('page-' + name);
+  if (target) {
+    target.style.display = 'block';
+    target.classList.add('active');
+  }
   const nav = document.getElementById('main-nav');
   if (nav) nav.style.display = (name === 'admin') ? 'none' : 'flex';
   window.scrollTo({top: 0, behavior: 'instant'});
