@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — SaveCode</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
+  --gold:#c9a84c;--green:#0d6e4f;--green-light:#e8f5f0;
+  --blue:#1a3a8f;--blue-light:#eef2ff;--border:#e0ddd5;--border2:#c8c4b8;
+  --gray:#64748b;--gray2:#94a3b8;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
+.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;color:var(--ink);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;}
+.nav-link:hover{background:var(--cream);color:var(--ink);}
+.nav-link.active{color:var(--blue);background:var(--blue-light);}
+.btn-primary{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:#fff;background:var(--ink);cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+.btn-ghost{padding:9px 20px;border:1.5px solid var(--border2);border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+
+/* HERO */
+.page-hero{padding:120px 48px 80px;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop') center/cover;opacity:0.06;}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;}
+.hero-tag{display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);margin-bottom:20px;line-height:1.1;letter-spacing:-1px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:1rem;color:var(--gray);line-height:1.8;font-weight:300;}
+.inventor-card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:40px;box-shadow:0 8px 40px rgba(10,15,30,0.08);}
+.inv-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--ink),var(--blue));display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:20px;}
+.inv-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);margin-bottom:4px;}
+.inv-title{font-size:0.82rem;color:var(--gray);margin-bottom:20px;}
+.inv-badge{display:inline-flex;padding:5px 14px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:20px;font-size:0.72rem;font-weight:600;color:#8a6d10;margin-bottom:20px;}
+.inv-detail{display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--gray);margin-bottom:10px;}
+.inv-detail-icon{font-size:1rem;}
+
+/* STORY */
+.story-section{max-width:1280px;margin:0 auto;padding:80px 48px;}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.story-text p{font-size:0.95rem;color:var(--gray);line-height:1.85;margin-bottom:20px;font-weight:300;}
+.story-quote{background:var(--ink);border-radius:20px;padding:40px;margin-top:32px;}
+.sq-text{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;line-height:1.5;margin-bottom:16px;font-style:italic;}
+.sq-author{font-size:0.82rem;color:rgba(255,255,255,0.4);}
+
+/* VALUES */
+.values-section{background:var(--cream);padding:80px 48px;}
+.values-inner{max-width:1280px;margin:0 auto;}
+.sec-tag{display:inline-flex;padding:5px 14px;background:#fff;border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);color:var(--ink);margin-bottom:48px;letter-spacing:-0.5px;}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.value-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px;}
+.value-icon{font-size:2rem;margin-bottom:16px;display:block;}
+.value-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.value-desc{font-size:0.83rem;color:var(--gray);line-height:1.65;}
+
+/* ROADMAP */
+.roadmap-section{max-width:1280px;margin:0 auto;padding:80px 48px;}
+.roadmap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative;}
+.roadmap-grid::before{content:'';position:absolute;top:32px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--ink),var(--gold),var(--green));opacity:0.2;}
+.rm-item{text-align:center;padding:0 16px;}
+.rm-dot{width:64px;height:64px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;position:relative;z-index:1;}
+.rm-dot.now{background:var(--green);color:#fff;}
+.rm-dot.future{background:#fff;border:2px solid var(--border);color:var(--gray2);}
+.rm-dot.active{background:var(--gold);color:var(--ink);}
+.rm-year{font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.rm-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.rm-desc{font-size:0.8rem;color:var(--gray);line-height:1.6;}
+
+/* PATENT */
+.patent-section{background:var(--ink);padding:80px 48px;text-align:center;}
+.patent-inner{max-width:700px;margin:0 auto;}
+.patent-badge{display:inline-flex;padding:8px 20px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:20px;font-size:0.82rem;font-weight:600;color:var(--gold);margin-bottom:28px;letter-spacing:1px;}
+.patent-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
+.patent-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);margin-bottom:32px;line-height:1.7;}
+.patent-num{font-family:'JetBrains Mono',monospace;font-size:1.2rem;color:var(--gold);letter-spacing:3px;}
+
+footer{background:var(--ink2);padding:40px 48px;}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .page-hero{padding:100px 20px 60px;}
+  .hero-inner{grid-template-columns:1fr;}
+  .story-section{padding:60px 20px;}
+  .story-grid{grid-template-columns:1fr;}
+  .values-section{padding:60px 20px;}
+  .values-grid{grid-template-columns:repeat(2,1fr);}
+  .roadmap-section{padding:60px 20px;}
+  .roadmap-grid{grid-template-columns:repeat(2,1fr);}
+  .patent-section{padding:60px 20px;}
+  footer{padding:32px 20px;}
+  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">SC</div>
+      <span class="nav-logo-text">SaveCode</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link" href="/features">Features</a>
+      <a class="nav-link" href="/how-it-works">How It Works</a>
+      <a class="nav-link active" href="/about">About</a>
+      <a class="nav-link" href="/contact">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a class="btn-ghost" href="/">Sign In</a>
+      <a class="btn-primary" href="/#register">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Our Story</div>
+      <h1 class="hero-title">Building America's<br>Address <em>Identity</em><br>Infrastructure</h1>
+      <p class="hero-sub">SaveCode was born from a simple frustration — and grew into a mission to give every American home a permanent, verifiable identity that protects residents, simplifies delivery, and builds the infrastructure for the future of shipping.</p>
+    </div>
+    <div class="inventor-card">
+      <div class="inv-avatar">E</div>
+      <div class="inv-name">Eman A. Eljack</div>
+      <div class="inv-title">Inventor & Founder, SaveCode</div>
+      <div class="inv-badge">🇺🇸 Patent Pending · US 63/808,302</div>
+      <div class="inv-detail"><span class="inv-detail-icon">📍</span>Everett, Washington, USA</div>
+      <div class="inv-detail"><span class="inv-detail-icon">✉️</span>eman4eljck@gmail.com</div>
+      <div class="inv-detail"><span class="inv-detail-icon">🌐</span>www.savecode.us</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="story-section">
+  <div class="story-grid">
+    <div class="story-text">
+      <div class="sec-tag" style="display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;">The Problem We Solved</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:24px;line-height:1.2;">Why We Built SaveCode</h2>
+      <p>SaveCode was born from a simple frustration — receiving tax notices, bank statements, and court documents intended for strangers who once lived at the same address. We realized this wasn't just an inconvenience. It was a systemic failure affecting millions of American homes every day.</p>
+      <p>The root cause? Addresses have no identity. A street address tells you where a place is — but it says nothing about who lives there, whether it's the right door, or whether the mail is even authorized to be delivered.</p>
+      <p>We built SaveCode to solve this problem once and for all. Every home deserves a permanent, verifiable identity — a single code that connects the physical address to its current residents, protects incoming mail, and enables the next generation of delivery technology.</p>
+      <p>Our system is the first of its kind: combining address identification, resident verification, privacy-preserving shipping, and autonomous delivery compatibility into one unified platform.</p>
+      <div class="story-quote">
+        <div class="sq-text">"Every home in America deserves a permanent identity. Not just an address — an identity."</div>
+        <div class="sq-author">— Eman A. Eljack, Founder of SaveCode</div>
+      </div>
+    </div>
+    <div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:24px;">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop" alt="American homes" style="width:100%;height:280px;object-fit:cover;">
+        <div style="padding:24px;">
+          <div style="font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">The Mission</div>
+          <div style="font-size:0.95rem;color:var(--ink);line-height:1.65;">Give every one of America's 142 million homes a permanent digital identity — free, forever.</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div style="background:var(--ink);border-radius:16px;padding:24px;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:6px;">142M+</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;">US Homes</div>
+        </div>
+        <div style="background:var(--green);border-radius:16px;padding:24px;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;margin-bottom:6px;">Free</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;">Always</div>
+        </div>
+        <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:6px;">100%</div>
+          <div style="font-size:0.72rem;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;">Unique IDs</div>
+        </div>
+        <div style="background:var(--blue);border-radius:16px;padding:24px;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;margin-bottom:6px;">2026</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;">Integration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-section">
+  <div class="values-inner">
+    <div class="sec-tag">What We Stand For</div>
+    <h2 class="sec-title">Our Core Values</h2>
+    <div class="values-grid">
+      <div class="value-card"><span class="value-icon">⚡</span><div class="value-title">Precision</div><p class="value-desc">Every Home ID is unique. No duplicates. No errors. No exceptions. Ever.</p></div>
+      <div class="value-card"><span class="value-icon">🔒</span><div class="value-title">Privacy</div><p class="value-desc">Your personal data is yours. We never sell, share, or expose your information to anyone.</p></div>
+      <div class="value-card"><span class="value-icon">🌐</span><div class="value-title">Access</div><p class="value-desc">Free for every American home. No subscription. No hidden fees. Our service is a public good.</p></div>
+      <div class="value-card"><span class="value-icon">🤝</span><div class="value-title">Partnership</div><p class="value-desc">Built to integrate with carriers, government agencies, and businesses across America.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="roadmap-section">
+  <div class="sec-tag" style="display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;">Our Journey</div>
+  <h2 class="sec-title">The SaveCode Roadmap</h2>
+  <div class="roadmap-grid">
+    <div class="rm-item">
+      <div class="rm-dot now">Now</div>
+      <div class="rm-year">2026</div>
+      <div class="rm-title">Home Registration</div>
+      <p class="rm-desc">Every US home gets a permanent ID with physical door and mailbox labels.</p>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot active">Q3</div>
+      <div class="rm-year">2026</div>
+      <div class="rm-title">Carrier Integration</div>
+      <p class="rm-desc">Amazon, FedEx, UPS, and USPS accept Home ID on all shipping labels.</p>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot future">2027</div>
+      <div class="rm-year">2027</div>
+      <div class="rm-title">Government Partnership</div>
+      <p class="rm-desc">Official proposal to USPS as the national address identity standard.</p>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot future">2028</div>
+      <div class="rm-year">2028+</div>
+      <div class="rm-title">National Standard</div>
+      <p class="rm-desc">SaveCode becomes the official address identity for all 142M+ US homes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PATENT -->
+<div class="patent-section">
+  <div class="patent-inner">
+    <div class="patent-badge">🇺🇸 Intellectual Property Protected</div>
+    <h2 class="patent-title">Patent Pending</h2>
+    <p class="patent-sub">SaveCode's Home ID system, resident registry, and last-mile verification technology are protected under US patent law. Our invention represents a new category of address infrastructure.</p>
+    <div class="patent-num">US 63/808,302</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/features">Features</a>
+      <a href="/how-it-works">How It Works</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
