@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features — SaveCode</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
+  --gold:#c9a84c;--green:#0d6e4f;--green2:#10a070;--green-light:#e8f5f0;
+  --blue:#1a3a8f;--blue-light:#eef2ff;--border:#e0ddd5;--border2:#c8c4b8;
+  --gray:#64748b;--gray2:#94a3b8;--shadow:0 2px 8px rgba(10,15,30,0.08);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
+.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;color:var(--ink);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;border:none;background:transparent;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;}
+.nav-link:hover{background:var(--cream);color:var(--ink);}
+.nav-link.active{color:var(--blue);background:var(--blue-light);}
+.btn-primary{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:#fff;background:var(--ink);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;text-decoration:none;}
+.btn-ghost{padding:9px 20px;border:1.5px solid var(--border2);border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+
+/* HERO */
+.page-hero{padding:120px 48px 80px;background:linear-gradient(135deg,var(--ink) 0%,#1a3a8f 100%);text-align:center;position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&auto=format&fit=crop') center/cover;opacity:0.1;}
+.hero-tag{display:inline-flex;padding:6px 16px;background:rgba(201,168,76,0.2);border:1px solid rgba(201,168,76,0.3);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;position:relative;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);color:#fff;margin-bottom:20px;line-height:1.1;letter-spacing:-1px;position:relative;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,0.6);max-width:560px;margin:0 auto;line-height:1.75;font-weight:300;position:relative;}
+
+/* FEATURES GRID */
+.features-wrap{max-width:1280px;margin:0 auto;padding:80px 48px;}
+.features-intro{text-align:center;margin-bottom:60px;}
+.sec-tag{display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);color:var(--ink);margin-bottom:16px;letter-spacing:-0.5px;}
+.sec-sub{font-size:0.95rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300;}
+
+/* FEATURE CARDS */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:80px;}
+.feat-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:36px;transition:all 0.2s;}
+.feat-card:hover{border-color:var(--ink);box-shadow:0 8px 40px rgba(10,15,30,0.1);transform:translateY(-2px);}
+.feat-icon-wrap{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:24px;}
+.feat-icon-wrap.gold{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);}
+.feat-icon-wrap.green{background:var(--green-light);border:1px solid rgba(13,110,79,0.15);}
+.feat-icon-wrap.blue{background:var(--blue-light);border:1px solid rgba(26,58,143,0.15);}
+.feat-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:12px;}
+.feat-desc{font-size:0.85rem;color:var(--gray);line-height:1.7;}
+.feat-tags{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;}
+.feat-tag{padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:600;}
+.feat-tag.gold{background:rgba(201,168,76,0.1);color:#8a6d10;}
+.feat-tag.green{background:var(--green-light);color:var(--green);}
+.feat-tag.blue{background:var(--blue-light);color:var(--blue);}
+
+/* FEATURE DETAIL SECTIONS */
+.feat-detail{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:4px;border-radius:24px;overflow:hidden;border:1px solid var(--border);}
+.feat-detail.reverse{direction:rtl;}
+.feat-detail.reverse > *{direction:ltr;}
+.fd-photo{position:relative;min-height:400px;overflow:hidden;}
+.fd-photo img{width:100%;height:100%;object-fit:cover;}
+.fd-content{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;background:#fff;}
+.fd-content.dark{background:var(--ink);}
+.fd-content.dark .fd-title{color:#fff;}
+.fd-content.dark .fd-desc{color:rgba(255,255,255,0.6);}
+.fd-content.dark .sec-tag{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);}
+.fd-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:16px;line-height:1.2;}
+.fd-desc{font-size:0.9rem;color:var(--gray);line-height:1.8;margin-bottom:24px;font-weight:300;}
+.fd-list{display:flex;flex-direction:column;gap:12px;}
+.fd-list-item{display:flex;align-items:center;gap:12px;font-size:0.85rem;color:var(--ink);}
+.fd-list-icon{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:0.85rem;flex-shrink:0;}
+
+/* CTA */
+.cta-section{background:var(--ink);padding:80px 48px;text-align:center;margin-top:80px;}
+.cta-inner{max-width:600px;margin:0 auto;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
+.cta-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);margin-bottom:36px;line-height:1.7;}
+.btn-white{padding:14px 32px;background:#fff;border:none;border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;}
+.btn-outline{padding:14px 32px;background:transparent;border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block;margin-left:12px;}
+
+/* FOOTER */
+footer{background:var(--ink2);padding:40px 48px;}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.15s;}
+.footer-links a:hover{color:#fff;}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .page-hero{padding:100px 20px 60px;}
+  .features-wrap{padding:60px 20px;}
+  .features-grid{grid-template-columns:1fr;}
+  .feat-detail{grid-template-columns:1fr;}
+  .feat-detail.reverse{direction:ltr;}
+  .fd-content{padding:40px 32px;}
+  .cta-section{padding:60px 20px;}
+  footer{padding:32px 20px;}
+  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">SC</div>
+      <span class="nav-logo-text">SaveCode</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link active" href="/features">Features</a>
+      <a class="nav-link" href="/how-it-works">How It Works</a>
+      <a class="nav-link" href="/about">About</a>
+      <a class="nav-link" href="/contact">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a class="btn-ghost" href="/">Sign In</a>
+      <a class="btn-primary" href="/#register">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-tag">All Features</div>
+  <h1 class="hero-title">Everything You Need for<br><em>Secure & Smart Delivery</em></h1>
+  <p class="hero-sub">Nine powerful features working together to protect every delivery, verify every address, and preserve your privacy — every time.</p>
+</div>
+
+<!-- FEATURES GRID -->
+<div class="features-wrap">
+  <div class="features-intro">
+    <div class="sec-tag">Core System</div>
+    <h2 class="sec-title">Built for Every American Home</h2>
+    <p class="sec-sub">SaveCode combines address identification, resident verification, privacy protection, and autonomous delivery into one unified platform.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon-wrap gold">🏠</div>
+      <div class="feat-title">Permanent Home ID</div>
+      <p class="feat-desc">Every US address receives a unique, permanent Home ID generated using proprietary identification algorithms. The code is tied to the physical address — not the resident — and never changes.</p>
+      <div class="feat-tags"><span class="feat-tag gold">Core Feature</span><span class="feat-tag blue">Patent Pending</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap green">👥</div>
+      <div class="feat-title">Resident Registry</div>
+      <p class="feat-desc">Register all current residents at your address. Mail addressed to unregistered names is automatically returned to sender — protecting sensitive correspondence like tax documents and bank statements.</p>
+      <div class="feat-tags"><span class="feat-tag green">Privacy</span><span class="feat-tag blue">Security</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap blue">🛡️</div>
+      <div class="feat-title">Anti-Spoofing System</div>
+      <p class="feat-desc">Multi-factor verification, device authentication, and behavioral pattern detection prevent any unauthorized use of your Home ID. Attempts are blocked, logged, and you are alerted immediately.</p>
+      <div class="feat-tags"><span class="feat-tag blue">Security</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap green">✅</div>
+      <div class="feat-title">Last-Mile Verification</div>
+      <p class="feat-desc">At the final delivery step, the driver scans your door label and the system confirms it matches the package's destination Home ID — preventing wrong-door deliveries even in apartment buildings.</p>
+      <div class="feat-tags"><span class="feat-tag green">Delivery</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap gold">🔐</div>
+      <div class="feat-title">Privacy-Preserving Shipping</div>
+      <p class="feat-desc">Shipping labels display only your Home ID — never your name or address. Your personal information is never visible at any stage of the external shipment handling process.</p>
+      <div class="feat-tags"><span class="feat-tag gold">Privacy</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap blue">🏛️</div>
+      <div class="feat-title">Address Update System (AANS)</div>
+      <p class="feat-desc">Moving? Use our checkbox interface to notify only the institutions you choose: IRS, banks, courts, clinics, employer, university, immigration, insurance, and government agencies.</p>
+      <div class="feat-tags"><span class="feat-tag blue">Smart</span><span class="feat-tag green">Privacy</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap gold">🤖</div>
+      <div class="feat-title">Autonomous Delivery</div>
+      <p class="feat-desc">Compatible with aerial drones, ground robots, and self-driving vehicles. Your Home ID is the universal machine-readable delivery target for all current and future autonomous systems.</p>
+      <div class="feat-tags"><span class="feat-tag gold">Future</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap green">🔗</div>
+      <div class="feat-title">Open Integration API</div>
+      <p class="feat-desc">Amazon, FedEx, UPS, USPS, and government agencies can integrate with SaveCode through our authenticated API with full access control and query validation.</p>
+      <div class="feat-tags"><span class="feat-tag green">Enterprise</span></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon-wrap blue">📋</div>
+      <div class="feat-title">Digital Home Registry</div>
+      <p class="feat-desc">A complete digital record of your home's identity — residents, delivery history, address updates, and security logs — all in one secure, private dashboard.</p>
+      <div class="feat-tags"><span class="feat-tag blue">Dashboard</span></div>
+    </div>
+  </div>
+
+  <!-- DETAIL SECTION 1 -->
+  <div class="feat-detail" style="margin-bottom:24px;">
+    <div class="fd-photo">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&auto=format&fit=crop" alt="American Home">
+    </div>
+    <div class="fd-content">
+      <div class="sec-tag">Permanent Home ID</div>
+      <div class="fd-title">One Code.<br>Every Home. Forever.</div>
+      <p class="fd-desc">Unlike a street address that can change, be duplicated, or misread — your SaveCode Home ID is a permanent, unique digital identity that belongs to your address for life.</p>
+      <div class="fd-list">
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--green-light)">✅</div>Generated instantly from your address data</div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--green-light)">✅</div>Never changes — even if residents move</div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--green-light)">✅</div>100% unique across all 142M+ US homes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL SECTION 2 -->
+  <div class="feat-detail reverse" style="margin-bottom:24px;">
+    <div class="fd-photo">
+      <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900&auto=format&fit=crop" alt="Privacy Security">
+    </div>
+    <div class="fd-content dark">
+      <div class="sec-tag">Privacy Protection</div>
+      <div class="fd-title">Your Name. Never on a Label.</div>
+      <p class="fd-desc">When you ship with SaveCode, your name and physical address are replaced by your Home ID on every label. Carriers see only the code — your identity stays private.</p>
+      <div class="fd-list">
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:rgba(255,255,255,0.1)">🔒</div><span style="color:rgba(255,255,255,0.8);">Name never appears on shipping labels</span></div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:rgba(255,255,255,0.1)">🔒</div><span style="color:rgba(255,255,255,0.8);">Address hidden from all external parties</span></div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:rgba(255,255,255,0.1)">🔒</div><span style="color:rgba(255,255,255,0.8);">Anti-spoofing prevents ID theft</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL SECTION 3 -->
+  <div class="feat-detail">
+    <div class="fd-photo">
+      <img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=900&auto=format&fit=crop" alt="Delivery verification">
+    </div>
+    <div class="fd-content">
+      <div class="sec-tag">Last-Mile Verification</div>
+      <div class="fd-title">Right Door.<br>Every Time.</div>
+      <p class="fd-desc">Delivery drivers scan your Home ID label at your door before placing any package. The system confirms the match in real time — no more wrong-door deliveries.</p>
+      <div class="fd-list">
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--blue-light)">📱</div>Works with any smartphone or scanner</div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--blue-light)">📱</div>Real-time confirmation at point of delivery</div>
+        <div class="fd-list-item"><div class="fd-list-icon" style="background:var(--blue-light)">📱</div>Compatible with all major carriers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">Ready to Protect Your Home?</h2>
+    <p class="cta-sub">Register your Home ID for free in under a minute. Join the future of American address identity.</p>
+    <a class="btn-white" href="/#register">Register Now — Free</a>
+    <a class="btn-outline" href="/contact">Contact Us</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/features">Features</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/admin">Admin</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
