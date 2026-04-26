@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — SaveCode</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
+  --gold:#c9a84c;--green:#0d6e4f;--green-light:#e8f5f0;
+  --blue:#1a3a8f;--blue-light:#eef2ff;--border:#e0ddd5;--border2:#c8c4b8;
+  --gray:#64748b;--gray2:#94a3b8;--red:#c0392b;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
+.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;color:var(--ink);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;}
+.nav-link:hover{background:var(--cream);color:var(--ink);}
+.nav-link.active{color:var(--blue);background:var(--blue-light);}
+.btn-primary{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:#fff;background:var(--ink);cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+.btn-ghost{padding:9px 20px;border:1.5px solid var(--border2);border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+
+/* HERO */
+.page-hero{padding:120px 48px 80px;background:var(--cream);text-align:center;border-bottom:1px solid var(--border);}
+.hero-tag{display:inline-flex;padding:5px 14px;background:#fff;border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);margin-bottom:20px;line-height:1.1;letter-spacing:-1px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:1rem;color:var(--gray);max-width:520px;margin:0 auto;line-height:1.75;font-weight:300;}
+
+/* CONTACT GRID */
+.contact-wrap{max-width:1280px;margin:0 auto;padding:80px 48px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start;}
+
+/* CONTACT INFO */
+.contact-info{}
+.ci-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);margin-bottom:8px;}
+.ci-sub{font-size:0.88rem;color:var(--gray);margin-bottom:36px;line-height:1.65;}
+.ci-item{display:flex;gap:16px;margin-bottom:28px;align-items:flex-start;}
+.ci-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;border:1px solid var(--border);}
+.ci-icon.general{background:var(--blue-light);}
+.ci-icon.partner{background:rgba(201,168,76,0.1);}
+.ci-icon.location{background:var(--green-light);}
+.ci-icon.time{background:var(--cream);}
+.ci-label{font-size:0.78rem;font-weight:600;color:var(--gray2);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;}
+.ci-value{font-size:0.92rem;font-weight:500;color:var(--ink);}
+.ci-value a{color:var(--blue);text-decoration:none;}
+.ci-value a:hover{text-decoration:underline;}
+.ci-desc{font-size:0.8rem;color:var(--gray);margin-top:4px;}
+
+/* EMAIL CARDS */
+.email-cards{display:flex;flex-direction:column;gap:16px;margin-top:40px;}
+.email-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;transition:all 0.2s;}
+.email-card:hover{border-color:var(--ink);box-shadow:0 4px 20px rgba(10,15,30,0.06);}
+.ec-type{font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.ec-email{font-family:'JetBrains Mono',monospace;font-size:0.95rem;color:var(--ink);margin-bottom:8px;}
+.ec-desc{font-size:0.8rem;color:var(--gray);line-height:1.6;}
+
+/* CONTACT FORM */
+.contact-form{background:#fff;border:1px solid var(--border);border-radius:24px;padding:48px;box-shadow:0 4px 24px rgba(10,15,30,0.06);}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--ink);margin-bottom:6px;}
+.form-sub{font-size:0.85rem;color:var(--gray);margin-bottom:32px;}
+.fg{margin-bottom:20px;}
+.fg label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 16px;background:var(--cream);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ink);background:#fff;}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--gray2);}
+.fg textarea{resize:vertical;min-height:130px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.btn-send{width:100%;padding:14px;background:var(--ink);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.btn-send:hover{background:var(--ink2);transform:translateY(-1px);}
+.form-success{background:var(--green-light);border:1px solid rgba(13,110,79,0.2);border-radius:10px;padding:16px;font-size:0.88rem;color:var(--green);display:none;margin-bottom:20px;text-align:center;}
+.form-success.show{display:block;}
+
+/* MAP/LOCATION SECTION */
+.location-section{background:var(--ink);padding:80px 48px;}
+.location-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.loc-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;margin-bottom:16px;}
+.loc-sub{font-size:0.92rem;color:rgba(255,255,255,0.5);line-height:1.75;font-weight:300;margin-bottom:32px;}
+.loc-detail{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.loc-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.08);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;}
+.loc-label{font-size:0.78rem;color:rgba(255,255,255,0.4);margin-bottom:2px;}
+.loc-value{font-size:0.9rem;color:#fff;font-weight:500;}
+.loc-map{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:20px;height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.loc-map img{width:100%;height:100%;object-fit:cover;opacity:0.4;}
+.loc-map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+.loc-pin{font-size:2.5rem;}
+.loc-city{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#fff;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;right:28px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.15);z-index:300;display:none;min-width:280px;}
+.toast.show{display:flex;align-items:flex-start;gap:12px;animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.toast-icon{font-size:1.2rem;}
+.toast-title{font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.toast-msg{font-size:0.78rem;color:var(--gray);}
+
+footer{background:var(--ink2);padding:40px 48px;}
+.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;}
+.footer-links a:hover{color:#fff;}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .page-hero{padding:100px 20px 60px;}
+  .contact-wrap{padding:60px 20px;}
+  .contact-grid{grid-template-columns:1fr;}
+  .fg-row{grid-template-columns:1fr;}
+  .location-section{padding:60px 20px;}
+  .location-inner{grid-template-columns:1fr;}
+  footer{padding:32px 20px;}
+  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">SC</div>
+      <span class="nav-logo-text">SaveCode</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link" href="/features">Features</a>
+      <a class="nav-link" href="/how-it-works">How It Works</a>
+      <a class="nav-link" href="/about">About</a>
+      <a class="nav-link active" href="/contact">Contact</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a class="btn-ghost" href="/">Sign In</a>
+      <a class="btn-primary" href="/#register">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-tag">Get In Touch</div>
+  <h1 class="hero-title">Contact <em>SaveCode</em></h1>
+  <p class="hero-sub">Questions, partnerships, media inquiries, or just want to learn more — we respond to every message within 24 hours.</p>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrap">
+  <div class="contact-grid">
+
+    <!-- LEFT: INFO -->
+    <div class="contact-info">
+      <div class="ci-title">We'd Love to Hear From You</div>
+      <p class="ci-sub">Whether you're a homeowner, a delivery company, a government agency, or a potential partner — SaveCode is built for collaboration.</p>
+
+      <div class="ci-item">
+        <div class="ci-icon general">✉️</div>
+        <div>
+          <div class="ci-label">General Inquiries</div>
+          <div class="ci-value"><a href="mailto:support@savecode.us">support@savecode.us</a></div>
+          <div class="ci-desc">For questions about registration, your Home ID, or how SaveCode works.</div>
+        </div>
+      </div>
+
+      <div class="ci-item">
+        <div class="ci-icon partner">🤝</div>
+        <div>
+          <div class="ci-label">Partnerships & Enterprise</div>
+          <div class="ci-value"><a href="mailto:partnerships@savecode.us">partnerships@savecode.us</a></div>
+          <div class="ci-desc">For carriers, government agencies, and businesses interested in integrating SaveCode.</div>
+        </div>
+      </div>
+
+      <div class="ci-item">
+        <div class="ci-icon location">📍</div>
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-value">Everett, Washington, USA</div>
+          <div class="ci-desc">Pacific Time Zone (PT)</div>
+        </div>
+      </div>
+
+      <div class="ci-item">
+        <div class="ci-icon time">⚡</div>
+        <div>
+          <div class="ci-label">Response Time</div>
+          <div class="ci-value">Within 24 Hours</div>
+          <div class="ci-desc">We respond to every inquiry, Monday through Friday.</div>
+        </div>
+      </div>
+
+      <!-- Email Cards -->
+      <div class="email-cards">
+        <div class="email-card">
+          <div class="ec-type">📧 General Support</div>
+          <div class="ec-email">support@savecode.us</div>
+          <p class="ec-desc">Home ID registration help, technical support, account questions, and general inquiries about how SaveCode works.</p>
+        </div>
+        <div class="email-card">
+          <div class="ec-type">🤝 Partnerships</div>
+          <div class="ec-email">partnerships@savecode.us</div>
+          <p class="ec-desc">Carrier integrations, government partnerships, enterprise licensing, API access, and investment inquiries.</p>
+        </div>
+        <div class="email-card">
+          <div class="ec-type">📰 Media & Press</div>
+          <div class="ec-email">press@savecode.us</div>
+          <p class="ec-desc">Interview requests, press kit, patent information, and media coverage about SaveCode and our mission.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="contact-form">
+      <div class="form-title">Send Us a Message</div>
+      <p class="form-sub">Fill in the form below and we'll get back to you within 24 hours.</p>
+      <div class="form-success" id="form-success">✅ Message sent successfully! We'll get back to you within 24 hours.</div>
+      <div class="fg-row">
+        <div class="fg"><label>First Name *</label><input type="text" id="f-fname" placeholder="John"></div>
+        <div class="fg"><label>Last Name *</label><input type="text" id="f-lname" placeholder="Anderson"></div>
+      </div>
+      <div class="fg"><label>Email Address *</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+      <div class="fg"><label>Organization (optional)</label><input type="text" id="f-org" placeholder="Company or Agency name"></div>
+      <div class="fg">
+        <label>Inquiry Type *</label>
+        <select id="f-type">
+          <option value="">Select inquiry type...</option>
+          <option>General Question</option>
+          <option>Home ID Registration Help</option>
+          <option>Partnership / Enterprise</option>
+          <option>Carrier Integration</option>
+          <option>Government Partnership</option>
+          <option>Media / Press</option>
+          <option>Investment</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Subject *</label><input type="text" id="f-subject" placeholder="How can we help?"></div>
+      <div class="fg"><label>Message *</label><textarea id="f-message" placeholder="Tell us more about your inquiry..."></textarea></div>
+      <button class="btn-send" onclick="sendMessage()">Send Message →</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOCATION -->
+<div class="location-section">
+  <div class="location-inner">
+    <div>
+      <h2 class="loc-title">Based in Everett, Washington</h2>
+      <p class="loc-sub">SaveCode was founded and is headquartered in Everett, WA — a vibrant city in the Pacific Northwest and home to one of America's most important shipping corridors.</p>
+      <div class="loc-detail">
+        <div class="loc-icon">📍</div>
+        <div><div class="loc-label">Address</div><div class="loc-value">Everett, Washington 98201, USA</div></div>
+      </div>
+      <div class="loc-detail">
+        <div class="loc-icon">🕐</div>
+        <div><div class="loc-label">Business Hours</div><div class="loc-value">Monday – Friday · 9 AM – 5 PM PT</div></div>
+      </div>
+      <div class="loc-detail">
+        <div class="loc-icon">🌐</div>
+        <div><div class="loc-label">Website</div><div class="loc-value">www.savecode.us</div></div>
+      </div>
+    </div>
+    <div class="loc-map">
+      <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?w=800&auto=format&fit=crop" alt="Pacific Northwest">
+      <div class="loc-map-overlay">
+        <div class="loc-pin">📍</div>
+        <div class="loc-city">Everett, Washington</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/features">Features</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="t-icon">✅</span>
+  <div><div class="toast-title" id="t-title">Success</div><div class="toast-msg" id="t-msg"></div></div>
+</div>
+
+<script>
+function sendMessage() {
+  const fname = document.getElementById('f-fname').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const type = document.getElementById('f-type').value;
+  const message = document.getElementById('f-message').value.trim();
+
+  if (!fname || !email || !type || !message) {
+    showToast('⚠️', 'Missing Fields', 'Please fill in all required fields.');
+    return;
+  }
+
+  // Show success
+  document.getElementById('form-success').classList.add('show');
+  showToast('✅', 'Message Sent!', "We'll get back to you within 24 hours.");
+
+  // Clear form
+  ['f-fname','f-lname','f-email','f-org','f-subject','f-message'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('f-type').value = '';
+}
+
+let toastTimer;
+function showToast(icon, title, msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('t-icon').textContent = icon;
+  document.getElementById('t-title').textContent = title;
+  document.getElementById('t-msg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('show'), 4000);
+}
+</script>
+
+</body>
+</html>
