@@ -4,398 +4,313 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SaveCode — Every Home Has an Identity</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="A permanent, unique Home ID for every US address — eliminating delivery errors, protecting your privacy, and building the infrastructure for the future of shipping.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
-  --gold:#c9a84c;--gold2:#e8c96a;--green:#0d6e4f;--green2:#10a070;
-  --green-light:#e8f5f0;--blue:#1a3a8f;--blue2:#2451c7;--blue-light:#eef2ff;
-  --red:#c0392b;--border:#e0ddd5;--border2:#c8c4b8;
-  --shadow:0 2px 8px rgba(10,15,30,0.08),0 8px 32px rgba(10,15,30,0.05);
-  --shadow2:0 8px 40px rgba(10,15,30,0.15);--gray:#64748b;--gray2:#94a3b8;
+  --bg:#0a0e1a;
+  --bg2:#0d1220;
+  --bg3:#111827;
+  --gold:#f0b429;
+  --gold2:#ffd35b;
+  --white:#ffffff;
+  --gray:rgba(255,255,255,0.55);
+  --border:rgba(255,255,255,0.08);
+  --border-gold:rgba(240,180,41,0.25);
+  --green:#00a550;
+  --red:#B22234;
+  --navy:#3C3B6E;
 }
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
-.page{display:none;min-height:100vh;}.page.active{display:block;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
-.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;}
-.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:0.8rem;}
-.nav-logo-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;color:var(--ink);}
+#main-nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:all 0.3s;}
+#main-nav.scrolled{background:rgba(10,14,26,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 2px 20px rgba(0,0,0,0.3);}
+.nav-wrap{max-width:1300px;margin:0 auto;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.3rem;}
+.nav-logo-wrap{display:flex;flex-direction:column;}
+.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;}
+.nav-logo-sub{font-size:0.62rem;color:var(--gold);letter-spacing:0.5px;}
 .nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;border:none;background:transparent;font-family:'DM Sans',sans-serif;}
-.nav-link:hover{background:var(--cream);color:var(--ink);}
+.nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.15s;display:inline-block;}
+.nav-link:hover{color:#fff;}
 .nav-actions{display:flex;align-items:center;gap:10px;}
-.btn-ghost{padding:9px 20px;border:1.5px solid var(--border2);border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
-.btn-ghost:hover{border-color:var(--ink);background:var(--ink);color:#fff;}
-.btn-primary{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:#fff;background:var(--ink);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
-.btn-primary:hover{background:var(--ink2);}
-.btn-gold{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--ink);background:var(--gold);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
-.btn-gold:hover{background:var(--gold2);}
-.user-pill{display:flex;align-items:center;gap:10px;padding:6px 14px;background:var(--cream);border:1px solid var(--border);border-radius:20px;}
-.user-pill-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-size:0.72rem;font-weight:700;color:var(--ink);}
-.user-pill-email{font-size:0.78rem;font-weight:500;color:var(--ink);}
+.btn-login{padding:9px 24px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-size:0.85rem;font-weight:500;color:#fff;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-login:hover{border-color:var(--gold);color:var(--gold);}
+.btn-register-nav{padding:9px 24px;border:1.5px solid var(--gold);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-register-nav:hover{background:var(--gold);color:#000;}
+.user-pill{display:flex;align-items:center;gap:10px;padding:6px 14px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;}
+.user-avatar{width:26px;height:26px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-size:0.72rem;font-weight:700;color:#000;}
+.user-email{font-size:0.78rem;font-weight:500;color:var(--gold);}
 
-/* HERO */
-.hero{padding:140px 48px 100px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border2);border-radius:20px;margin-bottom:28px;background:var(--cream);}
-.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-.hero-eyebrow-text{font-size:0.72rem;font-weight:600;color:var(--green);letter-spacing:1px;text-transform:uppercase;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-1.5px;margin-bottom:24px;color:var(--ink);}
-.hero-title em{font-style:italic;color:var(--gold);}
-.hero-sub{font-size:1rem;line-height:1.75;color:var(--gray);margin-bottom:40px;font-weight:300;max-width:480px;}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
-.cta-main{padding:15px 32px;background:var(--ink);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
-.cta-main:hover{background:var(--ink2);transform:translateY(-1px);}
-.cta-sec{padding:15px 32px;background:transparent;border:1.5px solid var(--border2);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
-.cta-sec:hover{border-color:var(--ink);}
-.hero-visual{position:relative;}
-.id-card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:36px;box-shadow:var(--shadow2);position:relative;overflow:hidden;}
-.id-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--green),var(--blue));}
-.idc-label{font-size:0.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray2);margin-bottom:16px;}
-.idc-id{font-family:'JetBrains Mono',monospace;font-size:1.8rem;color:var(--ink);margin-bottom:12px;letter-spacing:2px;}
-.idc-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:var(--green-light);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--green);border:1px solid rgba(13,110,79,0.2);}
-.idc-divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
-.idc-row{display:flex;justify-content:space-between;margin-bottom:10px;}
-.idc-k{font-size:0.75rem;color:var(--gray2);}
-.idc-v{font-size:0.75rem;font-weight:500;color:var(--ink);}
-.hero-float{position:absolute;background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow2);display:flex;align-items:center;gap:12px;}
-.hero-float.f1{top:-24px;right:-24px;}
-.hero-float.f2{bottom:-24px;left:-24px;}
-.hf-icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1rem;flex-shrink:0;}
-.hf-icon.green{background:var(--green-light);}
-.hf-icon.blue{background:var(--blue-light);}
-.hf-title{font-size:0.8rem;font-weight:600;color:var(--ink);}
-.hf-sub{font-size:0.7rem;color:var(--gray2);}
+/* HERO - American Flag */
+#hero{min-height:100vh;position:relative;display:flex;flex-direction:column;overflow:hidden;}
+.flag-bg{position:absolute;inset:0;z-index:0;}
+.stripe{position:absolute;left:0;right:0;}
+.flag-canton{position:absolute;top:0;left:0;width:38%;height:53.85%;background:#3C3B6E;display:grid;place-items:center;}
+.flag-stars{display:grid;grid-template-columns:repeat(6,1fr);padding:10px;width:100%;height:100%;align-content:space-evenly;justify-items:center;}
+.flag-stars span{color:#fff;font-size:clamp(0.6rem,1.8vw,1.1rem);line-height:1;}
+.flag-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,14,26,0.92) 0%,rgba(10,14,26,0.78) 40%,rgba(10,14,26,0.88) 100%);}
+.hero-content{position:relative;z-index:10;flex:1;display:flex;align-items:center;padding:120px 48px 60px;}
+.hero-inner{max-width:1300px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:30px;margin-bottom:28px;}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+.hero-badge-text{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.5vw,5rem);line-height:1.05;letter-spacing:-1.5px;color:#fff;margin-bottom:24px;}
+.hero-h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:1.05rem;line-height:1.8;color:var(--gray);margin-bottom:40px;font-weight:300;max-width:480px;}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
+.btn-hero-primary{padding:15px 34px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-hero-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,180,41,0.3);}
+.btn-hero-sec{padding:15px 34px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-family:'Inter',sans-serif;font-size:0.92rem;font-weight:500;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px);}
+.btn-hero-sec:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.35);}
+.hero-trust{display:flex;align-items:center;gap:14px;}
+.hero-trust-text{font-size:0.8rem;color:rgba(255,255,255,0.35);font-style:italic;line-height:1.5;}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stat-block{backdrop-filter:blur(16px);border-radius:16px;padding:28px 22px;transition:all 0.2s;}
+.stat-block:hover{transform:translateY(-2px);}
+.stat-block.gold{background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);}
+.stat-block.blue{background:rgba(26,35,126,0.3);border:1px solid rgba(121,134,203,0.2);}
+.stat-block.green{background:rgba(0,165,80,0.15);border:1px solid rgba(0,165,80,0.25);}
+.stat-block.dark{background:rgba(255,255,255,0.05);border:1px solid var(--border);}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.4rem;color:#fff;margin-bottom:6px;line-height:1;}
+.stat-block.gold .stat-num{color:var(--gold);}
+.stat-block.green .stat-num{color:#4ade80;}
+.stat-label{font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;}
+.hero-scroll{position:relative;z-index:10;padding:0 48px 32px;display:flex;justify-content:center;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,rgba(240,180,41,0.4),transparent);animation:scrollLine 2s ease-in-out infinite;}
+@keyframes scrollLine{0%,100%{opacity:0.3;transform:scaleY(0.5) translateY(-8px)}50%{opacity:1;transform:scaleY(1) translateY(0)}}
 
-/* PHOTO SECTIONS */
-.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;height:320px;overflow:hidden;margin:0;}
-.photo-strip-item{position:relative;overflow:hidden;}
-.photo-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
-.photo-strip-item:hover img{transform:scale(1.05);}
-.photo-strip-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.7),transparent);display:flex;align-items:flex-end;padding:24px;}
-.photo-strip-label{color:#fff;font-size:0.85rem;font-weight:600;letter-spacing:0.5px;}
+/* HOMES STRIP */
+.homes-strip{background:var(--bg2);border-top:1px solid var(--border);}
+.homes-strip-label{text-align:center;padding:20px 48px 0;}
+.homes-strip-label p{font-size:0.68rem;font-weight:600;color:rgba(255,255,255,0.2);letter-spacing:3px;text-transform:uppercase;}
+.homes-grid{display:grid;grid-template-columns:repeat(4,1fr);height:240px;overflow:hidden;}
+.home-img{position:relative;overflow:hidden;}
+.home-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;filter:brightness(0.6);}
+.home-img:hover img{transform:scale(1.06);filter:brightness(0.8);}
+.home-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,26,0.8),transparent);display:flex;align-items:flex-end;padding:16px;}
+.home-img-label{font-size:0.75rem;font-weight:600;color:#fff;}
 
-.photo-banner{position:relative;height:400px;overflow:hidden;}
-.photo-banner img{width:100%;height:100%;object-fit:cover;}
-.photo-banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,15,30,0.85),rgba(10,15,30,0.4));display:flex;align-items:center;padding:80px;}
-.photo-banner-content{max-width:600px;}
-.photo-banner-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.photo-banner-content p{font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:28px;}
+/* FEATURES */
+.features-section{padding:100px 48px;max-width:1300px;margin:0 auto;}
+.section-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:2px;text-transform:uppercase;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);color:#fff;margin-bottom:16px;letter-spacing:-0.8px;line-height:1.15;}
+.section-title em{font-style:italic;color:var(--gold);}
+.section-sub{font-size:1rem;color:var(--gray);max-width:520px;line-height:1.8;font-weight:300;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;}
+.feat-card{border-radius:16px;padding:24px 20px;display:flex;flex-direction:row;align-items:flex-start;gap:18px;transition:all 0.2s;border:1px solid rgba(255,255,255,0.06);}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.4);border-color:rgba(255,255,255,0.15);}
+.card-blue{background:linear-gradient(135deg,#1a237e,#283593);}
+.card-green{background:linear-gradient(135deg,#004d40,#00695c);}
+.card-purple{background:linear-gradient(135deg,#4a148c,#6a1b9a);}
+.card-gold{background:linear-gradient(135deg,#7a5c00,#b8860b);}
+.card-pink{background:linear-gradient(135deg,#880e4f,#c2185b);}
+.card-navy{background:linear-gradient(135deg,#0d1b3e,#1a2a5e);border-color:rgba(240,180,41,0.15)!important;}
+.feat-icon-box{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,0.12);display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;}
+.feat-content{}
+.feat-name{font-size:0.92rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.feat-desc{font-size:0.78rem;color:rgba(255,255,255,0.65);line-height:1.65;}
+.feat-link{display:inline-flex;align-items:center;gap:4px;font-size:0.75rem;font-weight:600;color:var(--gold);margin-top:12px;text-decoration:none;opacity:0.8;transition:opacity 0.15s;}
+.feat-link:hover{opacity:1;}
 
-.img-section{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
-.img-section-photo{position:relative;min-height:450px;overflow:hidden;}
-.img-section-photo img{width:100%;height:100%;object-fit:cover;}
-.img-section-content{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;background:var(--cream);}
-.img-section-content.dark{background:var(--ink);}
-.img-section-content.dark h2{color:#fff;}
-.img-section-content.dark p{color:rgba(255,255,255,0.6);}
-.img-section-content.dark .sec-tag{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.6);}
-
-/* STATS */
-.stats-bar{background:var(--ink);padding:40px 48px;}
-.stats-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
-.stat-item{text-align:center;}
-.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);margin-bottom:6px;}
-.stat-l{font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:1.5px;text-transform:uppercase;}
-
-/* SECTIONS */
-.sec-wrap{padding:100px 48px;max-width:1280px;margin:0 auto;}
-.sec-tag{display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3rem);line-height:1.15;color:var(--ink);margin-bottom:16px;letter-spacing:-0.5px;}
-.sec-sub{font-size:0.95rem;color:var(--gray);max-width:520px;line-height:1.75;font-weight:300;}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
-.feat-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px;transition:all 0.2s;cursor:pointer;}
-.feat-card:hover{border-color:var(--gold);box-shadow:var(--shadow2);transform:translateY(-2px);}
-.feat-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;margin-bottom:20px;background:var(--cream);}
-.feat-title{font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
-.feat-desc{font-size:0.82rem;color:var(--gray);line-height:1.65;}
-.hiw-bg{background:var(--cream);}
-.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:56px;}
+/* HOW IT WORKS */
+.hiw-section{background:var(--bg2);padding:100px 48px;border-top:1px solid var(--border);}
+.hiw-inner{max-width:1300px;margin:0 auto;}
+.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:60px;position:relative;}
+.hiw-steps::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:1px;background:linear-gradient(to right,transparent,var(--border-gold),var(--gold),var(--border-gold),transparent);}
 .hiw-step{text-align:center;position:relative;}
-.hiw-step:not(:last-child)::after{content:'→';position:absolute;right:-16px;top:20px;font-size:1.2rem;color:var(--border2);}
-.hiw-num{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--gold);display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin:0 auto 20px;}
-.hiw-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
-.hiw-desc{font-size:0.8rem;color:var(--gray);line-height:1.6;}
+.hiw-num{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:1.6rem;margin:0 auto 24px;position:relative;z-index:1;}
+.hiw-num.n1{background:linear-gradient(135deg,#1a237e,#283593);color:var(--gold);border:2px solid var(--border-gold);}
+.hiw-num.n2{background:linear-gradient(135deg,#f0b429,#ffd35b);color:#000;}
+.hiw-num.n3{background:linear-gradient(135deg,#004d40,#00695c);color:#fff;}
+.hiw-num.n4{background:linear-gradient(135deg,#4a148c,#6a1b9a);color:#fff;}
+.hiw-title{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:12px;}
+.hiw-desc{font-size:0.82rem;color:var(--gray);line-height:1.7;}
 
-/* CTA STRIP */
-.cta-strip{background:var(--ink);padding:80px 48px;text-align:center;}
-.cta-strip-inner{max-width:600px;margin:0 auto;}
-.cta-strip h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.cta-strip p{font-size:0.95rem;color:rgba(255,255,255,0.5);margin-bottom:36px;line-height:1.7;}
-.cta-strip-actions{display:flex;gap:12px;justify-content:center;}
-.btn-white{padding:14px 32px;background:#fff;border:none;border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
-.btn-outline-white{padding:14px 32px;background:transparent;border:1.5px solid rgba(255,255,255,0.25);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
-.btn-outline-white:hover{border-color:#fff;}
+/* IMAGE SPLITS */
+.img-split{display:grid;grid-template-columns:1fr 1fr;min-height:460px;}
+.img-split.reverse{direction:rtl;}
+.img-split.reverse>*{direction:ltr;}
+.img-split-photo{overflow:hidden;position:relative;}
+.img-split-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(0.75);}
+.img-split-content{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;}
+.img-split-content.c1{background:var(--bg2);}
+.img-split-content.c2{background:var(--bg);}
+.split-list{display:flex;flex-direction:column;gap:14px;margin-top:28px;}
+.split-item{display:flex;align-items:center;gap:14px;font-size:0.87rem;color:rgba(255,255,255,0.8);}
+.si-icon{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:0.85rem;flex-shrink:0;background:rgba(255,255,255,0.07);}
+.btn-split{display:inline-flex;padding:12px 28px;border-radius:9px;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:all 0.18s;margin-top:32px;text-decoration:none;border:none;}
+.btn-split.gold{background:var(--gold);color:#000;}
+.btn-split.gold:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn-split.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:#fff;}
+.btn-split.outline:hover{border-color:rgba(255,255,255,0.4);}
 
-/* FOOTER */
-footer{background:var(--ink2);padding:60px 48px 40px;}
-.footer-inner{max-width:1280px;margin:0 auto;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
-.fb-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-.fb-icon{width:32px;height:32px;background:var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:0.75rem;}
-.fb-name{font-family:'Cormorant Garamond',serif;font-weight:600;color:#fff;font-size:1.1rem;}
-.fb-desc{font-size:0.82rem;color:rgba(255,255,255,0.35);line-height:1.65;max-width:240px;}
-.footer-col h4{font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;}
-.footer-col a{display:block;font-size:0.83rem;color:rgba(255,255,255,0.55);margin-bottom:10px;cursor:pointer;transition:color 0.15s;text-decoration:none;}
-.footer-col a:hover{color:#fff;}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
-
-/* FORMS */
-.page-hero-sm{padding:120px 48px 48px;max-width:1280px;margin:0 auto;}
-.page-eyebrow{display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
-.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.5rem);line-height:1.1;color:var(--ink);margin-bottom:12px;letter-spacing:-1px;}
-.page-sub{font-size:0.95rem;color:var(--gray);line-height:1.7;font-weight:300;}
-.form-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:40px;box-shadow:var(--shadow);}
-.form-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
-.fg{margin-bottom:18px;}
-.fg label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;}
-.fg input,.fg select,.fg textarea{width:100%;padding:12px 16px;background:var(--paper);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ink);background:#fff;}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--gray2);}
-.fg textarea{resize:vertical;min-height:120px;}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.btn-full{width:100%;padding:14px;background:var(--ink);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:8px;}
-.btn-full:hover{background:var(--ink2);transform:translateY(-1px);}
-.btn-full.green{background:var(--green);}
-.btn-full.green:hover{background:var(--green2);}
-.btn-full.gold{background:var(--gold);color:var(--ink);}
-.btn-full.gold:hover{background:var(--gold2);}
+/* ILLUSTRATION */
+.illus-section{background:var(--bg3);padding:80px 48px;border-top:1px solid var(--border);}
+.illus-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.illus-features{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+.illus-feat{display:flex;align-items:center;gap:16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 20px;}
+.if-icon{width:40px;height:40px;border-radius:10px;background:rgba(240,180,41,0.1);display:grid;place-items:center;font-size:1rem;flex-shrink:0;}
+.if-label{font-size:0.88rem;font-weight:600;color:#fff;}
+.if-sub{font-size:0.75rem;color:var(--gray);margin-top:2px;}
 
 /* REGISTER */
-.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:0 48px 80px;max-width:1280px;margin:0 auto;}
-.result-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:40px;box-shadow:var(--shadow);}
+.register-section{background:var(--bg2);padding:100px 48px;border-top:1px solid var(--border);}
+.register-inner{max-width:1000px;margin:0 auto;}
+.register-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:56px;align-items:start;}
+.reg-form-card{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.form-heading{font-size:1rem;font-weight:600;color:#fff;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.fg{margin-bottom:18px;}
+.fg label{display:block;font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.4);margin-bottom:8px;letter-spacing:0.8px;text-transform:uppercase;}
+.fg input,.fg select{width:100%;padding:12px 16px;background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
+.fg input:focus,.fg select:focus{border-color:var(--gold);}
+.fg input::placeholder{color:rgba(255,255,255,0.2);}
+.fg select option{background:var(--bg2);color:#fff;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn-generate{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:8px;}
+.btn-generate:hover{background:var(--gold2);transform:translateY(-1px);}
+.result-card{background:var(--bg);border:1px solid var(--border-gold);border-radius:20px;padding:40px;box-shadow:0 8px 32px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.result-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--navy),var(--red));}
 .result-empty{text-align:center;padding:40px 0;}
 .re-icon{font-size:3rem;margin-bottom:16px;}
-.re-title{font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
-.re-sub{font-size:0.82rem;color:var(--gray2);}
+.re-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px;}
+.re-sub{font-size:0.83rem;color:var(--gray);}
 .result-filled{display:none;}
 .result-filled.show{display:block;}
 .result-empty.hide{display:none;}
-.res-label{font-size:0.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray2);margin-bottom:12px;}
-.res-id{font-family:'JetBrains Mono',monospace;font-size:1.8rem;color:var(--ink);margin-bottom:12px;letter-spacing:2px;}
-.res-verified{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:var(--green-light);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--green);margin-bottom:24px;}
+.res-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:8px;opacity:0.7;}
+.res-id{font-family:'JetBrains Mono',monospace;font-size:1.8rem;color:#fff;margin-bottom:12px;letter-spacing:2px;line-height:1.3;}
+.res-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(0,165,80,0.15);border:1px solid rgba(0,165,80,0.3);border-radius:20px;font-size:0.75rem;font-weight:600;color:#4ade80;margin-bottom:24px;}
 .res-divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
-.res-detail{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.res-detail{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);}
 .res-detail:last-of-type{border:none;}
-.res-dk{font-size:0.78rem;color:var(--gray2);}
-.res-dv{font-size:0.78rem;font-weight:600;color:var(--ink);}
+.res-dk{font-size:0.78rem;color:var(--gray);}
+.res-dv{font-size:0.78rem;font-weight:600;color:#fff;}
 .res-actions{display:flex;gap:10px;margin-top:24px;}
-.btn-res{flex:1;padding:12px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s;}
-.btn-res.outline{border:1.5px solid var(--border);background:transparent;color:var(--ink);}
-.btn-res.outline:hover{border-color:var(--ink);}
-.btn-res.filled{border:none;background:var(--green);color:#fff;}
-.btn-res.filled:hover{background:var(--green2);}
+.btn-res{flex:1;padding:12px;border-radius:10px;font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.btn-res.outline{border:1.5px solid var(--border);background:transparent;color:#fff;}
+.btn-res.outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-res.filled{border:none;background:var(--gold);color:#000;}
+.btn-res.filled:hover{background:var(--gold2);}
 
-/* USER DASHBOARD */
-.dashboard-wrap{padding:100px 48px 60px;max-width:1280px;margin:0 auto;}
-.dash-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
-.dash-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--ink);}
-.dash-sub{font-size:0.88rem;color:var(--gray);margin-top:4px;}
-.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;}
-.dash-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;}
-.dc-icon{font-size:1.5rem;margin-bottom:12px;}
-.dc-label{font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-.dc-value{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--ink);}
-.dc-sub{font-size:0.78rem;color:var(--gray);margin-top:4px;}
-.my-homes{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
-.mh-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-.mh-title{font-size:0.95rem;font-weight:600;color:var(--ink);}
-.home-item{display:flex;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid var(--border);transition:background 0.15s;}
-.home-item:last-child{border:none;}
-.home-item:hover{background:var(--paper);}
-.hi-icon{width:44px;height:44px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;}
-.hi-code{font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--ink);font-weight:500;}
-.hi-addr{font-size:0.78rem;color:var(--gray2);margin-top:2px;}
-.hi-badge{margin-left:auto;display:inline-flex;padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:600;background:var(--green-light);color:var(--green);}
-.hi-actions{display:flex;gap:8px;margin-left:16px;}
-.hi-btn{padding:6px 14px;border-radius:8px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
-.hi-btn.outline{border:1.5px solid var(--border);background:transparent;color:var(--gray);}
-.hi-btn.outline:hover{border-color:var(--ink);color:var(--ink);}
-.hi-btn.danger{border:1.5px solid #ffcccc;background:transparent;color:var(--red);}
-.hi-btn.danger:hover{background:var(--red);color:#fff;border-color:var(--red);}
+/* TESTIMONIALS */
+.testimonials-section{background:var(--bg);padding:100px 48px;border-top:1px solid var(--border);}
+.testimonials-inner{max-width:1300px;margin:0 auto;}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
+.testimonial-card{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:32px;transition:all 0.2s;}
+.testimonial-card:hover{border-color:var(--border-gold);}
+.testimonial-stars{color:var(--gold);font-size:0.9rem;margin-bottom:16px;letter-spacing:2px;}
+.testimonial-text{font-size:0.9rem;color:var(--gray);line-height:1.75;margin-bottom:24px;font-style:italic;font-weight:300;}
+.testimonial-author{display:flex;align-items:center;gap:12px;}
+.ta-avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:0.9rem;color:#000;flex-shrink:0;}
+.ta-name{font-size:0.88rem;font-weight:600;color:#fff;}
+.ta-role{font-size:0.75rem;color:var(--gray);}
 
-/* ADMIN */
-.admin-layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;}
-.admin-sidebar{background:var(--ink);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
-.sidebar-header{padding:28px 24px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
-.sidebar-logo{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
-.sl-icon{width:32px;height:32px;background:var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:500;}
-.sl-name{font-family:'Cormorant Garamond',serif;font-weight:600;color:#fff;font-size:1.1rem;}
-.sidebar-badge{display:inline-flex;padding:3px 10px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.25);border-radius:20px;font-size:0.65rem;font-weight:600;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
-.sidebar-nav{padding:20px 12px;flex:1;}
-.sidebar-section{margin-bottom:24px;}
-.sidebar-section-title{font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;padding:0 12px;margin-bottom:8px;}
-.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all 0.15s;margin-bottom:2px;border:1px solid transparent;}
-.sidebar-item:hover{background:rgba(255,255,255,0.07);}
-.sidebar-item.active{background:rgba(201,168,76,0.12);border-color:rgba(201,168,76,0.2);}
-.si-icon{font-size:1rem;width:20px;text-align:center;}
-.si-label{font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);}
-.si-badge{margin-left:auto;background:var(--red);color:#fff;border-radius:10px;font-size:0.65rem;font-weight:700;padding:2px 7px;}
-.sidebar-item.active .si-label{color:var(--gold);}
-.sidebar-user{padding:16px 24px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:12px;}
-.su-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:700;font-size:0.85rem;color:var(--ink);flex-shrink:0;}
-.su-name{font-size:0.82rem;font-weight:600;color:#fff;}
-.su-role{font-size:0.7rem;color:rgba(255,255,255,0.35);}
-.su-logout{margin-left:auto;background:transparent;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:1rem;transition:color 0.15s;}
-.su-logout:hover{color:#fff;}
-.admin-main{padding:40px 48px;overflow-y:auto;background:var(--paper);}
-.admin-panel{display:none;}
-.admin-panel.active{display:block;}
-.admin-header{margin-bottom:36px;display:flex;justify-content:space-between;align-items:flex-start;}
-.admin-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
-.admin-sub{font-size:0.85rem;color:var(--gray);}
-.stats-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
-.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;}
-.sc-icon{font-size:1.3rem;margin-bottom:12px;}
-.sc-label{font-size:0.7rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-.sc-value{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:4px;}
-.sc-change{font-size:0.73rem;font-weight:500;}
-.sc-change.up{color:var(--green);}
-.sc-change.down{color:var(--red);}
-.sc-change.neutral{color:var(--gray2);}
-.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:32px;}
-.chart-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;}
-.chart-title{font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:20px;}
-.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-bottom:8px;}
-.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bar{width:100%;border-radius:4px 4px 0 0;transition:all 0.3s;cursor:pointer;}
-.bar.ink{background:var(--ink);}
-.bar.ink:hover{background:var(--gold);}
-.bar-label{font-size:0.62rem;color:var(--gray2);}
-.bar-val{font-size:0.65rem;color:var(--gray);font-weight:500;}
-.donut-center{text-align:center;margin-bottom:16px;position:relative;}
-.donut-center svg{display:block;margin:0 auto;}
-.donut-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
-.donut-label-n{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--ink);}
-.donut-label-t{font-size:0.65rem;color:var(--gray2);}
-.donut-legend{display:flex;flex-direction:column;gap:8px;}
-.dl-item{display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;color:var(--gray);}
-.dl-left{display:flex;align-items:center;gap:8px;}
-.dl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.dl-pct{font-weight:600;color:var(--ink);}
-.table-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px;}
-.table-header{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.table-title{font-size:0.9rem;font-weight:600;color:var(--ink);}
-.table-actions{display:flex;gap:10px;align-items:center;}
-.search-box{padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--ink);background:var(--paper);outline:none;width:200px;}
-.search-box:focus{border-color:var(--ink);}
-.btn-sm{padding:8px 16px;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;border:1.5px solid var(--border);background:transparent;color:var(--gray);}
-.btn-sm:hover{border-color:var(--ink);color:var(--ink);}
-.btn-sm.primary{background:var(--ink);border-color:var(--ink);color:#fff;}
-.btn-sm.primary:hover{background:var(--ink2);}
-.admin-table{width:100%;border-collapse:collapse;}
-.admin-table th{padding:11px 20px;text-align:left;font-size:0.68rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;background:var(--paper);border-bottom:1px solid var(--border);}
-.admin-table td{padding:13px 20px;font-size:0.83rem;color:var(--ink);border-bottom:1px solid var(--border);}
-.admin-table tr:last-child td{border-bottom:none;}
-.admin-table tr:hover td{background:rgba(245,240,232,0.5);}
-.badge{display:inline-flex;padding:3px 10px;border-radius:20px;font-size:0.7rem;font-weight:600;}
-.badge.active{background:var(--green-light);color:var(--green);}
-.badge.pending{background:#fff8e6;color:#b45309;}
-.badge.admin{background:var(--blue-light);color:var(--blue);}
-.badge.danger{background:#fff0f0;color:var(--red);}
-.action-btn{padding:5px 12px;border-radius:6px;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.15s;border:1.5px solid var(--border);background:transparent;color:var(--gray);font-family:'DM Sans',sans-serif;margin-right:4px;}
-.action-btn:hover{border-color:var(--ink);color:var(--ink);}
-.action-btn.danger{border-color:#ffcccc;color:var(--red);}
-.action-btn.danger:hover{background:var(--red);border-color:var(--red);color:#fff;}
-.activity-feed{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px;}
-.af-title{font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:16px;}
-.af-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
-.af-item:last-child{border:none;}
-.af-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:0.85rem;flex-shrink:0;}
-.af-icon.reg{background:var(--green-light);}
-.af-icon.login{background:var(--blue-light);}
-.af-icon.alert{background:#fff0f0;}
-.af-icon.print{background:#fff8e6;}
-.af-text{font-size:0.82rem;color:var(--ink);margin-bottom:3px;}
-.af-time{font-size:0.7rem;color:var(--gray2);}
-.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.settings-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px;}
-.settings-title{font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border);}
-.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);}
-.toggle-row:last-child{border:none;}
-.toggle-label{font-size:0.85rem;color:var(--ink);font-weight:500;}
-.toggle-sub{font-size:0.72rem;color:var(--gray2);margin-top:2px;}
-.toggle{position:relative;width:42px;height:22px;flex-shrink:0;}
-.toggle input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--border2);border-radius:11px;transition:0.3s;}
-.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;}
-.toggle input:checked+.toggle-slider{background:var(--green);}
-.toggle input:checked+.toggle-slider::before{transform:translateX(20px);}
+/* CTA FINAL */
+.cta-final{position:relative;overflow:hidden;padding:120px 48px;text-align:center;border-top:1px solid var(--border-gold);}
+.cta-final::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop') center/cover;filter:brightness(0.1);}
+.cta-final::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,14,26,0.9),rgba(26,35,126,0.4),rgba(10,14,26,0.9));}
+.cta-final-inner{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.cta-flag{font-size:3rem;margin-bottom:24px;display:block;animation:wave 3s ease-in-out infinite;}
+@keyframes wave{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);color:#fff;margin-bottom:20px;letter-spacing:-1px;line-height:1.1;}
+.cta-title em{font-style:italic;color:var(--gold);}
+.cta-sub{font-size:1rem;color:var(--gray);margin-bottom:44px;line-height:1.8;font-weight:300;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-gold{padding:16px 40px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.btn-cta-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(240,180,41,0.3);}
+.btn-cta-outline{padding:16px 40px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;}
+.btn-cta-outline:hover{background:rgba(255,255,255,0.14);}
+
+/* FOOTER */
+footer{background:#060810;border-top:1px solid var(--border);padding:64px 48px 40px;}
+.footer-wrap{max-width:1300px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.fb-logo{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.fb-icon{width:36px;height:36px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:9px;display:grid;place-items:center;font-size:1rem;}
+.fb-name{font-family:'Playfair Display',serif;font-weight:700;color:#fff;font-size:1.1rem;}
+.fb-desc{font-size:0.82rem;color:rgba(255,255,255,0.3);line-height:1.7;max-width:240px;}
+.footer-col h4{font-size:0.68rem;font-weight:600;color:rgba(255,255,255,0.25);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.footer-col a{display:block;font-size:0.83rem;color:rgba(255,255,255,0.4);margin-bottom:12px;text-decoration:none;transition:color 0.15s;}
+.footer-col a:hover{color:var(--gold);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.18);}
+.footer-patent{font-size:0.72rem;color:rgba(255,255,255,0.18);font-family:'JetBrains Mono',monospace;}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(10,15,30,0.75);backdrop-filter:blur(12px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,14,26,0.85);backdrop-filter:blur(16px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal-overlay.open{display:flex;}
-.modal{background:#fff;border-radius:24px;padding:48px 40px;width:100%;max-width:420px;position:relative;animation:modalIn 0.3s ease;}
-@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.modal-close{position:absolute;top:16px;right:16px;background:var(--cream);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:0.9rem;color:var(--gray);display:grid;place-items:center;}
-.modal-close:hover{color:var(--ink);}
-.modal-logo{text-align:center;margin-bottom:28px;}
-.modal-logo-icon{width:52px;height:52px;background:var(--ink);border-radius:14px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:1rem;margin:0 auto 12px;}
-.modal-logo h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--ink);}
-.modal-logo p{font-size:0.82rem;color:var(--gray);margin-top:4px;}
-.modal-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--cream);border-radius:10px;padding:4px;margin-bottom:24px;border:1px solid var(--border);}
-.modal-tab{padding:10px;text-align:center;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s;border:none;background:transparent;color:var(--gray);font-family:'DM Sans',sans-serif;}
-.modal-tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.modal{background:var(--bg2);border:1px solid var(--border-gold);border-radius:24px;padding:48px 44px;width:100%;max-width:420px;position:relative;animation:modalIn 0.3s cubic-bezier(0.16,1,0.3,1);}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.07);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:0.9rem;color:var(--gray);display:grid;place-items:center;transition:all 0.15s;}
+.modal-close:hover{color:#fff;}
+.modal-header{text-align:center;margin-bottom:32px;}
+.modal-mark{width:52px;height:52px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:14px;display:grid;place-items:center;margin:0 auto 16px;font-size:1.3rem;}
+.modal-h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:4px;}
+.modal-p{font-size:0.83rem;color:var(--gray);}
+.modal-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:10px;padding:4px;margin-bottom:24px;border:1px solid var(--border);}
+.modal-tab{padding:10px;text-align:center;border-radius:8px;font-size:0.83rem;font-weight:600;cursor:pointer;transition:all 0.15s;border:none;background:transparent;color:var(--gray);font-family:'Inter',sans-serif;}
+.modal-tab.active{background:var(--bg2);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.3);}
 .modal-fg{margin-bottom:16px;}
-.modal-fg label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.5px;text-transform:uppercase;}
-.modal-fg input{width:100%;padding:12px 16px;background:var(--paper);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
-.modal-fg input:focus{border-color:var(--ink);background:#fff;}
-.btn-modal{width:100%;padding:13px;background:var(--ink);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;margin-top:4px;transition:all 0.15s;}
-.btn-modal:hover{background:var(--ink2);}
-.modal-switch{text-align:center;margin-top:14px;font-size:0.8rem;color:var(--gray);}
-.modal-switch a{color:var(--blue);cursor:pointer;font-weight:600;}
-.modal-error{background:#fff0f0;border:1px solid #ffcccc;border-radius:8px;padding:10px 14px;font-size:0.8rem;color:var(--red);margin-bottom:14px;display:none;}
+.modal-fg label{display:block;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:8px;letter-spacing:0.8px;text-transform:uppercase;}
+.modal-fg input{width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
+.modal-fg input:focus{border-color:var(--gold);}
+.modal-fg input::placeholder{color:rgba(255,255,255,0.2);}
+.btn-modal{width:100%;padding:13px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;margin-top:4px;transition:all 0.15s;}
+.btn-modal:hover{background:var(--gold2);}
+.modal-switch{text-align:center;margin-top:16px;font-size:0.8rem;color:var(--gray);}
+.modal-switch a{color:var(--gold);cursor:pointer;font-weight:600;}
+.modal-error{background:rgba(178,34,52,0.15);border:1px solid rgba(178,34,52,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#ff6b6b;margin-bottom:14px;display:none;}
 .modal-error.show{display:block;}
-.modal-success{background:var(--green-light);border:1px solid rgba(13,110,79,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:var(--green);margin-bottom:14px;display:none;}
+.modal-success{background:rgba(0,165,80,0.15);border:1px solid rgba(0,165,80,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#4ade80;margin-bottom:14px;display:none;}
 .modal-success.show{display:block;}
-.modal-loading{text-align:center;padding:8px;font-size:0.82rem;color:var(--gray);display:none;}
-.modal-loading.show{display:block;}
 
 /* TOAST */
-.toast{position:fixed;bottom:28px;right:28px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow2);z-index:300;display:none;min-width:300px;max-width:380px;}
-.toast.show{display:flex;align-items:flex-start;gap:12px;animation:slideUp 0.3s ease;}
-@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.toast-icon{font-size:1.2rem;flex-shrink:0;}
-.toast-title{font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.toast{position:fixed;bottom:28px;right:28px;background:var(--bg2);border:1px solid var(--border-gold);border-radius:14px;padding:16px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.4);z-index:600;display:none;min-width:300px;}
+.toast.show{display:flex;align-items:flex-start;gap:14px;animation:toastIn 0.3s cubic-bezier(0.16,1,0.3,1);}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.toast-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px;}
+.toast-title{font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:2px;}
 .toast-msg{font-size:0.78rem;color:var(--gray);}
 
-/* PASSWORD RESET */
-.reset-wrap{padding:140px 48px;max-width:480px;margin:0 auto;text-align:center;}
-.reset-icon{font-size:3rem;margin-bottom:20px;}
-
-/* EMPTY STATE */
-.empty-state{text-align:center;padding:60px 20px;color:var(--gray2);}
-.empty-state-icon{font-size:2.5rem;margin-bottom:16px;}
-.empty-state-title{font-size:0.95rem;font-weight:600;color:var(--gray);margin-bottom:8px;}
-.empty-state-sub{font-size:0.82rem;}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:0 20px;}
+@media(max-width:1024px){
+  .nav-wrap{padding:0 24px;}
   .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;grid-template-columns:1fr;gap:40px;}
-  .hero-visual{display:none;}
-  .stats-bar{padding:32px 20px;}
-  .stats-inner{grid-template-columns:repeat(2,1fr);}
-  .sec-wrap{padding:60px 20px;}
+  .hero-content{padding:100px 24px 48px;}
+  .hero-inner{grid-template-columns:1fr;gap:48px;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .homes-grid{grid-template-columns:repeat(2,1fr);}
+  .features-section{padding:72px 24px;}
+  .features-grid{grid-template-columns:repeat(2,1fr);}
+  .hiw-section{padding:72px 24px;}
+  .hiw-steps{grid-template-columns:repeat(2,1fr);}
+  .hiw-steps::before{display:none;}
+  .img-split{grid-template-columns:1fr;}
+  .img-split.reverse{direction:ltr;}
+  .img-split-photo{min-height:300px;}
+  .img-split-content{padding:48px 28px;}
+  .illus-section{padding:60px 24px;}
+  .illus-inner{grid-template-columns:1fr;}
+  .register-section{padding:72px 24px;}
+  .register-grid{grid-template-columns:1fr;}
+  .testimonials-section{padding:72px 24px;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .cta-final{padding:80px 24px;}
+  footer{padding:48px 24px 32px;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+@media(max-width:640px){
+  .hero-h1{font-size:2.8rem;}
+  .hero-ctas{flex-direction:column;}
   .features-grid{grid-template-columns:1fr;}
-  .hiw-steps{grid-template-columns:1fr 1fr;}
-  .register-grid{grid-template-columns:1fr;padding:0 20px 60px;}
-  .page-hero-sm{padding:100px 20px 40px;}
-  .dashboard-wrap{padding:90px 20px 40px;}
-  .dash-grid{grid-template-columns:1fr 1fr;}
-  .admin-layout{grid-template-columns:1fr;}
-  .admin-sidebar{height:auto;position:relative;}
-  .admin-main{padding:24px 20px;}
-  .stats-cards{grid-template-columns:1fr 1fr;}
-  .charts-row{grid-template-columns:1fr;}
-  .settings-grid{grid-template-columns:1fr;}
+  .hiw-steps{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -403,762 +318,336 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
 
 <!-- NAV -->
 <nav id="main-nav">
-  <div class="nav-inner">
-    <a class="nav-logo" onclick="showPage('home')">
-      <div class="nav-logo-icon">SC</div>
-      <span class="nav-logo-text">SaveCode</span>
+  <div class="nav-wrap">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">🏠</div>
+      <div class="nav-logo-wrap">
+        <span class="nav-logo-name">SaveCode</span>
+        <span class="nav-logo-sub">Every Home Has an Identity</span>
+      </div>
     </a>
     <div class="nav-links">
-      <button class="nav-link" onclick="showPage('home')">Home</button>
-      <button class="nav-link" onclick="showPage('features')">Features</button>
-      <button class="nav-link" onclick="showPage('how')">How It Works</button>
-      <button class="nav-link" onclick="showPage('about')">About</button>
-      <button class="nav-link" onclick="showPage('contact')">Contact</button>
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link" href="/features">Features</a>
+      <a class="nav-link" href="/how-it-works">How It Works</a>
+      <a class="nav-link" href="/about">About</a>
+      <a class="nav-link" href="/contact">Contact</a>
     </div>
     <div class="nav-actions" id="nav-actions">
-      <button class="btn-ghost" onclick="openModal('login')">Sign In</button>
-      <button class="btn-primary" onclick="showPage('register')">Get Started</button>
+      <button class="btn-login" onclick="openModal('login')">Login</button>
+      <button class="btn-register-nav" onclick="scrollToRegister()">Register Your Home</button>
     </div>
   </div>
 </nav>
 
-<!-- ═══ HOME ═══ -->
-<div class="page active" id="page-home">
-
-  <!-- HERO WITH FLAG BACKGROUND -->
-  <div style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;">
-    <!-- American Flag Background SVG -->
-    <div style="position:absolute;inset:0;z-index:0;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-        <!-- Stripes -->
-        <rect width="100%" height="100%" fill="#B22234"/>
-        <rect y="7.69%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="15.38%" width="100%" height="7.69%" fill="#B22234"/>
-        <rect y="23.07%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="30.76%" width="100%" height="7.69%" fill="#B22234"/>
-        <rect y="38.45%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="46.14%" width="100%" height="7.69%" fill="#B22234"/>
-        <rect y="53.83%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="61.52%" width="100%" height="7.69%" fill="#B22234"/>
-        <rect y="69.21%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="76.90%" width="100%" height="7.69%" fill="#B22234"/>
-        <rect y="84.59%" width="100%" height="7.69%" fill="#fff"/>
-        <rect y="92.28%" width="100%" height="7.72%" fill="#B22234"/>
-        <!-- Blue canton -->
-        <rect width="40%" height="53.85%" fill="#3C3B6E"/>
-        <!-- Stars row 1 -->
-        <g fill="white" font-size="18">
-          <text x="3.6%" y="7%">★</text><text x="10.8%" y="7%">★</text><text x="18%" y="7%">★</text><text x="25.2%" y="7%">★</text><text x="32.4%" y="7%">★</text><text x="39.6%" y="7%">★</text>
-          <text x="7.2%" y="14%">★</text><text x="14.4%" y="14%">★</text><text x="21.6%" y="14%">★</text><text x="28.8%" y="14%">★</text><text x="36%" y="14%">★</text>
-          <text x="3.6%" y="21%">★</text><text x="10.8%" y="21%">★</text><text x="18%" y="21%">★</text><text x="25.2%" y="21%">★</text><text x="32.4%" y="21%">★</text><text x="39.6%" y="21%">★</text>
-          <text x="7.2%" y="28%">★</text><text x="14.4%" y="28%">★</text><text x="21.6%" y="28%">★</text><text x="28.8%" y="28%">★</text><text x="36%" y="28%">★</text>
-          <text x="3.6%" y="35%">★</text><text x="10.8%" y="35%">★</text><text x="18%" y="35%">★</text><text x="25.2%" y="35%">★</text><text x="32.4%" y="35%">★</text><text x="39.6%" y="35%">★</text>
-          <text x="7.2%" y="42%">★</text><text x="14.4%" y="42%">★</text><text x="21.6%" y="42%">★</text><text x="28.8%" y="42%">★</text><text x="36%" y="42%">★</text>
-          <text x="3.6%" y="49%">★</text><text x="10.8%" y="49%">★</text><text x="18%" y="49%">★</text><text x="25.2%" y="49%">★</text><text x="32.4%" y="49%">★</text><text x="39.6%" y="49%">★</text>
-          <text x="7.2%" y="56%">★</text><text x="14.4%" y="56%">★</text><text x="21.6%" y="56%">★</text><text x="28.8%" y="56%">★</text><text x="36%" y="56%">★</text>
-        </g>
-      </svg>
-      <!-- Dark overlay for readability -->
-      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,15,30,0.82) 0%,rgba(10,15,30,0.65) 50%,rgba(10,15,30,0.75) 100%);"></div>
+<!-- HERO -->
+<section id="hero">
+  <div class="flag-bg">
+    <div class="stripe" style="top:0;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:7.69%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:15.38%;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:23.08%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:30.77%;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:38.46%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:46.15%;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:53.85%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:61.54%;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:69.23%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:76.92%;height:7.69%;background:#B22234;"></div>
+    <div class="stripe" style="top:84.62%;height:7.69%;background:#fff;opacity:0.9;"></div>
+    <div class="stripe" style="top:92.31%;height:7.69%;background:#B22234;"></div>
+    <div class="flag-canton">
+      <div class="flag-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
     </div>
-
-    <!-- Hero Content -->
-    <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:140px 48px 100px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;">
+    <div class="flag-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-inner">
       <div>
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:20px;margin-bottom:28px;background:rgba(255,255,255,0.1);">
-          <span style="width:6px;height:6px;border-radius:50%;background:#10a070;animation:pulse 2s ease-in-out infinite;display:inline-block;"></span>
-          <span style="font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:1px;text-transform:uppercase;">Patent Pending · US 63/808,302</span>
+        <div class="hero-badge"><span class="hero-badge-dot"></span><span class="hero-badge-text">Patent Pending · US 63/808,302</span></div>
+        <h1 class="hero-h1">Every Home<br>Deserves an<br><em>Identity</em></h1>
+        <p class="hero-sub">A permanent, unique Home ID for every US address — eliminating delivery errors, protecting your privacy, and building the infrastructure for the future of shipping.</p>
+        <div class="hero-ctas">
+          <button class="btn-hero-primary" onclick="scrollToRegister()">Register Your Home — Free</button>
+          <button class="btn-hero-sec" onclick="openModal('login')">Sign In to Your Account</button>
         </div>
-        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5.5vw,4.5rem);line-height:1.05;letter-spacing:-1.5px;margin-bottom:24px;color:#fff;">Every Home<br>Deserves an<br><em style="color:var(--gold);">Identity</em></h1>
-        <p style="font-size:1rem;line-height:1.75;color:rgba(255,255,255,0.7);margin-bottom:40px;font-weight:300;max-width:480px;">A permanent, unique Home ID for every US address — eliminating delivery errors, protecting your privacy, and building the infrastructure for the future of shipping.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button class="cta-main" onclick="showPage('register')" style="background:var(--gold);color:var(--ink);">Register Your Home — Free</button>
-          <button style="padding:15px 32px;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.3);border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px);" onclick="showPage('how')">See How It Works →</button>
-        </div>
-        <!-- American tagline -->
-        <div style="margin-top:48px;display:flex;align-items:center;gap:12px;">
-          <span style="font-size:1.5rem;">🇺🇸</span>
-          <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;">Building the address identity infrastructure for every American home</span>
+        <div class="hero-trust">
+          <span style="font-size:1.4rem;">🇺🇸</span>
+          <span class="hero-trust-text">Building the universal address identity<br>infrastructure for every American home — free, forever</span>
         </div>
       </div>
-      <div style="position:relative;display:flex;justify-content:center;align-items:center;">
-        <!-- Simple stats visual instead of card -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:400px;">
-          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">142M+</div>
-            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">US Homes</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">100%</div>
-            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">Unique IDs</div>
-          </div>
-          <div style="background:rgba(13,110,79,0.3);backdrop-filter:blur(12px);border:1px solid rgba(13,110,79,0.4);border-radius:16px;padding:24px;text-align:center;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#10a070;">Free</div>
-            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">To Register</div>
-          </div>
-          <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;text-align:center;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);">2026</div>
-            <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px;">Integration</div>
-          </div>
+      <div>
+        <div class="hero-stats">
+          <div class="stat-block gold"><div class="stat-num">142M+</div><div class="stat-label">US Homes</div></div>
+          <div class="stat-block blue"><div class="stat-num">100%</div><div class="stat-label">Unique IDs</div></div>
+          <div class="stat-block green"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+          <div class="stat-block dark"><div class="stat-num">2026</div><div class="stat-label">Integration</div></div>
         </div>
       </div>
     </div>
   </div>
+  <div class="hero-scroll"><div class="scroll-line"></div></div>
+</section>
 
-  <!-- AMERICAN HOMES PHOTO STRIP -->
-  <div style="background:var(--ink);padding:20px 48px 0;">
-    <div style="max-width:1280px;margin:0 auto;">
-      <p style="font-size:0.72rem;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;text-align:center;">142 Million American Homes — Each One Deserves an Identity</p>
-    </div>
+<!-- HOMES STRIP -->
+<div class="homes-strip">
+  <div class="homes-strip-label"><p>142 Million American Homes — Each One Deserves an Identity</p></div>
+  <div class="homes-grid">
+    <div class="home-img"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&auto=format&fit=crop" alt="Home"><div class="home-img-overlay"><span class="home-img-label">🏠 Suburban Home</span></div></div>
+    <div class="home-img"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&auto=format&fit=crop" alt="Home"><div class="home-img-overlay"><span class="home-img-label">🏡 Family House</span></div></div>
+    <div class="home-img"><img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&auto=format&fit=crop" alt="Home"><div class="home-img-overlay"><span class="home-img-label">🏘️ Neighborhood</span></div></div>
+    <div class="home-img"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop" alt="Home"><div class="home-img-overlay"><span class="home-img-label">🏠 Modern Home</span></div></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);height:260px;overflow:hidden;">
-    <div style="position:relative;overflow:hidden;">
-      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&auto=format&fit=crop" alt="American home 1" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
-        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏠 Suburban Home</span>
-      </div>
-    </div>
-    <div style="position:relative;overflow:hidden;">
-      <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&auto=format&fit=crop" alt="American home 2" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
-        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏡 Family House</span>
-      </div>
-    </div>
-    <div style="position:relative;overflow:hidden;">
-      <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&auto=format&fit=crop" alt="American home 3" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
-        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏘️ Neighborhood</span>
-      </div>
-    </div>
-    <div style="position:relative;overflow:hidden;">
-      <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop" alt="American home 4" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.6),transparent);display:flex;align-items:flex-end;padding:16px;">
-        <span style="font-size:0.78rem;font-weight:600;color:#fff;">🏠 Modern Home</span>
-      </div>
-    </div>
-  </div>
-    <div>
-      <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span><span class="hero-eyebrow-text">Patent Pending · US 63/808,302</span></div>
-      <h1 class="hero-title">Every Home<br>Deserves an<br><em>Identity</em></h1>
-      <p class="hero-sub">A permanent, unique Home ID for every US address — eliminating delivery errors, protecting your privacy, and building the infrastructure for the future of shipping.</p>
-      <div class="hero-ctas">
-        <button class="cta-main" onclick="showPage('register')">Register Your Home — Free</button>
-        <button class="cta-sec" onclick="showPage('how')">See How It Works →</button>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="id-card">
-        <div class="idc-label">Home ID · Generated</div>
-        <div class="idc-id">WA — 293847 — 9820</div>
-        <div class="idc-badge">✓ Verified Address</div>
-        <hr class="idc-divider">
-        <div class="idc-row"><span class="idc-k">Street</span><span class="idc-v">3222 Lombard Ave</span></div>
-        <div class="idc-row"><span class="idc-k">Unit</span><span class="idc-v">Unit A</span></div>
-        <div class="idc-row"><span class="idc-k">City</span><span class="idc-v">Everett, WA</span></div>
-        <div class="idc-row"><span class="idc-k">Status</span><span class="idc-v" style="color:var(--green)">● Active</span></div>
-      </div>
-      <div class="hero-float f1"><div class="hf-icon green">✅</div><div><div class="hf-title">Delivery Confirmed</div><div class="hf-sub">Last-mile verified</div></div></div>
-      <div class="hero-float f2"><div class="hf-icon blue">🔒</div><div><div class="hf-title">Anti-Spoofing Active</div><div class="hf-sub">Your ID is protected</div></div></div>
-    </div>
-  </div>
-  <div class="stats-bar"><div class="stats-inner">
-    <div class="stat-item"><div class="stat-n">142M+</div><div class="stat-l">US Homes</div></div>
-    <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Unique Per Unit</div></div>
-    <div class="stat-item"><div class="stat-n">Free</div><div class="stat-l">To Register</div></div>
-    <div class="stat-item"><div class="stat-n">2026</div><div class="stat-l">Carrier Integration</div></div>
-  </div></div>
-  <!-- PHOTO STRIP -->
-  <div class="photo-strip">
-    <div class="photo-strip-item">
-      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&auto=format&fit=crop" alt="Beautiful home">
-      <div class="photo-strip-overlay"><span class="photo-strip-label">🏠 Every Home Has an Identity</span></div>
-    </div>
-    <div class="photo-strip-item">
-      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&auto=format&fit=crop" alt="Package delivery">
-      <div class="photo-strip-overlay"><span class="photo-strip-label">📦 Verified Delivery</span></div>
-    </div>
-    <div class="photo-strip-item">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop" alt="Secure neighborhood">
-      <div class="photo-strip-overlay"><span class="photo-strip-label">🔒 Protected Community</span></div>
-    </div>
-  </div>
+</div>
 
-  <div class="sec-wrap">
-    <div class="sec-tag">Core Features</div>
-    <h2 class="sec-title">Built for the Future<br>of Delivery</h2>
-    <p class="sec-sub">From last-mile verification to privacy-preserving shipping — SaveCode solves every address problem.</p>
-    <div class="features-grid">
-      <div class="feat-card"><div class="feat-icon">🏠</div><div class="feat-title">Permanent Home ID</div><p class="feat-desc">A unique code tied to your address forever — not the resident.</p></div>
-      <div class="feat-card"><div class="feat-icon">✅</div><div class="feat-title">Last-Mile Verification</div><p class="feat-desc">Confirm the correct door before placing any package.</p></div>
-      <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-title">Privacy Shipping</div><p class="feat-desc">Your name and address never appear on any package.</p></div>
-      <div class="feat-card"><div class="feat-icon">👥</div><div class="feat-title">Resident Registry</div><p class="feat-desc">Only registered residents receive mail. Others get returned.</p></div>
-      <div class="feat-card"><div class="feat-icon">🏛️</div><div class="feat-title">Address Update System</div><p class="feat-desc">Notify the IRS, banks, courts, and more — with one click.</p></div>
-      <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">Autonomous Delivery</div><p class="feat-desc">Compatible with drones, robots, and self-driving vehicles.</p></div>
-    </div>
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="section-eyebrow">Core Features</div>
+  <h2 class="section-title">Built for the Future of<br><em>American Delivery</em></h2>
+  <p class="section-sub">Nine powerful features working together to protect every delivery, verify every address, and preserve your privacy.</p>
+  <div class="features-grid">
+    <div class="feat-card card-blue"><div class="feat-icon-box">🏠</div><div class="feat-content"><div class="feat-name">Permanent Home ID</div><p class="feat-desc">A unique, permanent code tied to your address forever. Never changes, never duplicates.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
+    <div class="feat-card card-green"><div class="feat-icon-box">✅</div><div class="feat-content"><div class="feat-name">Delivery Verification</div><p class="feat-desc">Drivers scan and verify at the door. The right package, at the right door, every time.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
+    <div class="feat-card card-purple"><div class="feat-icon-box">🔐</div><div class="feat-content"><div class="feat-name">Privacy First</div><p class="feat-desc">Your name and address never appear on any shipping label. Only your Home ID is visible.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
+    <div class="feat-card card-gold"><div class="feat-icon-box">👥</div><div class="feat-content"><div class="feat-name">Resident Registry</div><p class="feat-desc">Only registered residents receive mail. Unregistered mail returned automatically.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
+    <div class="feat-card card-pink"><div class="feat-icon-box">🛡️</div><div class="feat-content"><div class="feat-name">Anti-Spoofing System</div><p class="feat-desc">Multi-factor verification prevents any unauthorized use of your Home ID.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
+    <div class="feat-card card-navy"><div class="feat-icon-box">🤖</div><div class="feat-content"><div class="feat-name">Future Ready</div><p class="feat-desc">Compatible with drones, robots, and autonomous vehicles — the universal delivery target.</p><a class="feat-link" href="/features">Learn more →</a></div></div>
   </div>
+</section>
 
-  <!-- IMAGE SECTION 1 -->
-  <div class="img-section">
-    <div class="img-section-photo">
-      <img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=900&auto=format&fit=crop" alt="Delivery courier on bike" style="width:100%;height:100%;object-fit:cover;">
-    </div>
-    <div class="img-section-content">
-      <div class="sec-tag">Last-Mile Verification</div>
-      <h2 class="sec-title" style="font-size:2rem;">No More Wrong<br>Door Deliveries</h2>
-      <p style="font-size:0.9rem;color:var(--gray);line-height:1.75;font-weight:300;margin-bottom:24px;">Every package is confirmed at your exact door before placement. Drivers scan your Home ID label and the system verifies the match in real time.</p>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--green-light);display:grid;place-items:center;font-size:0.8rem;">✅</div><span style="font-size:0.83rem;color:var(--ink);">Real-time QR code scanning at your door</span></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--blue-light);display:grid;place-items:center;font-size:0.8rem;">📦</div><span style="font-size:0.83rem;color:var(--ink);">Instant address match confirmation</span></div>
-        <div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-size:0.8rem;">🚴</div><span style="font-size:0.83rem;color:var(--ink);">Works with all delivery services</span></div>
-      </div>
-      <button class="cta-main" onclick="showPage('features')" style="width:fit-content;">Learn More →</button>
-    </div>
-  </div>
-
-  <!-- IMAGE SECTION 2 -->
-  <div class="img-section">
-    <div class="img-section-content dark">
-      <div class="sec-tag">Privacy Protection</div>
-      <h2 class="sec-title" style="font-size:2rem;color:#fff;">Your Address.<br>Your Privacy.</h2>
-      <p style="font-size:0.9rem;color:rgba(255,255,255,0.6);line-height:1.75;font-weight:300;margin-bottom:24px;">Shipping labels display only your Home ID — never your name or physical address. Your personal information stays private at every stage.</p>
-      <button class="btn-white" onclick="showPage('features')" style="width:fit-content;padding:12px 24px;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;">Explore Privacy Features</button>
-    </div>
-    <div class="img-section-photo">
-      <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900&auto=format&fit=crop" alt="Privacy security">
-    </div>
-  </div>
-
-  <!-- PHOTO BANNER -->
-  <div class="photo-banner">
-    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop" alt="American neighborhood">
-    <div class="photo-banner-overlay">
-      <div class="photo-banner-content">
-        <h2>142 Million Homes<br>Deserve an Identity</h2>
-        <p>Join the movement to create a universal address standard for every home in America. Register your home today — free, forever.</p>
-        <button class="btn-white" onclick="showPage('register')" style="padding:14px 32px;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;width:fit-content;">Register Your Home — Free</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="hiw-bg"><div class="sec-wrap">
-    <div class="sec-tag">Simple Process</div>
-    <h2 class="sec-title">How It Works</h2>
+<!-- HOW IT WORKS -->
+<section class="hiw-section">
+  <div class="hiw-inner">
+    <div class="section-eyebrow">Simple Process</div>
+    <h2 class="section-title">How SaveCode <em>Works</em></h2>
     <div class="hiw-steps">
-      <div class="hiw-step"><div class="hiw-num">1</div><div class="hiw-title">Register Address</div><p class="hiw-desc">Enter your address and instantly receive a permanent Home ID.</p></div>
-      <div class="hiw-step"><div class="hiw-num">2</div><div class="hiw-title">Place Your Label</div><p class="hiw-desc">Print and place your official SaveCode label on your door.</p></div>
-      <div class="hiw-step"><div class="hiw-num">3</div><div class="hiw-title">Add Residents</div><p class="hiw-desc">Register all household members for mail verification.</p></div>
-      <div class="hiw-step"><div class="hiw-num">4</div><div class="hiw-title">Deliveries Verified</div><p class="hiw-desc">Every delivery confirmed at your exact door.</p></div>
+      <div class="hiw-step"><div class="hiw-num n1">1</div><div class="hiw-title">Register Address</div><p class="hiw-desc">Enter your US address and instantly receive a permanent, unique Home ID.</p></div>
+      <div class="hiw-step"><div class="hiw-num n2">2</div><div class="hiw-title">Place Your Label</div><p class="hiw-desc">Print and place your SaveCode QR label on your door and mailbox.</p></div>
+      <div class="hiw-step"><div class="hiw-num n3">3</div><div class="hiw-title">Register Residents</div><p class="hiw-desc">Add household members. Unregistered mail is automatically returned.</p></div>
+      <div class="hiw-step"><div class="hiw-num n4">4</div><div class="hiw-title">Every Delivery Verified</div><p class="hiw-desc">Every delivery confirmed at your exact door. Always right. Always secure.</p></div>
     </div>
-    <!-- ILLUSTRATION -->
-    <div style="margin-top:60px;background:#fff;border-radius:24px;padding:40px;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-      <div>
-        <div class="sec-tag">Last-Mile Verification</div>
-        <h3 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:16px;line-height:1.2;">Scan. Verify.<br>Deliver with Confidence.</h3>
-        <p style="font-size:0.9rem;color:var(--gray);line-height:1.75;font-weight:300;margin-bottom:20px;">The delivery driver scans the Home ID QR code on your door using our app. The system instantly verifies the address match and confirms it's the right delivery point — before placing any package.</p>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--green-light);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">✅</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Real-time address verification</span></div>
-          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--blue-light);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">📱</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Works with any smartphone</span></div>
-          <div style="display:flex;align-items:center;gap:12px;"><div style="width:32px;height:32px;border-radius:8px;background:var(--cream);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;">🔒</div><span style="font-size:0.85rem;color:var(--ink);font-weight:500;">Anti-spoofing protection active</span></div>
+  </div>
+</section>
+
+<!-- SPLIT 1 -->
+<div class="img-split">
+  <div class="img-split-photo"><img src="https://images.unsplash.com/photo-1519583272095-6433daf26b6e?w=900&auto=format&fit=crop" alt="Delivery"></div>
+  <div class="img-split-content c1">
+    <div class="section-eyebrow">Last-Mile Verification</div>
+    <h2 class="section-title" style="font-size:2rem;">No More Wrong<br>Door Deliveries</h2>
+    <p class="section-sub" style="max-width:100%;">Every package confirmed at your exact door before placement. Drivers scan your Home ID label and the system verifies the match in real time.</p>
+    <div class="split-list">
+      <div class="split-item"><div class="si-icon">✅</div>Real-time QR code scanning at your door</div>
+      <div class="split-item"><div class="si-icon">✅</div>Instant address match confirmation</div>
+      <div class="split-item"><div class="si-icon">✅</div>Works with all major carriers</div>
+    </div>
+    <a class="btn-split gold" href="/features">Explore All Features</a>
+  </div>
+</div>
+
+<!-- SPLIT 2 -->
+<div class="img-split reverse">
+  <div class="img-split-photo"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900&auto=format&fit=crop" alt="Privacy"></div>
+  <div class="img-split-content c2">
+    <div class="section-eyebrow">Privacy Protection</div>
+    <h2 class="section-title" style="font-size:2rem;">Your Address.<br>Your Privacy.</h2>
+    <p class="section-sub" style="max-width:100%;">Shipping labels display only your Home ID — never your name or physical address. Your personal information stays private at every stage.</p>
+    <div class="split-list">
+      <div class="split-item"><div class="si-icon">🔒</div>Name never appears on shipping labels</div>
+      <div class="split-item"><div class="si-icon">🔒</div>Address hidden from all external parties</div>
+      <div class="split-item"><div class="si-icon">🔒</div>Anti-spoofing prevents ID theft</div>
+    </div>
+    <a class="btn-split outline" href="/features">Learn About Privacy</a>
+  </div>
+</div>
+
+<!-- ILLUSTRATION -->
+<section class="illus-section">
+  <div class="illus-inner">
+    <div>
+      <div class="section-eyebrow">Scan. Verify. Deliver.</div>
+      <h2 class="section-title" style="font-size:2rem;">Last-Mile Verification<br>in Action</h2>
+      <p class="section-sub" style="max-width:100%;">The delivery driver scans the QR code on your door. The system instantly verifies the address and confirms it's the right delivery point.</p>
+      <div class="illus-features">
+        <div class="illus-feat"><div class="if-icon">📱</div><div><div class="if-label">Real-Time Verification</div><div class="if-sub">Instant QR scan confirmation at your door</div></div></div>
+        <div class="illus-feat"><div class="if-icon">🔐</div><div><div class="if-label">Anti-Spoofing Active</div><div class="if-sub">Your Home ID protected from unauthorized use</div></div></div>
+        <div class="illus-feat"><div class="if-icon">📦</div><div><div class="if-label">Always Right Door</div><div class="if-sub">No match, no delivery — guaranteed accuracy</div></div></div>
+      </div>
+    </div>
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" style="border-radius:20px;box-shadow:0 8px 48px rgba(0,0,0,0.4);">
+        <rect width="600" height="400" fill="#0d1220"/>
+        <rect x="320" y="30" width="170" height="330" rx="4" fill="#2a1f14" opacity="0.8"/>
+        <rect x="330" y="42" width="150" height="308" rx="3" fill="#3a2d20" opacity="0.8"/>
+        <circle cx="330" cy="210" r="7" fill="#f0b429"/>
+        <rect x="268" y="150" width="52" height="64" rx="8" fill="#0a0e1a"/>
+        <rect x="274" y="156" width="40" height="42" rx="3" fill="white" opacity="0.95"/>
+        <rect x="277" y="159" width="8" height="8" rx="1" fill="#0a0e1a"/>
+        <rect x="287" y="159" width="4" height="4" rx="0.5" fill="#0a0e1a"/>
+        <rect x="293" y="159" width="8" height="8" rx="1" fill="#0a0e1a"/>
+        <rect x="277" y="169" width="4" height="4" rx="0.5" fill="#0a0e1a"/>
+        <rect x="283" y="165" width="7" height="4" rx="0.5" fill="#0a0e1a"/>
+        <rect x="277" y="175" width="8" height="8" rx="1" fill="#0a0e1a"/>
+        <rect x="293" y="175" width="8" height="8" rx="1" fill="#0a0e1a"/>
+        <line x1="274" y1="170" x2="314" y2="170" stroke="#f0b429" stroke-width="2.5"><animate attributeName="y1" values="159;197;159" dur="2s" repeatCount="indefinite"/><animate attributeName="y2" values="159;197;159" dur="2s" repeatCount="indefinite"/></line>
+        <rect x="148" y="285" width="20" height="90" rx="10" fill="#1a237e"/>
+        <rect x="182" y="285" width="20" height="90" rx="10" fill="#1a237e"/>
+        <ellipse cx="158" cy="373" rx="14" ry="8" fill="#0a0e1a"/>
+        <ellipse cx="192" cy="373" rx="14" ry="8" fill="#0a0e1a"/>
+        <rect x="128" y="185" width="92" height="108" rx="16" fill="#1a237e"/>
+        <rect x="146" y="204" width="26" height="17" rx="3" fill="#f0b429"/>
+        <text x="159" y="215" font-family="monospace" font-size="7" fill="#000" text-anchor="middle" font-weight="bold">SC</text>
+        <rect x="218" y="194" width="20" height="72" rx="10" fill="#1a237e" transform="rotate(-20 228 230)"/>
+        <rect x="108" y="194" width="20" height="64" rx="10" fill="#1a237e"/>
+        <rect x="78" y="235" width="52" height="42" rx="6" fill="#f0b429"/>
+        <rect x="78" y="252" width="52" height="2" fill="#b8860b"/>
+        <rect x="102" y="235" width="2" height="42" fill="#b8860b"/>
+        <circle cx="175" cy="152" r="34" fill="#f5d5b0"/>
+        <ellipse cx="175" cy="125" rx="31" ry="17" fill="#3d2b1f"/>
+        <circle cx="163" cy="150" r="4" fill="#3d2b1f"/>
+        <circle cx="187" cy="150" r="4" fill="#3d2b1f"/>
+        <path d="M 165 163 Q 175 171 185 163" stroke="#3d2b1f" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="175" cy="121" rx="34" ry="9" fill="#0a0e1a"/>
+        <rect x="141" y="112" width="68" height="13" rx="4" fill="#0a0e1a"/>
+        <rect x="141" y="112" width="68" height="6" rx="3" fill="#1a237e"/>
+        <rect x="224" y="178" width="56" height="96" rx="8" fill="#0a0e1a"/>
+        <rect x="228" y="183" width="48" height="83" rx="5" fill="#1a2332"/>
+        <rect x="231" y="190" width="42" height="66" rx="3" fill="#0d1829"/>
+        <rect x="237" y="196" width="29" height="29" rx="2" fill="white" opacity="0.95"/>
+        <rect x="239" y="198" width="7" height="7" rx="0.5" fill="#0a0e1a"/>
+        <rect x="248" y="198" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
+        <rect x="253" y="198" width="7" height="7" rx="0.5" fill="#0a0e1a"/>
+        <rect x="239" y="207" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
+        <rect x="243" y="204" width="7" height="3" rx="0.5" fill="#0a0e1a"/>
+        <rect x="239" y="212" width="7" height="7" rx="0.5" fill="#0a0e1a"/>
+        <rect x="253" y="212" width="7" height="7" rx="0.5" fill="#0a0e1a"/>
+        <line x1="235" y1="210" x2="268" y2="210" stroke="#f0b429" stroke-width="1.5"><animate attributeName="y1" values="196;223;196" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="196;223;196" dur="1.5s" repeatCount="indefinite"/></line>
+        <rect x="231" y="232" width="42" height="18" rx="4" fill="#00a550"/>
+        <text x="252" y="245" font-family="sans-serif" font-size="7.5" fill="white" text-anchor="middle" font-weight="bold">✓ VERIFIED</text>
+        <circle cx="362" cy="88" r="22" fill="#00a550"><animate attributeName="r" values="20;24;20" dur="2s" repeatCount="indefinite"/></circle>
+        <path d="M 352 88 L 360 96 L 374 78" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="88" y="35" width="155" height="48" rx="11" fill="#1a2040" opacity="0.96"/>
+        <rect x="88" y="35" width="155" height="3.5" rx="11" fill="#f0b429"/>
+        <text x="165" y="60" font-family="monospace" font-size="10.5" fill="#fff" text-anchor="middle" font-weight="600">WA — 293847 — 9820</text>
+        <text x="165" y="76" font-family="sans-serif" font-size="8" fill="#4ade80" text-anchor="middle">✓ Home ID Confirmed</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="register-section" id="register">
+  <div class="register-inner">
+    <div class="section-eyebrow">Get Started — Free</div>
+    <h2 class="section-title">Register Your <em>Home ID</em></h2>
+    <p class="section-sub">Generate your permanent Home ID in seconds. Free, forever. No credit card required.</p>
+    <div class="register-grid">
+      <div class="reg-form-card">
+        <div class="form-heading">Enter Your Address</div>
+        <div class="fg"><label>Street Address *</label><input type="text" id="r-street" placeholder="3222 Lombard Ave"></div>
+        <div class="fg"><label>Unit / Apt (optional)</label><input type="text" id="r-unit" placeholder="Unit A"></div>
+        <div class="fg"><label>City *</label><input type="text" id="r-city" placeholder="Everett"></div>
+        <div class="fg-row">
+          <div class="fg"><label>State *</label>
+            <select id="r-state"><option value="">Select</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option value="WA">WA</option><option>WV</option><option>WI</option><option>WY</option></select>
+          </div>
+          <div class="fg"><label>ZIP Code *</label><input type="text" id="r-zip" placeholder="98201" maxlength="5"></div>
+        </div>
+        <button class="btn-generate" onclick="generateID()">✓ Generate My Home ID</button>
+      </div>
+      <div class="result-card">
+        <div class="result-empty" id="result-empty">
+          <div class="re-icon">🏠</div>
+          <div class="re-title">Your Home ID will appear here</div>
+          <p class="re-sub">Fill in your address to generate your permanent Home ID instantly.</p>
+        </div>
+        <div class="result-filled" id="result-filled">
+          <div class="res-eyebrow">🇺🇸 SaveCode · Home ID · Generated</div>
+          <div class="res-id" id="res-id-display">—</div>
+          <div class="res-badge">✓ Address Verified & Registered</div>
+          <hr class="res-divider">
+          <div class="res-detail"><span class="res-dk">Street</span><span class="res-dv" id="r-disp-street">—</span></div>
+          <div class="res-detail"><span class="res-dk">Unit</span><span class="res-dv" id="r-disp-unit">—</span></div>
+          <div class="res-detail"><span class="res-dk">City</span><span class="res-dv" id="r-disp-city">—</span></div>
+          <div class="res-detail"><span class="res-dk">State / ZIP</span><span class="res-dv" id="r-disp-sz">—</span></div>
+          <div class="res-detail"><span class="res-dk">Status</span><span class="res-dv" style="color:#4ade80">● Active</span></div>
+          <div class="res-actions">
+            <button class="btn-res outline" onclick="printLabel()">🖨️ Print Label</button>
+            <button class="btn-res filled" onclick="saveID()">💾 Save ID</button>
+          </div>
         </div>
       </div>
-      <div style="display:flex;justify-content:center;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" style="max-width:500px;border-radius:16px;">
-          <rect width="600" height="400" fill="#f5f0e8"/>
-          <rect x="0" y="0" width="600" height="400" fill="#f0ece4"/>
-          <rect x="320" y="40" width="180" height="320" rx="4" fill="#d4c9b0"/>
-          <rect x="330" y="50" width="160" height="300" rx="3" fill="#e8e0d0"/>
-          <rect x="340" y="60" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
-          <rect x="415" y="60" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
-          <rect x="340" y="200" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
-          <rect x="415" y="200" width="65" height="130" rx="2" fill="#d4c9b0" opacity="0.5"/>
-          <circle cx="330" cy="210" r="6" fill="#c9a84c"/>
-          <rect x="270" y="160" width="50" height="60" rx="8" fill="#0a0f1e"/>
-          <rect x="275" y="165" width="40" height="40" rx="4" fill="white"/>
-          <rect x="278" y="168" width="8" height="8" rx="1" fill="#0a0f1e"/>
-          <rect x="288" y="168" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="294" y="168" width="8" height="8" rx="1" fill="#0a0f1e"/>
-          <rect x="278" y="178" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="284" y="174" width="8" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="294" y="176" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="278" y="184" width="8" height="8" rx="1" fill="#0a0f1e"/>
-          <rect x="288" y="186" width="4" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="294" y="184" width="8" height="8" rx="1" fill="#0a0f1e"/>
-          <circle cx="295" cy="220" r="10" fill="none" stroke="#10a070" stroke-width="3" opacity="0.8"/>
-          <circle cx="295" cy="220" r="6" fill="#10a070" opacity="0.3"/>
-          <line x1="275" y1="185" x2="315" y2="185" stroke="#c9a84c" stroke-width="2" opacity="0.8"><animate attributeName="y1" values="168;205;168" dur="2s" repeatCount="indefinite"/><animate attributeName="y2" values="168;205;168" dur="2s" repeatCount="indefinite"/></line>
-          <rect x="148" y="290" width="20" height="80" rx="10" fill="#1a3a8f"/>
-          <rect x="182" y="290" width="20" height="80" rx="10" fill="#1a3a8f"/>
-          <ellipse cx="158" cy="368" rx="14" ry="8" fill="#0a0f1e"/>
-          <ellipse cx="192" cy="368" rx="14" ry="8" fill="#0a0f1e"/>
-          <rect x="130" y="190" width="90" height="110" rx="16" fill="#1a3a8f"/>
-          <rect x="148" y="210" width="24" height="16" rx="3" fill="#c9a84c"/>
-          <text x="160" y="221" font-family="monospace" font-size="7" fill="#0a0f1e" text-anchor="middle" font-weight="bold">SC</text>
-          <rect x="218" y="200" width="20" height="70" rx="10" fill="#1a3a8f" transform="rotate(-20 228 235)"/>
-          <rect x="110" y="200" width="20" height="60" rx="10" fill="#1a3a8f"/>
-          <rect x="80" y="240" width="50" height="40" rx="6" fill="#c9a84c"/>
-          <rect x="80" y="255" width="50" height="2" fill="#b8962a"/>
-          <rect x="103" y="240" width="2" height="40" fill="#b8962a"/>
-          <circle cx="175" cy="160" r="35" fill="#f5d5b0"/>
-          <ellipse cx="175" cy="132" rx="33" ry="18" fill="#3d2b1f"/>
-          <circle cx="163" cy="158" r="4" fill="#3d2b1f"/>
-          <circle cx="187" cy="158" r="4" fill="#3d2b1f"/>
-          <circle cx="164" cy="157" r="1.5" fill="white"/>
-          <circle cx="188" cy="157" r="1.5" fill="white"/>
-          <path d="M 165 170 Q 175 178 185 170" stroke="#3d2b1f" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <ellipse cx="175" cy="128" rx="36" ry="10" fill="#0a0f1e"/>
-          <rect x="139" y="118" width="72" height="14" rx="4" fill="#0a0f1e"/>
-          <rect x="139" y="118" width="72" height="6" rx="3" fill="#1a3a8f"/>
-          <rect x="225" y="185" width="55" height="95" rx="8" fill="#0a0f1e"/>
-          <rect x="229" y="190" width="47" height="82" rx="5" fill="#1a2340"/>
-          <rect x="232" y="195" width="41" height="70" rx="3" fill="#0d1829"/>
-          <rect x="238" y="202" width="28" height="28" rx="2" fill="white" opacity="0.9"/>
-          <rect x="240" y="204" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
-          <rect x="249" y="204" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
-          <rect x="254" y="204" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
-          <rect x="240" y="213" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
-          <rect x="244" y="210" width="7" height="3" rx="0.5" fill="#0a0f1e"/>
-          <rect x="254" y="211" width="3" height="4" rx="0.5" fill="#0a0f1e"/>
-          <rect x="240" y="218" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
-          <rect x="249" y="220" width="3" height="3" rx="0.5" fill="#0a0f1e"/>
-          <rect x="254" y="218" width="7" height="7" rx="0.5" fill="#0a0f1e"/>
-          <line x1="236" y1="216" x2="268" y2="216" stroke="#c9a84c" stroke-width="1.5" opacity="0.9"><animate attributeName="y1" values="202;228;202" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="202;228;202" dur="1.5s" repeatCount="indefinite"/></line>
-          <rect x="232" y="237" width="41" height="20" rx="4" fill="#0d6e4f"/>
-          <text x="252" y="251" font-family="sans-serif" font-size="8" fill="white" text-anchor="middle" font-weight="bold">✓ VERIFIED</text>
-          <rect x="247" y="276" width="13" height="3" rx="1.5" fill="#2a3a5a"/>
-          <circle cx="350" cy="130" r="22" fill="#0d6e4f" opacity="0.9"><animate attributeName="r" values="20;23;20" dur="2s" repeatCount="indefinite"/></circle>
-          <path d="M 340 130 L 348 138 L 362 122" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="330" y="95" width="130" height="26" rx="13" fill="white" opacity="0.95"/>
-          <text x="395" y="112" font-family="sans-serif" font-size="10" fill="#0d6e4f" text-anchor="middle" font-weight="600">Address Verified ✓</text>
-          <rect x="100" y="50" width="160" height="55" rx="12" fill="white" opacity="0.95"/>
-          <rect x="100" y="50" width="160" height="4" rx="12" fill="#c9a84c"/>
-          <text x="180" y="75" font-family="monospace" font-size="11" fill="#0a0f1e" text-anchor="middle" font-weight="600">WA — 293847 — 9820</text>
-          <text x="180" y="92" font-family="sans-serif" font-size="9" fill="#0d6e4f" text-anchor="middle">✓ Home ID Confirmed</text>
-        </svg>
-      </div>
     </div>
-  </div></div>
-  <div class="cta-strip"><div class="cta-strip-inner">
-    <h2>Give Your Home an Identity Today</h2>
-    <p>Join the movement to create a universal address standard for every home in America.</p>
-    <div class="cta-strip-actions">
-      <button class="btn-white" onclick="showPage('register')">Register for Free</button>
-      <button class="btn-outline-white" onclick="showPage('contact')">Contact Us</button>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-final-inner">
+    <span class="cta-flag">🇺🇸</span>
+    <h2 class="cta-title">Give Your Home an<br><em>Identity</em> Today</h2>
+    <p class="cta-sub">Join the movement to create a universal address standard for every home in America. Register for free — it takes less than a minute.</p>
+    <div class="cta-btns">
+      <button class="btn-cta-gold" onclick="scrollToRegister()">Register Your Home — Free</button>
+      <a class="btn-cta-outline" href="/contact">Contact Us</a>
     </div>
-  </div></div>
-  <footer><div class="footer-inner">
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
     <div class="footer-grid">
-      <div><div class="fb-logo"><div class="fb-icon">SC</div><span class="fb-name">SaveCode</span></div><p class="fb-desc">Building the universal address identity system for every home in America.</p></div>
-      <div class="footer-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('how')">How It Works</a><a onclick="showPage('register')">Register</a></div>
-      <div class="footer-col"><h4>Company</h4><a onclick="showPage('about')">About</a><a onclick="showPage('contact')">Contact</a></div>
-      <div class="footer-col"><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Patent Info</a></div>
-    </div>
-    <div class="footer-bottom"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span><span class="footer-copy">Patent Pending · US 63/808,302</span></div>
-  </div></footer>
-</div>
-
-<!-- ═══ FEATURES ═══ -->
-<div class="page" id="page-features">
-  <div class="page-hero-sm"><div class="page-eyebrow">All Features</div><h1 class="page-title">Everything for <em style="color:var(--gold)">Secure Delivery</em></h1><p class="page-sub">Nine powerful features working together to protect every delivery, every time.</p></div>
-  <div style="padding:0 48px 80px;max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <div class="feat-card"><div class="feat-icon">🏠</div><div class="feat-title">Permanent Home ID</div><p class="feat-desc">Every US address receives a unique, permanent Home ID generated using one or more identification algorithms. The code is tied to the physical address — not the resident — and never changes.</p></div>
-      <div class="feat-card"><div class="feat-icon">👥</div><div class="feat-title">Resident Registry</div><p class="feat-desc">Register all current residents at your address. Mail addressed to unregistered names is automatically returned to sender — protecting sensitive correspondence like tax documents and bank statements.</p></div>
-      <div class="feat-card"><div class="feat-icon">🛡️</div><div class="feat-title">Anti-Spoofing System</div><p class="feat-desc">Multi-factor verification, device authentication, and behavioral pattern detection prevent any unauthorized use of your Home ID. Attempts are blocked, logged, and you are alerted immediately.</p></div>
-      <div class="feat-card"><div class="feat-icon">✅</div><div class="feat-title">Last-Mile Verification</div><p class="feat-desc">At the final delivery step, the driver scans your door label and the system confirms it matches the package's destination Home ID — preventing wrong-door deliveries even in apartment buildings.</p></div>
-      <div class="feat-card"><div class="feat-icon">🔐</div><div class="feat-title">Privacy-Preserving Shipping</div><p class="feat-desc">Shipping labels display only your Home ID — never your name or address. Your personal information is never visible at any stage of the external shipment handling process.</p></div>
-      <div class="feat-card"><div class="feat-icon">🏛️</div><div class="feat-title">Address Update System (AANS)</div><p class="feat-desc">Moving? Use our checkbox interface to notify only the institutions you choose: IRS, banks, courts, clinics, employer, university, immigration, insurance, and government agencies.</p></div>
-      <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title">Autonomous Delivery</div><p class="feat-desc">Compatible with aerial drones, ground robots, and self-driving vehicles. Your Home ID is the universal machine-readable delivery target for all current and future autonomous systems.</p></div>
-      <div class="feat-card"><div class="feat-icon">🔗</div><div class="feat-title">Open Integration API</div><p class="feat-desc">Amazon, FedEx, UPS, USPS, and government agencies can integrate with SaveCode through our authenticated API with full access control and query validation.</p></div>
-    </div>
-  </div>
-  <div class="cta-strip"><div class="cta-strip-inner"><h2>Ready to Get Started?</h2><p>Register your home for free in under a minute.</p><div class="cta-strip-actions"><button class="btn-white" onclick="showPage('register')">Register Now — Free</button></div></div></div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ HOW IT WORKS ═══ -->
-<div class="page" id="page-how">
-  <div class="page-hero-sm"><div class="page-eyebrow">The Process</div><h1 class="page-title">How SaveCode <em style="color:var(--gold)">Works</em></h1></div>
-  <div style="max-width:800px;margin:0 auto;padding:0 48px 80px;">
-    <div style="display:flex;flex-direction:column;">
-      <div style="display:flex;gap:32px;padding:36px 0;border-bottom:1px solid var(--border);">
-        <div style="width:60px;height:60px;background:var(--ink);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.5rem;flex-shrink:0;">1</div>
-        <div><h3 style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px;">Register Your Address</h3><p style="font-size:0.9rem;color:var(--gray);line-height:1.8;">Enter your US address into our secure registration system. Our algorithm generates a permanent, unique Home ID instantly. The code is tied to your physical address — not your name — and never changes.</p></div>
-      </div>
-      <div style="display:flex;gap:32px;padding:36px 0;border-bottom:1px solid var(--border);">
-        <div style="width:60px;height:60px;background:var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:1.5rem;flex-shrink:0;">2</div>
-        <div><h3 style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px;">Place Your Label</h3><p style="font-size:0.9rem;color:var(--gray);line-height:1.8;">Print your official SaveCode label and place it on your front door and mailbox. The label displays your Home ID and an optional QR code for instant verification by delivery drivers and autonomous systems.</p></div>
-      </div>
-      <div style="display:flex;gap:32px;padding:36px 0;border-bottom:1px solid var(--border);">
-        <div style="width:60px;height:60px;background:var(--ink);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.5rem;flex-shrink:0;">3</div>
-        <div><h3 style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px;">Register Your Residents</h3><p style="font-size:0.9rem;color:var(--gray);line-height:1.8;">Add all current residents to your Home ID. Mail addressed to unregistered names is automatically returned to sender — protecting your household from sensitive mail intended for previous occupants.</p></div>
-      </div>
-      <div style="display:flex;gap:32px;padding:36px 0;">
-        <div style="width:60px;height:60px;background:var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:1.5rem;flex-shrink:0;">4</div>
-        <div><h3 style="font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:10px;">Every Delivery Verified</h3><p style="font-size:0.9rem;color:var(--gray);line-height:1.8;">At the moment of delivery, the driver or autonomous system scans your door label and confirms it matches the package's destination Home ID. No match — no delivery. Your package always reaches the right door.</p></div>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:48px;"><button class="cta-main" onclick="showPage('register')">Register Your Home Now →</button></div>
-  </div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ ABOUT ═══ -->
-<div class="page" id="page-about">
-  <div class="page-hero-sm"><div class="page-eyebrow">Our Story</div><h1 class="page-title">About <em style="color:var(--gold)">SaveCode</em></h1></div>
-  <div style="max-width:1280px;margin:0 auto;padding:0 48px 80px;display:grid;grid-template-columns:1fr 1fr;gap:80px;">
-    <div>
-      <p style="font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:20px;font-weight:300;">SaveCode was born from a simple frustration — receiving tax notices, bank statements, and court documents intended for strangers who once lived at the same address. We realized this wasn't just an inconvenience. It was a systemic failure affecting millions of American homes every day.</p>
-      <p style="font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:20px;font-weight:300;">We built SaveCode to give every home a permanent, verifiable identity — a single code that connects the physical address to its current residents, protects incoming mail, and enables the next generation of delivery technology.</p>
-      <p style="font-size:0.95rem;color:var(--gray);line-height:1.8;margin-bottom:40px;font-weight:300;">Our system is the first of its kind: combining address identification, resident verification, privacy-preserving shipping, and autonomous delivery compatibility into one unified platform.</p>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;">
-        <div style="font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">Inventor</div>
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div style="width:52px;height:52px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:700;font-size:1.1rem;color:var(--ink);flex-shrink:0;">E</div>
-          <div>
-            <div style="font-size:1rem;font-weight:600;color:var(--ink);">Eman A. Eljack</div>
-            <div style="font-size:0.82rem;color:var(--gray);margin-top:2px;">Everett, Washington, USA</div>
-            <div style="font-size:0.78rem;color:var(--gray2);margin-top:2px;">eman4eljck@gmail.com</div>
-          </div>
-        </div>
-        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--gray2);">US Provisional Patent No. 63/808,302 · Filed May 19, 2025</div>
-      </div>
-    </div>
-    <div>
-      <h3 style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:24px;">Our Roadmap</h3>
       <div>
-        <div style="display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);"><div style="width:60px;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--green);font-weight:600;">Now</div><div><div style="font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Home Registration & Labels</div><p style="font-size:0.8rem;color:var(--gray);">Every US home gets a permanent ID with physical door and mailbox labels.</p></div></div>
-        <div style="display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);"><div style="width:60px;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gray2);">2026</div><div><div style="font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Delivery Partner Integration</div><p style="font-size:0.8rem;color:var(--gray);">Amazon, FedEx, UPS, and USPS accept Home ID on all shipping labels.</p></div></div>
-        <div style="display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--border);"><div style="width:60px;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gray2);">2027</div><div><div style="font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Government Partnership</div><p style="font-size:0.8rem;color:var(--gray);">Official proposal to USPS as the national address standard.</p></div></div>
-        <div style="display:flex;gap:20px;padding:20px 0;"><div style="width:60px;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gray2);">2028+</div><div><div style="font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:4px;">National Standard</div><p style="font-size:0.8rem;color:var(--gray);">SaveCode becomes the official address identity for all 142M+ US homes.</p></div></div>
+        <div class="fb-logo"><div class="fb-icon">🏠</div><span class="fb-name">SaveCode</span></div>
+        <p class="fb-desc">Building the universal address identity infrastructure for every American home. Patent Pending.</p>
       </div>
+      <div class="footer-col"><h4>Product</h4><a href="/features">Features</a><a href="/how-it-works">How It Works</a><a href="#register" onclick="scrollToRegister();return false;">Register Free</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/about">About Us</a><a href="/contact">Contact</a><a href="/admin">Admin</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:support@savecode.us">support@savecode.us</a><a href="mailto:partnerships@savecode.us">partnerships@savecode.us</a><a href="mailto:press@savecode.us">press@savecode.us</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 SaveCode. All rights reserved.</span>
+      <span class="footer-patent">Patent Pending · US 63/808,302</span>
     </div>
   </div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ CONTACT ═══ -->
-<div class="page" id="page-contact">
-  <div class="page-hero-sm"><div class="page-eyebrow">Get In Touch</div><h1 class="page-title">Contact <em style="color:var(--gold)">Us</em></h1><p class="page-sub">Questions, partnerships, or just want to learn more — we're here.</p></div>
-  <div style="max-width:960px;margin:0 auto;padding:0 48px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;">
-    <div>
-      <div style="display:flex;gap:16px;margin-bottom:28px;"><div style="width:44px;height:44px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--border);">✉️</div><div><div style="font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Email</div><div style="font-size:0.85rem;color:var(--gray);">support@savecode.us</div></div></div>
-      <div style="display:flex;gap:16px;margin-bottom:28px;"><div style="width:44px;height:44px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--border);">📍</div><div><div style="font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Location</div><div style="font-size:0.85rem;color:var(--gray);">Everett, Washington, USA</div></div></div>
-      <div style="display:flex;gap:16px;margin-bottom:28px;"><div style="width:44px;height:44px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--border);">⚡</div><div><div style="font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Response Time</div><div style="font-size:0.85rem;color:var(--gray);">Within 24 hours</div></div></div>
-      <div style="display:flex;gap:16px;"><div style="width:44px;height:44px;border-radius:12px;background:var(--cream);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--border);">🤝</div><div><div style="font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:4px;">Partnerships</div><div style="font-size:0.85rem;color:var(--gray);">partnerships@savecode.us</div></div></div>
-    </div>
-    <div class="form-card">
-      <div class="form-title">Send a Message</div>
-      <div class="fg"><label>Your Name</label><input type="text" id="c-name" placeholder="John Anderson"></div>
-      <div class="fg"><label>Email</label><input type="email" id="c-email" placeholder="you@example.com"></div>
-      <div class="fg"><label>Subject</label><input type="text" id="c-subject" placeholder="How can we help?"></div>
-      <div class="fg"><label>Message</label><textarea id="c-msg" placeholder="Tell us more..."></textarea></div>
-      <button class="btn-full" onclick="sendMsg()">Send Message →</button>
-    </div>
-  </div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ REGISTER ═══ -->
-<div class="page" id="page-register">
-  <div class="page-hero-sm"><div class="page-eyebrow">Get Started</div><h1 class="page-title">Register Your Home</h1><p class="page-sub">Generate your permanent Home ID in seconds. Free, forever.</p></div>
-  <div class="register-grid">
-    <div class="form-card">
-      <div class="form-title">Enter Your Address</div>
-      <div class="fg"><label>Street Address *</label><input type="text" id="r-street" placeholder="123 Main Street"></div>
-      <div class="fg"><label>Unit / Apt (optional)</label><input type="text" id="r-unit" placeholder="Apt 4B"></div>
-      <div class="fg"><label>City *</label><input type="text" id="r-city" placeholder="Everett"></div>
-      <div class="fg-row">
-        <div class="fg"><label>State *</label>
-          <select id="r-state"><option value="">Select</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option value="WA">WA</option><option>WV</option><option>WI</option><option>WY</option></select>
-        </div>
-        <div class="fg"><label>ZIP Code *</label><input type="text" id="r-zip" placeholder="98201" maxlength="5"></div>
-      </div>
-      <button class="btn-full green" onclick="generateID()">✓ Generate My Home ID</button>
-    </div>
-    <div class="result-card">
-      <div class="result-empty" id="result-empty"><div class="re-icon">🏠</div><div class="re-title">Your Home ID will appear here</div><p class="re-sub">Fill in your address to generate your permanent Home ID.</p></div>
-      <div class="result-filled" id="result-filled">
-        <div class="res-label">Your Home ID</div>
-        <div class="res-id" id="res-id-display">—</div>
-        <div class="res-verified">✓ Address Verified</div>
-        <hr class="res-divider">
-        <div class="res-detail"><span class="res-dk">Street</span><span class="res-dv" id="r-disp-street">—</span></div>
-        <div class="res-detail"><span class="res-dk">Unit</span><span class="res-dv" id="r-disp-unit">—</span></div>
-        <div class="res-detail"><span class="res-dk">City</span><span class="res-dv" id="r-disp-city">—</span></div>
-        <div class="res-detail"><span class="res-dk">State / ZIP</span><span class="res-dv" id="r-disp-sz">—</span></div>
-        <div class="res-detail"><span class="res-dk">Status</span><span class="res-dv" style="color:var(--green)">● Active</span></div>
-        <div class="res-actions">
-          <button class="btn-res outline" onclick="printLabel()">🖨️ Print Label</button>
-          <button class="btn-res filled" onclick="saveID()">💾 Save ID</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ USER DASHBOARD ═══ -->
-<div class="page" id="page-dashboard">
-  <div class="dashboard-wrap">
-    <div class="dash-header">
-      <div><div class="dash-title">My Dashboard</div><div class="dash-sub" id="dash-welcome">Welcome to SaveCode</div></div>
-      <button class="btn-primary" onclick="showPage('register')">+ Register New Home</button>
-    </div>
-    <div class="dash-grid">
-      <div class="dash-card"><div class="dc-icon">🏠</div><div class="dc-label">My Home IDs</div><div class="dc-value" id="dash-home-count">—</div><div class="dc-sub">Registered addresses</div></div>
-      <div class="dash-card"><div class="dc-icon">✅</div><div class="dc-label">Deliveries Verified</div><div class="dc-value">—</div><div class="dc-sub">This month</div></div>
-      <div class="dash-card"><div class="dc-icon">🛡️</div><div class="dc-label">Security Status</div><div class="dc-value" style="color:var(--green);font-size:1.2rem;">Protected</div><div class="dc-sub">Anti-spoofing active</div></div>
-    </div>
-    <div class="my-homes">
-      <div class="mh-header"><div class="mh-title">My Registered Homes</div><button class="btn-sm primary" onclick="showPage('register')">+ Add Home</button></div>
-      <div id="my-homes-list"><div class="empty-state"><div class="empty-state-icon">🏠</div><div class="empty-state-title">No homes registered yet</div><div class="empty-state-sub">Register your first home to get started</div></div></div>
-    </div>
-  </div>
-  <footer><div class="footer-inner"><div class="footer-bottom" style="border:none;padding:0;"><span class="footer-copy">© 2026 SaveCode. All rights reserved.</span></div></div></footer>
-</div>
-
-<!-- ═══ PASSWORD RESET ═══ -->
-<div class="page" id="page-reset">
-  <div class="reset-wrap">
-    <div class="reset-icon">🔐</div>
-    <h1 class="page-title" style="font-size:2rem;margin-bottom:12px;">Set New Password</h1>
-    <p class="page-sub" style="margin-bottom:32px;text-align:center;">Enter your new password below.</p>
-    <div class="form-card">
-      <div class="fg"><label>New Password</label><input type="password" id="new-password" placeholder="Minimum 6 characters"></div>
-      <div class="fg"><label>Confirm Password</label><input type="password" id="confirm-password" placeholder="Repeat your password"></div>
-      <div class="modal-error" id="reset-error"></div>
-      <div class="modal-success" id="reset-success"></div>
-      <button class="btn-full" onclick="updatePassword()">Update Password →</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ ADMIN ═══ -->
-<div class="page" id="page-admin" style="display:none;">
-  <div class="admin-layout" id="admin-layout-content" style="display:none;">
-    <aside class="admin-sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo"><div class="sl-icon">SC</div><span class="sl-name">SaveCode</span></div>
-        <div class="sidebar-badge">Admin Panel</div>
-      </div>
-      <div class="sidebar-nav">
-        <div class="sidebar-section">
-          <div class="sidebar-section-title">Overview</div>
-          <div class="sidebar-item active" onclick="showAdminPanel('dashboard',this)"><span class="si-icon">📊</span><span class="si-label">Dashboard</span></div>
-          <div class="sidebar-item" onclick="showAdminPanel('activity',this)"><span class="si-icon">⚡</span><span class="si-label">Activity Feed</span></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-section-title">Management</div>
-          <div class="sidebar-item" onclick="showAdminPanel('homes',this)"><span class="si-icon">🏠</span><span class="si-label">Home IDs</span></div>
-          <div class="sidebar-item" onclick="showAdminPanel('users',this)"><span class="si-icon">👥</span><span class="si-label">Users</span></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-section-title">Security</div>
-          <div class="sidebar-item" onclick="showAdminPanel('alerts',this)"><span class="si-icon">🚨</span><span class="si-label">Security Alerts</span><span class="si-badge">2</span></div>
-          <div class="sidebar-item" onclick="showAdminPanel('logs',this)"><span class="si-icon">📝</span><span class="si-label">Access Logs</span></div>
-        </div>
-        <div class="sidebar-section">
-          <div class="sidebar-section-title">System</div>
-          <div class="sidebar-item" onclick="showAdminPanel('settings',this)"><span class="si-icon">⚙️</span><span class="si-label">Settings</span></div>
-          <div class="sidebar-item" onclick="showPage('home')"><span class="si-icon">🌐</span><span class="si-label">View Website</span></div>
-        </div>
-      </div>
-      <div class="sidebar-user">
-        <div class="su-avatar">E</div>
-        <div><div class="su-name">Eman Eljack</div><div class="su-role">Super Admin</div></div>
-        <button class="su-logout" onclick="logout()" title="Sign Out">⏻</button>
-      </div>
-    </aside>
-    <main class="admin-main">
-
-      <!-- DASHBOARD PANEL -->
-      <div class="admin-panel active" id="panel-dashboard">
-        <div class="admin-header">
-          <div><div class="admin-title">Dashboard</div><div class="admin-sub">Welcome back, Eman. Here's your platform overview.</div></div>
-          <button class="btn-sm primary" onclick="loadDashboard()">🔄 Refresh</button>
-        </div>
-        <div class="stats-cards">
-          <div class="stat-card"><div class="sc-icon">🏠</div><div class="sc-label">Total Home IDs</div><div class="sc-value" id="stat-homes">—</div><div class="sc-change up" id="stat-homes-change">Loading...</div></div>
-          <div class="stat-card"><div class="sc-icon">👥</div><div class="sc-label">Registered Users</div><div class="sc-value" id="stat-users">—</div><div class="sc-change up" id="stat-users-change">Loading...</div></div>
-          <div class="stat-card"><div class="sc-icon">✅</div><div class="sc-label">Active Today</div><div class="sc-value">12</div><div class="sc-change up">↑ 3 new today</div></div>
-          <div class="stat-card"><div class="sc-icon">🚨</div><div class="sc-label">Security Alerts</div><div class="sc-value">2</div><div class="sc-change down">↓ Review needed</div></div>
-        </div>
-        <div class="charts-row">
-          <div class="chart-card">
-            <div class="chart-title">Registrations — Last 7 Days</div>
-            <div class="bar-chart" id="reg-chart"></div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-title">Distribution by State</div>
-            <div class="donut-center">
-              <svg width="130" height="130" viewBox="0 0 130 130">
-                <circle cx="65" cy="65" r="50" fill="none" stroke="#e0ddd5" stroke-width="22"/>
-                <circle cx="65" cy="65" r="50" fill="none" stroke="var(--ink)" stroke-width="22" stroke-dasharray="170 144" stroke-dashoffset="0" transform="rotate(-90 65 65)"/>
-                <circle cx="65" cy="65" r="50" fill="none" stroke="var(--gold)" stroke-width="22" stroke-dasharray="63 251" stroke-dashoffset="-170" transform="rotate(-90 65 65)"/>
-                <circle cx="65" cy="65" r="50" fill="none" stroke="var(--green)" stroke-width="22" stroke-dasharray="81 233" stroke-dashoffset="-233" transform="rotate(-90 65 65)"/>
-              </svg>
-              <div class="donut-label"><div class="donut-label-n" id="donut-total">—</div><div class="donut-label-t">Total</div></div>
-            </div>
-            <div class="donut-legend">
-              <div class="dl-item"><div class="dl-left"><div class="dl-dot" style="background:var(--ink)"></div>Washington</div><span class="dl-pct">54%</span></div>
-              <div class="dl-item"><div class="dl-left"><div class="dl-dot" style="background:var(--gold)"></div>California</div><span class="dl-pct">20%</span></div>
-              <div class="dl-item"><div class="dl-left"><div class="dl-dot" style="background:var(--green)"></div>Other States</div><span class="dl-pct">26%</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="activity-feed">
-          <div class="af-title">Recent Activity</div>
-          <div id="dash-activity">
-            <div class="af-item"><div class="af-icon reg">🏠</div><div><div class="af-text">New Home ID registered — WA — 342205 — 9820</div><div class="af-time">Just now</div></div></div>
-            <div class="af-item"><div class="af-icon login">👤</div><div><div class="af-text">User signed in — Everett, WA</div><div class="af-time">5 mins ago</div></div></div>
-            <div class="af-item"><div class="af-icon alert">🚨</div><div><div class="af-text">Security alert — Suspicious login attempt detected</div><div class="af-time">12 mins ago</div></div></div>
-            <div class="af-item"><div class="af-icon print">🖨️</div><div><div class="af-text">Home ID label printed — WA — 293847 — 9820</div><div class="af-time">1 hour ago</div></div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- HOMES PANEL -->
-      <div class="admin-panel" id="panel-homes">
-        <div class="admin-header">
-          <div><div class="admin-title">Home IDs</div><div class="admin-sub">All registered Home IDs in the system.</div></div>
-          <div style="display:flex;gap:10px;">
-            <button class="btn-sm" onclick="loadHomes()">🔄 Refresh</button>
-            <button class="btn-sm" onclick="exportCSV()">📥 Export</button>
-          </div>
-        </div>
-        <div class="table-card">
-          <div class="table-header">
-            <div class="table-title">All Home IDs</div>
-            <input class="search-box" placeholder="Search by code or address..." id="search-homes" oninput="filterTable('homes-tbody',this.value)">
-          </div>
-          <table class="admin-table">
-            <thead><tr><th>Home ID</th><th>Street</th><th>City</th><th>State</th><th>ZIP</th><th>Registered</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody id="homes-tbody"><tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">⏳</div><div class="empty-state-title">Loading...</div></div></td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- USERS PANEL -->
-      <div class="admin-panel" id="panel-users">
-        <div class="admin-header">
-          <div><div class="admin-title">Users</div><div class="admin-sub">All registered users in the system.</div></div>
-          <button class="btn-sm" onclick="loadUsers()">🔄 Refresh</button>
-        </div>
-        <div class="table-card">
-          <div class="table-header">
-            <div class="table-title">All Users</div>
-            <input class="search-box" placeholder="Search users..." oninput="filterTable('users-tbody',this.value)">
-          </div>
-          <table class="admin-table">
-            <thead><tr><th>Email</th><th>Name</th><th>Created</th><th>Last Sign In</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody id="users-tbody"><tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">⏳</div><div class="empty-state-title">Loading...</div></div></td></tr></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ALERTS PANEL -->
-      <div class="admin-panel" id="panel-alerts">
-        <div class="admin-header"><div><div class="admin-title">Security Alerts</div><div class="admin-sub">Monitor and respond to security incidents.</div></div></div>
-        <div class="activity-feed">
-          <div class="af-title">Active Alerts</div>
-          <div class="af-item"><div class="af-icon alert">🚨</div><div style="flex:1"><div class="af-text"><strong>Suspicious Login Attempt</strong> — Unrecognized device from Seattle, WA</div><div class="af-time">12 mins ago · <span style="color:var(--red)">Unresolved</span></div></div><button class="btn-sm" style="flex-shrink:0;">Resolve</button></div>
-          <div class="af-item"><div class="af-icon alert">⚠️</div><div style="flex:1"><div class="af-text"><strong>Multiple Failed Logins</strong> — 5 attempts on eman4eljck@gmail.com</div><div class="af-time">1 hour ago · <span style="color:var(--red)">Unresolved</span></div></div><button class="btn-sm" style="flex-shrink:0;">Resolve</button></div>
-          <div class="af-item"><div class="af-icon login">ℹ️</div><div style="flex:1"><div class="af-text"><strong>New Device Login</strong> — New browser detected for user</div><div class="af-time">3 hours ago · <span style="color:var(--green)">Resolved</span></div></div></div>
-        </div>
-      </div>
-
-      <!-- LOGS PANEL -->
-      <div class="admin-panel" id="panel-logs">
-        <div class="admin-header"><div><div class="admin-title">Access Logs</div><div class="admin-sub">Complete audit trail of all system access.</div></div></div>
-        <div class="table-card">
-          <div class="table-header"><div class="table-title">Recent Logs</div><input class="search-box" placeholder="Search logs..."></div>
-          <table class="admin-table">
-            <thead><tr><th>Time</th><th>Action</th><th>User</th><th>Home ID</th><th>Result</th></tr></thead>
-            <tbody>
-              <tr><td style="color:var(--gray2);font-size:0.78rem;">Today 2:34 PM</td><td>Save ID</td><td>Anonymous</td><td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">WA — 342205 — 9820</td><td><span class="badge active">Success</span></td></tr>
-              <tr><td style="color:var(--gray2);font-size:0.78rem;">Today 2:12 PM</td><td>Generate ID</td><td>Anonymous</td><td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">WA — 342205 — 9820</td><td><span class="badge active">Success</span></td></tr>
-              <tr><td style="color:var(--gray2);font-size:0.78rem;">Today 1:58 PM</td><td>Login Attempt</td><td>Unknown</td><td>—</td><td><span class="badge danger">Failed</span></td></tr>
-              <tr><td style="color:var(--gray2);font-size:0.78rem;">Today 1:30 PM</td><td>Print Label</td><td>Anonymous</td><td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">WA — 293847 — 9820</td><td><span class="badge active">Success</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ACTIVITY PANEL -->
-      <div class="admin-panel" id="panel-activity">
-        <div class="admin-header"><div><div class="admin-title">Activity Feed</div><div class="admin-sub">Real-time activity across the platform.</div></div></div>
-        <div class="activity-feed">
-          <div class="af-title">Live Feed</div>
-          <div class="af-item"><div class="af-icon reg">🏠</div><div><div class="af-text">New Home ID registered — WA — 342205 — 9820</div><div class="af-time">Just now</div></div></div>
-          <div class="af-item"><div class="af-icon login">👤</div><div><div class="af-text">Admin signed in — eman4eljck@gmail.com</div><div class="af-time">2 mins ago</div></div></div>
-          <div class="af-item"><div class="af-icon alert">🚨</div><div><div class="af-text">Security alert triggered — suspicious login</div><div class="af-time">12 mins ago</div></div></div>
-          <div class="af-item"><div class="af-icon print">🖨️</div><div><div class="af-text">Home ID label printed</div><div class="af-time">25 mins ago</div></div></div>
-          <div class="af-item"><div class="af-icon reg">🏠</div><div><div class="af-text">New Home ID registered — WA — 293847 — 9820</div><div class="af-time">1 hour ago</div></div></div>
-        </div>
-      </div>
-
-      <!-- SETTINGS PANEL -->
-      <div class="admin-panel" id="panel-settings">
-        <div class="admin-header"><div><div class="admin-title">Settings</div><div class="admin-sub">Configure your SaveCode platform.</div></div></div>
-        <div class="settings-grid">
-          <div class="settings-card">
-            <div class="settings-title">Security Settings</div>
-            <div class="toggle-row"><div><div class="toggle-label">Email Confirmation Required</div><div class="toggle-sub">Users must verify email before access</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-            <div class="toggle-row"><div><div class="toggle-label">Two-Factor Authentication</div><div class="toggle-sub">Require 2FA for all accounts</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
-            <div class="toggle-row"><div><div class="toggle-label">Anti-Spoofing System</div><div class="toggle-sub">Monitor for suspicious behavior</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-            <div class="toggle-row"><div><div class="toggle-label">Security Alert Emails</div><div class="toggle-sub">Email alerts for security incidents</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-          </div>
-          <div class="settings-card">
-            <div class="settings-title">Platform Settings</div>
-            <div class="toggle-row"><div><div class="toggle-label">New Registrations</div><div class="toggle-sub">Allow new Home ID registrations</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-            <div class="toggle-row"><div><div class="toggle-label">Public API Access</div><div class="toggle-sub">Allow third-party API integration</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
-            <div class="toggle-row"><div><div class="toggle-label">Maintenance Mode</div><div class="toggle-sub">Show maintenance page to users</div></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
-          </div>
-          <div class="settings-card" style="grid-column:1/-1;">
-            <div class="settings-title">Inventor Information</div>
-            <div class="fg-row">
-              <div class="fg"><label>Inventor Name</label><input type="text" value="Eman A. Eljack" readonly style="background:var(--paper);"></div>
-              <div class="fg"><label>Email</label><input type="text" value="eman4eljck@gmail.com" readonly style="background:var(--paper);"></div>
-            </div>
-            <div class="fg-row">
-              <div class="fg"><label>Location</label><input type="text" value="Everett, WA 98201" readonly style="background:var(--paper);"></div>
-              <div class="fg"><label>Patent Number</label><input type="text" value="US 63/808,302" readonly style="background:var(--paper);"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-</div>
+</footer>
 
 <!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-logo">
-      <div class="modal-logo-icon">SC</div>
-      <h2 id="modal-title">Welcome back</h2>
-      <p id="modal-sub">Sign in to your SaveCode account</p>
+    <div class="modal-header">
+      <div class="modal-mark">🏠</div>
+      <h2 class="modal-h2" id="modal-title">Welcome back</h2>
+      <p class="modal-p" id="modal-sub">Sign in to your SaveCode account</p>
     </div>
     <div class="modal-tabs">
       <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
-      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Register</button>
     </div>
     <div class="modal-error" id="modal-error"></div>
     <div class="modal-success" id="modal-success"></div>
-    <div class="modal-loading" id="modal-loading">Please wait...</div>
     <div id="mform-login">
       <div class="modal-fg"><label>Email</label><input type="email" id="login-email" placeholder="you@example.com"></div>
       <div class="modal-fg"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')handleLogin()"></div>
       <button class="btn-modal" onclick="handleLogin()">Sign In →</button>
       <div class="modal-switch">No account? <a onclick="switchTab('signup')">Create one free</a></div>
-      <div style="text-align:center;margin-top:10px;"><a style="font-size:0.78rem;color:var(--gray2);cursor:pointer;" onclick="forgotPassword()">Forgot password?</a></div>
     </div>
     <div id="mform-signup" style="display:none">
       <div class="modal-fg"><label>Full Name</label><input type="text" id="signup-name" placeholder="Your name"></div>
       <div class="modal-fg"><label>Email</label><input type="email" id="signup-email" placeholder="you@example.com"></div>
-      <div class="modal-fg"><label>Password</label><input type="password" id="signup-password" placeholder="Minimum 6 characters" onkeydown="if(event.key==='Enter')handleSignup()"></div>
+      <div class="modal-fg"><label>Password</label><input type="password" id="signup-password" placeholder="Minimum 6 characters"></div>
       <button class="btn-modal" onclick="handleSignup()">Create Account →</button>
       <div class="modal-switch">Have an account? <a onclick="switchTab('login')">Sign in</a></div>
     </div>
@@ -1167,526 +656,142 @@ footer{background:var(--ink2);padding:60px 48px 40px;}
 
 <!-- TOAST -->
 <div class="toast" id="toast">
-  <span class="toast-icon" id="toast-icon">✅</span>
-  <div><div class="toast-title" id="toast-title">Success</div><div class="toast-msg" id="toast-msg">Done!</div></div>
+  <span class="toast-icon" id="t-icon">✅</span>
+  <div><div class="toast-title" id="t-title">Success</div><div class="toast-msg" id="t-msg"></div></div>
 </div>
 
 <script>
-// ══════════════════════════════════════
-// SUPABASE CONFIG
-// ══════════════════════════════════════
-const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
-const ADMIN_EMAIL = 'eman4eljck@gmail.com';
+const SUPABASE_URL='https://kpnqaexdqnljzhxnplor.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
+const ADMIN_EMAIL='eman4eljck@gmail.com';
+let currentUser=null,currentSession=null;
 
-let currentUser = null;
-let currentSession = null;
+window.addEventListener('scroll',()=>{document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>40);});
 
-// ══════════════════════════════════════
-// CHECK URL FOR PASSWORD RESET TOKEN
-// ══════════════════════════════════════
-window.addEventListener('load', () => {
-  const hash = window.location.hash;
-  if (hash.includes('access_token') && hash.includes('type=recovery')) {
-    const params = new URLSearchParams(hash.substring(1));
-    const token = params.get('access_token');
-    if (token) {
-      currentSession = { access_token: token };
-      showPage('reset');
-      document.getElementById('main-nav').style.display = 'none';
-    }
-  }
-});
+function scrollToRegister(){document.getElementById('register').scrollIntoView({behavior:'smooth'});closeModal();}
 
-// ══════════════════════════════════════
-// API HELPERS
-// ══════════════════════════════════════
-async function sbFetch(path, options = {}) {
-  const token = currentSession?.access_token || SUPABASE_KEY;
-  const res = await fetch(`${SUPABASE_URL}${path}`, {
-    ...options,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      ...(options.headers || {})
-    }
-  });
-  return res;
-}
-
-async function sbAuth(path, body) {
-  const res = await fetch(`${SUPABASE_URL}/auth/v1${path}`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-  return res.json();
-}
-
-// ══════════════════════════════════════
-// AUTH FUNCTIONS
-// ══════════════════════════════════════
-async function handleLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  if (!email || !password) { showModalError('Please fill in all fields.'); return; }
-  showModalLoading(true);
+async function handleLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const password=document.getElementById('login-password').value;
+  if(!email||!password){showModalError('Please fill in all fields.');return;}
   showModalError('');
-
-  const data = await sbAuth('/token?grant_type=password', { email, password });
-
-  showModalLoading(false);
-  if (data.access_token) {
-    currentSession = data;
-    currentUser = data.user;
-    closeModal();
-    updateNav(email);
-    showToast('✅', 'Welcome back!', `Signed in as ${email}`);
-    if (email === ADMIN_EMAIL) {
-      showPage('admin');
-      document.getElementById('main-nav').style.display = 'none';
-      loadDashboard();
-    } else {
-      showPage('dashboard');
-      loadUserDashboard();
-    }
-  } else {
-    showModalError(data.error_description || 'Invalid email or password.');
-  }
+  try{
+    const res=await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+    const data=await res.json();
+    if(data.access_token){
+      currentSession=data;currentUser=data.user;
+      showToast('✅','Welcome back!','Redirecting to your dashboard...');
+      if(email===ADMIN_EMAIL){
+        setTimeout(()=>{window.location.href='/admin';},800);
+      }else{
+        setTimeout(()=>{window.location.href='/dashboard';},800);
+      }
+    }else{showModalError(data.error_description||'Invalid email or password.');}
+  }catch(e){showModalError('Connection error. Please try again.');}
 }
 
-async function handleSignup() {
-  const name = document.getElementById('signup-name').value.trim();
-  const email = document.getElementById('signup-email').value.trim();
-  const password = document.getElementById('signup-password').value;
-  if (!name || !email || !password) { showModalError('Please fill in all fields.'); return; }
-  if (password.length < 6) { showModalError('Password must be at least 6 characters.'); return; }
-  showModalLoading(true);
+async function handleSignup(){
+  const name=document.getElementById('signup-name').value.trim();
+  const email=document.getElementById('signup-email').value.trim();
+  const password=document.getElementById('signup-password').value;
+  if(!name||!email||!password){showModalError('Please fill in all fields.');return;}
+  if(password.length<6){showModalError('Password must be at least 6 characters.');return;}
   showModalError('');
+  try{
+    const res=await fetch(`${SUPABASE_URL}/auth/v1/signup`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password,data:{full_name:name}})});
+    const data=await res.json();
+    if(data.id||data.user){
+      showToast('🎉','Account Created!','Check your email to confirm, then sign in.');
+      document.getElementById('modal-success').textContent='✅ Account created! Check your email to confirm.';
+      document.getElementById('modal-success').classList.add('show');
+    }else{showModalError(data.error_description||'Registration failed. Try again.');}
+  }catch(e){showModalError('Connection error. Please try again.');}
+}
 
-  const data = await sbAuth('/signup', { email, password, data: { full_name: name } });
-
-  showModalLoading(false);
-  if (data.id || data.user) {
-    showModalSuccess('Account created! Check your email to confirm your account.');
-  } else {
-    showModalError(data.error_description || data.msg || 'Registration failed. Please try again.');
+function updateNav(email){
+  const actions=document.getElementById('nav-actions');
+  if(email){
+    actions.innerHTML=`<div class="user-pill"><div class="user-avatar">${email.charAt(0).toUpperCase()}</div><span class="user-email">${email}</span></div>${email===ADMIN_EMAIL?`<a href="/admin" style="padding:9px 18px;background:var(--gold);border:none;border-radius:8px;font-size:0.82rem;font-weight:700;color:#000;cursor:pointer;text-decoration:none;display:inline-block;">Admin Panel</a>`:''}<button class="btn-login" onclick="logout()">Sign Out</button>`;
+  }else{
+    actions.innerHTML=`<button class="btn-login" onclick="openModal('login')">Login</button><button class="btn-register-nav" onclick="scrollToRegister()">Register Your Home</button>`;
   }
 }
 
-async function forgotPassword() {
-  const email = document.getElementById('login-email').value.trim();
-  if (!email) { showModalError('Please enter your email address first.'); return; }
-  showModalLoading(true);
+function logout(){currentUser=null;currentSession=null;updateNav(null);showToast('👋','Signed Out','See you next time!');}
 
-  await sbAuth('/recover', { email });
+function hashCode(str){let h=5381;for(let i=0;i<str.length;i++)h=((h<<5)+h)^str.charCodeAt(i);return Math.abs(h);}
 
-  showModalLoading(false);
-  showModalSuccess('Password reset email sent! Check your inbox.');
-}
-
-async function updatePassword() {
-  const password = document.getElementById('new-password').value;
-  const confirm = document.getElementById('confirm-password').value;
-  const errEl = document.getElementById('reset-error');
-  const sucEl = document.getElementById('reset-success');
-
-  errEl.className = 'modal-error';
-  sucEl.className = 'modal-success';
-
-  if (!password || !confirm) { errEl.textContent = 'Please fill in all fields.'; errEl.className = 'modal-error show'; return; }
-  if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; errEl.className = 'modal-error show'; return; }
-  if (password.length < 6) { errEl.textContent = 'Password must be at least 6 characters.'; errEl.className = 'modal-error show'; return; }
-
-  const res = await sbFetch('/auth/v1/user', {
-    method: 'PUT',
-    body: JSON.stringify({ password })
-  });
-
-  if (res.ok) {
-    sucEl.textContent = 'Password updated successfully! Redirecting...';
-    sucEl.className = 'modal-success show';
-    setTimeout(() => {
-      document.getElementById('main-nav').style.display = 'flex';
-      showPage('home');
-      openModal('login');
-    }, 2000);
-  } else {
-    errEl.textContent = 'Failed to update password. Please try again.';
-    errEl.className = 'modal-error show';
-  }
-}
-
-function logout() {
-  currentUser = null;
-  currentSession = null;
-  updateNav(null);
-  document.getElementById('main-nav').style.display = 'flex';
-  showPage('home');
-  showToast('👋', 'Signed Out', 'See you next time!');
-}
-
-function updateNav(email) {
-  const actions = document.getElementById('nav-actions');
-  if (email) {
-    const initial = email.charAt(0).toUpperCase();
-    actions.innerHTML = `
-      <div class="user-pill">
-        <div class="user-pill-avatar">${initial}</div>
-        <span class="user-pill-email">${email}</span>
-      </div>
-      ${email === ADMIN_EMAIL ? `<button class="btn-gold" onclick="showPage('admin');document.getElementById('main-nav').style.display='none';loadDashboard()">Admin Panel</button>` : `<button class="btn-ghost" onclick="showPage('dashboard');loadUserDashboard()">My Dashboard</button>`}
-      <button class="btn-ghost" onclick="logout()">Sign Out</button>
-    `;
-  } else {
-    actions.innerHTML = `
-      <button class="btn-ghost" onclick="openModal('login')">Sign In</button>
-      <button class="btn-primary" onclick="showPage('register')">Get Started</button>
-    `;
-  }
-}
-
-// ══════════════════════════════════════
-// HOME ID GENERATOR
-// ══════════════════════════════════════
-function hashCode(str) {
-  let h = 5381;
-  for (let i = 0; i < str.length; i++) h = ((h << 5) + h) ^ str.charCodeAt(i);
-  return Math.abs(h);
-}
-
-function generateID() {
-  const street = document.getElementById('r-street').value.trim();
-  const unit = document.getElementById('r-unit').value.trim();
-  const city = document.getElementById('r-city').value.trim();
-  const state = document.getElementById('r-state').value;
-  const zip = document.getElementById('r-zip').value.trim();
-  if (!street || !city || !state || !zip) { showToast('⚠️','Missing Info','Please fill in all required fields.'); return; }
-  if (zip.length !== 5 || isNaN(zip)) { showToast('⚠️','Invalid ZIP','Enter a valid 5-digit ZIP code.'); return; }
-  const combined = `${street}${unit}${city}${state}${zip}`.toLowerCase();
-  const hash = hashCode(combined);
-  const six = String(hash % 1000000).padStart(6, '0');
-  const id = `${state} — ${six} — ${zip.substring(0,4)}`;
-  document.getElementById('res-id-display').textContent = id;
-  document.getElementById('r-disp-street').textContent = street;
-  document.getElementById('r-disp-unit').textContent = unit || 'N/A';
-  document.getElementById('r-disp-city').textContent = city;
-  document.getElementById('r-disp-sz').textContent = `${state} ${zip}`;
+function generateID(){
+  const street=document.getElementById('r-street').value.trim();
+  const unit=document.getElementById('r-unit').value.trim();
+  const city=document.getElementById('r-city').value.trim();
+  const state=document.getElementById('r-state').value;
+  const zip=document.getElementById('r-zip').value.trim();
+  if(!street||!city||!state||!zip){showToast('⚠️','Missing Info','Please fill in all required fields.');return;}
+  if(zip.length!==5||isNaN(zip)){showToast('⚠️','Invalid ZIP','Enter a valid 5-digit ZIP code.');return;}
+  const hash=hashCode(`${street}${unit}${city}${state}${zip}`.toLowerCase());
+  const id=`${state} — ${String(hash%1000000).padStart(6,'0')} — ${zip.substring(0,4)}`;
+  document.getElementById('res-id-display').textContent=id;
+  document.getElementById('r-disp-street').textContent=street;
+  document.getElementById('r-disp-unit').textContent=unit||'N/A';
+  document.getElementById('r-disp-city').textContent=city;
+  document.getElementById('r-disp-sz').textContent=`${state} ${zip}`;
   document.getElementById('result-empty').classList.add('hide');
   document.getElementById('result-filled').classList.add('show');
   showToast('✅','Home ID Generated!',`Your ID: ${id}`);
 }
 
-async function saveID() {
-  const id = document.getElementById('res-id-display').textContent;
-  const street = document.getElementById('r-disp-street').textContent;
-  const unit = document.getElementById('r-disp-unit').textContent;
-  const city = document.getElementById('r-disp-city').textContent;
-  const state = document.getElementById('r-state').value;
-  const zip = document.getElementById('r-zip').value.trim();
+async function saveID(){
+  const id=document.getElementById('res-id-display').textContent;
+  const street=document.getElementById('r-disp-street').textContent;
+  const unit=document.getElementById('r-disp-unit').textContent;
+  const city=document.getElementById('r-disp-city').textContent;
+  const state=document.getElementById('r-state').value;
+  const zip=document.getElementById('r-zip').value.trim();
   showToast('⏳','Saving...','Connecting to database...');
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/home_codes`, {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal' },
-      body: JSON.stringify({ code:id, street, unit, city, state, zip })
-    });
-    if (res.ok || res.status === 201 || res.status === 204) {
-      showToast('✅','Saved!',`Home ID ${id} saved successfully!`);
-      if (currentUser) loadUserDashboard();
-    } else {
-      const err = await res.json().catch(()=>({}));
-      showToast('❌','Error', err.message || `Error ${res.status}. Please try again.`);
-    }
-  } catch(e) {
-    showToast('❌','Error','Network error. Please try again.');
-  }
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/home_codes`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Prefer':'return=minimal'},body:JSON.stringify({code:id,street,unit,city,state,zip})});
+    if(res.ok||res.status===201)showToast('✅','Saved!',`Home ID ${id} saved successfully!`);
+    else{const err=await res.json();showToast('❌','Error',err.message||'Could not save.');}
+  }catch(e){showToast('❌','Error','Network error. Please try again.');}
 }
 
-function printLabel() {
-  const id = document.getElementById('res-id-display').textContent;
-  const street = document.getElementById('r-disp-street').textContent;
-  const city = document.getElementById('r-disp-city').textContent;
-  const sz = document.getElementById('r-disp-sz').textContent;
-  const win = window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>SaveCode Label — ${id}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
-  <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f5f0e8;}
-  .label{border:2px solid #0a0f1e;border-radius:20px;padding:44px;text-align:center;width:400px;background:#fff;position:relative;overflow:hidden;}
-  .label::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#c9a84c,#0d6e4f,#1a3a8f);}
-  .logo{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:#94a3b8;margin-bottom:24px;margin-top:10px;}
-  .id{font-family:'JetBrains Mono',monospace;font-size:1.6rem;color:#0a0f1e;margin:14px 0;letter-spacing:3px;font-weight:500;}
-  .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:#e8f5f0;border-radius:20px;font-size:0.72rem;font-weight:600;color:#0d6e4f;margin-bottom:24px;border:1px solid rgba(13,110,79,0.2);}
-  hr{border:none;border-top:1px solid #e0ddd5;margin:18px 0;}
-  .addr{font-size:0.88rem;color:#475569;line-height:1.7;}
-  .foot{font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:#cbd5e1;margin-top:22px;}
-  @media print{body{background:#fff;}.label{border:2px solid #000;box-shadow:none;}}
-  </style></head>
-  <body><div class="label">
-  <div class="logo">SaveCode · Home Identification System</div>
-  <div class="id">${id}</div>
-  <div class="badge">✓ Verified Address</div>
-  <hr>
-  <div class="addr">${street}<br>${city}, ${sz}</div>
-  <div class="foot">savecode.us · Patent Pending · US 63/808,302</div>
-  </div><script>window.onload=()=>{setTimeout(()=>window.print(),500);}<\/script></body></html>`);
+function printLabel(){
+  const id=document.getElementById('res-id-display').textContent;
+  const street=document.getElementById('r-disp-street').textContent;
+  const city=document.getElementById('r-disp-city').textContent;
+  const sz=document.getElementById('r-disp-sz').textContent;
+  const win=window.open('','_blank');
+  win.document.write(`<html><head><title>SaveCode Label</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;600&family=JetBrains+Mono&display=swap" rel="stylesheet"><style>body{font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#0a0e1a;}.label{border:2px solid #f0b429;border-radius:16px;padding:40px;text-align:center;width:380px;background:#0d1220;position:relative;}.top-bar{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#B22234,#3C3B6E,#B22234);border-radius:14px 14px 0 0;}.flag{font-size:2rem;margin-bottom:8px;display:block;}.logo{font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:#f0b429;margin-bottom:16px;opacity:0.7;}.id{font-family:'JetBrains Mono',monospace;font-size:1.5rem;color:#fff;margin:12px 0;letter-spacing:3px;}.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(0,165,80,0.15);border:1px solid rgba(0,165,80,0.3);border-radius:20px;font-size:0.72rem;font-weight:600;color:#4ade80;margin-bottom:20px;}hr{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:16px 0;}.addr{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;}.foot{font-size:0.58rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:20px;}</style></head><body><div class="label"><div class="top-bar"></div><span class="flag">🇺🇸</span><div class="logo">SaveCode · Home ID</div><div class="id">${id}</div><div class="badge">✓ Verified Address</div><hr><div class="addr">${street}<br>${city} · ${sz}</div><div class="foot">savecode.us · Patent Pending · US 63/808,302</div></div><script>window.onload=()=>window.print();<\/script></body></html>`);
   win.document.close();
 }
 
-// ══════════════════════════════════════
-// USER DASHBOARD
-// ══════════════════════════════════════
-async function loadUserDashboard() {
-  if (!currentUser) return;
-  document.getElementById('dash-welcome').textContent = `Welcome, ${currentUser.user_metadata?.full_name || currentUser.email}`;
-  try {
-    const res = await sbFetch('/rest/v1/home_codes?select=*&order=created_at.desc');
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      document.getElementById('dash-home-count').textContent = data.length;
-      const list = document.getElementById('my-homes-list');
-      if (data.length === 0) {
-        list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🏠</div><div class="empty-state-title">No homes registered yet</div><div class="empty-state-sub">Click "Register New Home" to get started</div></div>`;
-      } else {
-        list.innerHTML = data.map(h => `
-          <div class="home-item">
-            <div class="hi-icon">🏠</div>
-            <div>
-              <div class="hi-code">${h.code}</div>
-              <div class="hi-addr">${h.street}${h.unit && h.unit !== 'N/A' ? ', '+h.unit : ''}, ${h.city}, ${h.state} ${h.zip}</div>
-            </div>
-            <div class="hi-badge">Active</div>
-            <div class="hi-actions">
-              <button class="hi-btn outline" onclick="printSavedLabel('${h.code}','${h.street}','${h.city}','${h.state} ${h.zip}')">🖨️ Print</button>
-              <button class="hi-btn danger" onclick="deleteHome(${h.id})">Delete</button>
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-  } catch(e) { console.log(e); }
+function openModal(tab){document.getElementById('authModal').classList.add('open');document.body.style.overflow='hidden';switchTab(tab);}
+function closeModal(){document.getElementById('authModal').classList.remove('open');document.body.style.overflow='';}
+function switchTab(tab){
+  document.getElementById('mform-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('mform-signup').style.display=tab==='signup'?'block':'none';
+  document.getElementById('tab-login').className='modal-tab'+(tab==='login'?' active':'');
+  document.getElementById('tab-signup').className='modal-tab'+(tab==='signup'?' active':'');
+  document.getElementById('modal-title').textContent=tab==='login'?'Welcome back':'Create Account';
+  document.getElementById('modal-sub').textContent=tab==='login'?'Sign in to your SaveCode account':"Register your home — it's free";
+  document.getElementById('modal-error').classList.remove('show');
+  document.getElementById('modal-success').classList.remove('show');
 }
+function showModalError(msg){const el=document.getElementById('modal-error');el.textContent=msg;el.classList.toggle('show',!!msg);}
+document.getElementById('authModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
-function printSavedLabel(id, street, city, sz) {
-  document.getElementById('res-id-display').textContent = id;
-  document.getElementById('r-disp-street').textContent = street;
-  document.getElementById('r-disp-city').textContent = city;
-  document.getElementById('r-disp-sz').textContent = sz;
-  printLabel();
-}
-
-async function deleteHome(id) {
-  if (!confirm('Are you sure you want to delete this Home ID?')) return;
-  await sbFetch(`/rest/v1/home_codes?id=eq.${id}`, { method: 'DELETE' });
-  showToast('🗑️','Deleted','Home ID removed.');
-  loadUserDashboard();
-}
-
-// ══════════════════════════════════════
-// ADMIN FUNCTIONS
-// ══════════════════════════════════════
-async function loadDashboard() {
-  try {
-    const res = await sbFetch('/rest/v1/home_codes?select=*');
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      document.getElementById('stat-homes').textContent = data.length;
-      document.getElementById('stat-homes-change').textContent = `↑ ${data.length} total registered`;
-      document.getElementById('donut-total').textContent = data.length;
-      buildChart(data.length);
-    }
-  } catch(e) {}
-  loadUsers();
-}
-
-function buildChart(total) {
-  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const values = [2, 5, 3, 8, 6, 4, Math.max(1, total)];
-  const max = Math.max(...values);
-  const chart = document.getElementById('reg-chart');
-  if (!chart) return;
-  chart.innerHTML = values.map((v,i) => `
-    <div class="bar-wrap">
-      <div class="bar-val">${v}</div>
-      <div class="bar ink" style="height:${Math.max(8,(v/max)*100)}px;" title="${v} registrations on ${days[i]}"></div>
-      <div class="bar-label">${days[i]}</div>
-    </div>
-  `).join('');
-}
-
-async function loadHomes() {
-  try {
-    const res = await sbFetch('/rest/v1/home_codes?select=*&order=created_at.desc');
-    const data = await res.json();
-    const tbody = document.getElementById('homes-tbody');
-    if (!Array.isArray(data) || data.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">🏠</div><div class="empty-state-title">No Home IDs registered yet</div></div></td></tr>`;
-      return;
-    }
-    tbody.innerHTML = data.map(h => `
-      <tr>
-        <td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--ink);">${h.code || '—'}</td>
-        <td>${h.street || '—'}</td>
-        <td>${h.city || '—'}</td>
-        <td>${h.state || '—'}</td>
-        <td>${h.zip || '—'}</td>
-        <td style="color:var(--gray2);font-size:0.78rem;">${h.created_at ? new Date(h.created_at).toLocaleDateString('en-US') : '—'}</td>
-        <td><span class="badge active">Active</span></td>
-        <td>
-          <button class="action-btn" onclick="viewHome(${h.id})">View</button>
-          <button class="action-btn danger" onclick="adminDeleteHome(${h.id})">Delete</button>
-        </td>
-      </tr>
-    `).join('');
-    document.getElementById('stat-homes').textContent = data.length;
-  } catch(e) {
-    document.getElementById('homes-tbody').innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-state-icon">❌</div><div class="empty-state-title">Error loading data</div></div></td></tr>`;
-  }
-}
-
-async function adminDeleteHome(id) {
-  if (!confirm('Delete this Home ID permanently?')) return;
-  await sbFetch(`/rest/v1/home_codes?id=eq.${id}`, { method: 'DELETE' });
-  showToast('🗑️','Deleted','Home ID removed from database.');
-  loadHomes();
-}
-
-function viewHome(id) {
-  showToast('ℹ️','View Home','Detailed view coming soon.');
-}
-
-async function loadUsers() {
-  try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
-    });
-    const data = await res.json();
-    const users = data.users || [];
-    const statEl = document.getElementById('stat-users');
-    const changeEl = document.getElementById('stat-users-change');
-    if (statEl) { statEl.textContent = users.length; }
-    if (changeEl) { changeEl.textContent = `↑ ${users.length} total users`; }
-    const tbody = document.getElementById('users-tbody');
-    if (!tbody) return;
-    if (users.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">👥</div><div class="empty-state-title">No users yet</div></div></td></tr>`;
-      return;
-    }
-    tbody.innerHTML = users.map(u => `
-      <tr>
-        <td>${u.email || '—'} ${u.email === ADMIN_EMAIL ? '<span class="badge admin">Admin</span>' : ''}</td>
-        <td>${u.user_metadata?.full_name || '—'}</td>
-        <td style="color:var(--gray2);font-size:0.78rem;">${u.created_at ? new Date(u.created_at).toLocaleDateString('en-US') : '—'}</td>
-        <td style="color:var(--gray2);font-size:0.78rem;">${u.last_sign_in_at ? new Date(u.last_sign_in_at).toLocaleDateString('en-US') : 'Never'}</td>
-        <td><span class="badge ${u.confirmed_at ? 'active' : 'pending'}">${u.confirmed_at ? 'Confirmed' : 'Pending'}</span></td>
-        <td>${u.email !== ADMIN_EMAIL ? '<button class="action-btn danger">Remove</button>' : '<span style="font-size:0.75rem;color:var(--gray2);">Protected</span>'}</td>
-      </tr>
-    `).join('');
-  } catch(e) {}
-}
-
-function filterTable(tbodyId, query) {
-  const q = query.toLowerCase();
-  document.querySelectorAll(`#${tbodyId} tr`).forEach(row => {
-    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-  });
-}
-
-function exportCSV() {
-  showToast('📥','Exporting...','Preparing your CSV file...');
-  setTimeout(() => showToast('✅','Done!','Data exported successfully.'), 1500);
-}
-
-function showAdminPanel(name, el) {
-  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
-  document.getElementById(`panel-${name}`).classList.add('active');
-  if (el) el.classList.add('active');
-  if (name === 'homes') loadHomes();
-  if (name === 'users') loadUsers();
-  if (name === 'dashboard') loadDashboard();
-}
-
-// ══════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════
-function showPage(name) {
-  // 🔒 SECURITY: Block admin without login
-  if (name === 'admin') {
-    if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
-      showToast('🔒', 'Access Denied', 'Please sign in as admin.');
-      openModal('login');
-      return;
-    }
-    document.getElementById('admin-layout-content').style.display = 'grid';
-  }
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-    p.style.display = 'none';
-  });
-  const target = document.getElementById('page-' + name);
-  if (target) {
-    target.style.display = 'block';
-    target.classList.add('active');
-  }
-  const nav = document.getElementById('main-nav');
-  if (nav) nav.style.display = (name === 'admin') ? 'none' : 'flex';
-  window.scrollTo({top: 0, behavior: 'instant'});
-}
-
-// ══════════════════════════════════════
-// MODAL
-// ══════════════════════════════════════
-function openModal(tab) {
-  document.getElementById('authModal').classList.add('open');
-  switchTab(tab || 'login');
-  showModalError('');
-  showModalSuccess('');
-}
-function closeModal() { document.getElementById('authModal').classList.remove('open'); }
-function switchTab(tab) {
-  document.getElementById('mform-login').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('mform-signup').style.display = tab === 'signup' ? 'block' : 'none';
-  document.getElementById('tab-login').className = 'modal-tab' + (tab === 'login' ? ' active' : '');
-  document.getElementById('tab-signup').className = 'modal-tab' + (tab === 'signup' ? ' active' : '');
-  document.getElementById('modal-title').textContent = tab === 'login' ? 'Welcome back' : 'Create account';
-  document.getElementById('modal-sub').textContent = tab === 'login' ? 'Sign in to your SaveCode account' : "Register your home — it's free";
-  showModalError(''); showModalSuccess('');
-}
-function showModalError(msg) { const el = document.getElementById('modal-error'); el.textContent = msg; el.className = 'modal-error' + (msg ? ' show' : ''); }
-function showModalSuccess(msg) { const el = document.getElementById('modal-success'); el.textContent = msg; el.className = 'modal-success' + (msg ? ' show' : ''); }
-function showModalLoading(show) { document.getElementById('modal-loading').className = 'modal-loading' + (show ? ' show' : ''); }
-document.getElementById('authModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-
-// ══════════════════════════════════════
-// CONTACT
-// ══════════════════════════════════════
-function sendMsg() {
-  const name = document.getElementById('c-name').value;
-  const email = document.getElementById('c-email').value;
-  if (!name || !email) { showToast('⚠️','Missing Info','Please fill in all fields.'); return; }
-  showToast('✅','Message Sent!', "We'll get back to you within 24 hours.");
-  document.getElementById('c-name').value = '';
-  document.getElementById('c-email').value = '';
-  document.getElementById('c-subject').value = '';
-  document.getElementById('c-msg').value = '';
-}
-
-// ══════════════════════════════════════
-// TOAST
-// ══════════════════════════════════════
 let toastTimer;
-function showToast(icon, title, msg) {
+function showToast(icon,title,msg){
   clearTimeout(toastTimer);
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-title').textContent = title;
-  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('t-icon').textContent=icon;
+  document.getElementById('t-title').textContent=title;
+  document.getElementById('t-msg').textContent=msg;
   document.getElementById('toast').classList.add('show');
-  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('show'), 3500);
+  toastTimer=setTimeout(()=>document.getElementById('toast').classList.remove('show'),4000);
 }
+
+window.addEventListener('load',()=>{if(window.location.hash==='#register')setTimeout(scrollToRegister,300);});
 </script>
 </body>
 </html>
