@@ -4,96 +4,152 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --ink:#0a0f1e;--ink2:#1a2340;--paper:#fafaf8;--cream:#f5f0e8;
-  --gold:#c9a84c;--green:#0d6e4f;--green-light:#e8f5f0;
-  --blue:#1a3a8f;--blue-light:#eef2ff;--border:#e0ddd5;--border2:#c8c4b8;
-  --gray:#64748b;--gray2:#94a3b8;
+  --bg:#0a0e1a;
+  --bg2:#0d1220;
+  --bg3:#111827;
+  --gold:#f0b429;
+  --gold2:#ffd35b;
+  --white:#ffffff;
+  --gray:rgba(255,255,255,0.55);
+  --border:rgba(255,255,255,0.08);
+  --border-gold:rgba(240,180,41,0.25);
 }
-body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,248,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
-.nav-inner{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
+.nav-inner{width:100%;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-icon{width:36px;height:36px;background:var(--ink);border-radius:10px;display:grid;place-items:center;color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.8rem;}
-.nav-logo-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;color:var(--ink);}
+.nav-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.2rem;}
+.nav-logo-wrap{display:flex;flex-direction:column;}
+.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.nav-logo-sub{font-size:0.65rem;color:var(--gold);letter-spacing:0.5px;}
 .nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{padding:8px 16px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--gray);cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;}
-.nav-link:hover{background:var(--cream);color:var(--ink);}
-.nav-link.active{color:var(--blue);background:var(--blue-light);}
-.btn-primary{padding:9px 20px;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;color:#fff;background:var(--ink);cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
-.btn-ghost{padding:9px 20px;border:1.5px solid var(--border2);border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
+.nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.15s;display:inline-block;}
+.nav-link:hover{color:#fff;}
+.nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold);border-radius:0;}
+.btn-login{padding:9px 24px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-size:0.85rem;font-weight:500;color:#fff;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-login:hover{border-color:var(--gold);color:var(--gold);}
+.btn-register{padding:9px 24px;border:1.5px solid var(--gold);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.btn-register:hover{background:var(--gold);color:#000;}
 
 /* HERO */
-.page-hero{padding:120px 48px 80px;position:relative;overflow:hidden;}
-.page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop') center/cover;opacity:0.06;}
-.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;}
-.hero-tag{display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);margin-bottom:20px;line-height:1.1;letter-spacing:-1px;}
-.hero-title em{color:var(--gold);font-style:italic;}
-.hero-sub{font-size:1rem;color:var(--gray);line-height:1.8;font-weight:300;}
-.inventor-card{background:#fff;border:1px solid var(--border);border-radius:24px;padding:40px;box-shadow:0 8px 40px rgba(10,15,30,0.08);}
-.inv-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--ink),var(--blue));display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:20px;}
-.inv-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);margin-bottom:4px;}
-.inv-title{font-size:0.82rem;color:var(--gray);margin-bottom:20px;}
-.inv-badge{display:inline-flex;padding:5px 14px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:20px;font-size:0.72rem;font-weight:600;color:#8a6d10;margin-bottom:20px;}
-.inv-detail{display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--gray);margin-bottom:10px;}
-.inv-detail-icon{font-size:1rem;}
+.hero{padding:130px 48px 80px;text-align:center;position:relative;overflow:hidden;background:var(--bg);}
+.hero::before{content:'';position:absolute;top:0;left:0;width:35%;height:100%;background-image:radial-gradient(circle,rgba(240,180,41,0.12) 1px,transparent 1px);background-size:24px 24px;opacity:0.5;}
+.hero::after{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse at right center,rgba(79,70,229,0.12),transparent 70%);}
+.hero-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);color:#fff;margin-bottom:8px;line-height:1.1;position:relative;z-index:1;}
+.hero-h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:1rem;color:var(--gray);max-width:560px;margin:20px auto 0;line-height:1.75;font-weight:300;position:relative;z-index:1;}
 
-/* STORY */
-.story-section{max-width:1280px;margin:0 auto;padding:80px 48px;}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.story-text p{font-size:0.95rem;color:var(--gray);line-height:1.85;margin-bottom:20px;font-weight:300;}
-.story-quote{background:var(--ink);border-radius:20px;padding:40px;margin-top:32px;}
-.sq-text{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#fff;line-height:1.5;margin-bottom:16px;font-style:italic;}
-.sq-author{font-size:0.82rem;color:rgba(255,255,255,0.4);}
+/* STORY SECTION */
+.story-section{max-width:1300px;margin:0 auto;padding:80px 48px;}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
 
-/* VALUES */
-.values-section{background:var(--cream);padding:80px 48px;}
-.values-inner{max-width:1280px;margin:0 auto;}
-.sec-tag{display:inline-flex;padding:5px 14px;background:#fff;border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);color:var(--ink);margin-bottom:48px;letter-spacing:-0.5px;}
-.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
-.value-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px;}
-.value-icon{font-size:2rem;margin-bottom:16px;display:block;}
-.value-title{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
-.value-desc{font-size:0.83rem;color:var(--gray);line-height:1.65;}
+/* STORY TEXT */
+.story-text{}
+.story-eyebrow{display:inline-flex;padding:5px 14px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;font-size:0.7rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:1.5px;text-transform:uppercase;}
+.story-title{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:24px;line-height:1.2;}
+.story-title em{color:var(--gold);font-style:italic;}
+.story-text p{font-size:0.92rem;color:var(--gray);line-height:1.85;margin-bottom:20px;font-weight:300;}
+
+/* QUOTE */
+.story-quote{background:linear-gradient(135deg,#1a237e,#283593);border:1px solid rgba(240,180,41,0.2);border-radius:16px;padding:32px;margin-top:32px;position:relative;}
+.story-quote::before{content:'"';font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);opacity:0.3;position:absolute;top:-10px;left:24px;line-height:1;}
+.sq-text{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;line-height:1.6;margin-bottom:16px;font-style:italic;padding-top:20px;}
+.sq-author{font-size:0.8rem;color:var(--gold);font-weight:600;}
+
+/* INVENTOR CARD */
+.inventor-card{background:linear-gradient(135deg,#0d1220,#1a2040);border:1px solid var(--border-gold);border-radius:20px;padding:36px;position:relative;overflow:hidden;}
+.inventor-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent);}
+.inv-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a237e,#f0b429);display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;margin-bottom:20px;border:2px solid var(--border-gold);}
+.inv-name{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;margin-bottom:4px;}
+.inv-title{font-size:0.82rem;color:var(--gold);margin-bottom:20px;font-weight:500;}
+.inv-badge{display:inline-flex;padding:5px 14px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:20px;font-size:0.7rem;font-weight:600;color:var(--gold);margin-bottom:24px;letter-spacing:1px;}
+.inv-detail{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.inv-detail-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.06);display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;}
+.inv-detail-text{font-size:0.85rem;color:var(--gray);}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px;}
+.stat-box{border-radius:14px;padding:20px;text-align:center;}
+.stat-box.blue{background:linear-gradient(135deg,#1a237e,#283593);}
+.stat-box.green{background:linear-gradient(135deg,#004d40,#00695c);}
+.stat-box.gold{background:linear-gradient(135deg,#7a5c00,#b8860b);}
+.stat-box.navy{background:linear-gradient(135deg,#0d1b3e,#1a2a5e);border:1px solid var(--border-gold);}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:4px;}
+.stat-box.gold .stat-num{color:#000;}
+.stat-label{font-size:0.68rem;color:rgba(255,255,255,0.55);letter-spacing:1.5px;text-transform:uppercase;}
+.stat-box.gold .stat-label{color:rgba(0,0,0,0.6);}
+
+/* VALUES SECTION */
+.values-section{background:var(--bg2);padding:80px 48px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.values-inner{max-width:1300px;margin:0 auto;}
+.section-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:2px;text-transform:uppercase;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;letter-spacing:-0.5px;}
+.section-title em{color:var(--gold);font-style:italic;}
+.values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.value-card{border-radius:16px;padding:28px 24px;border:1px solid rgba(255,255,255,0.06);}
+.value-card.blue{background:linear-gradient(135deg,#1a237e,#283593);}
+.value-card.green{background:linear-gradient(135deg,#004d40,#00695c);}
+.value-card.purple{background:linear-gradient(135deg,#4a148c,#6a1b9a);}
+.value-card.gold-card{background:linear-gradient(135deg,#7a5c00,#b8860b);}
+.value-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+.value-title{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.value-card.gold-card .value-title{color:#000;}
+.value-desc{font-size:0.8rem;color:rgba(255,255,255,0.65);line-height:1.65;}
+.value-card.gold-card .value-desc{color:rgba(0,0,0,0.65);}
 
 /* ROADMAP */
-.roadmap-section{max-width:1280px;margin:0 auto;padding:80px 48px;}
-.roadmap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative;}
-.roadmap-grid::before{content:'';position:absolute;top:32px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--ink),var(--gold),var(--green));opacity:0.2;}
-.rm-item{text-align:center;padding:0 16px;}
-.rm-dot{width:64px;height:64px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;position:relative;z-index:1;}
-.rm-dot.now{background:var(--green);color:#fff;}
-.rm-dot.future{background:#fff;border:2px solid var(--border);color:var(--gray2);}
-.rm-dot.active{background:var(--gold);color:var(--ink);}
-.rm-year{font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-.rm-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
-.rm-desc{font-size:0.8rem;color:var(--gray);line-height:1.6;}
+.roadmap-section{max-width:1300px;margin:0 auto;padding:80px 48px;}
+.roadmap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px;}
+.rm-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px 20px;text-align:center;transition:all 0.2s;}
+.rm-card.active{border-color:var(--border-gold);background:linear-gradient(135deg,#0d1220,#1a2040);}
+.rm-dot{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:600;margin:0 auto 20px;position:relative;}
+.rm-dot.now{background:linear-gradient(135deg,#00a550,#00c864);color:#fff;}
+.rm-dot.q3{background:linear-gradient(135deg,#f0b429,#ffd35b);color:#000;}
+.rm-dot.y27{background:linear-gradient(135deg,#1a237e,#3949ab);color:#fff;}
+.rm-dot.y28{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);color:var(--gray);}
+.rm-year{font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.rm-title{font-size:0.9rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.rm-desc{font-size:0.78rem;color:var(--gray);line-height:1.6;}
 
 /* PATENT */
-.patent-section{background:var(--ink);padding:80px 48px;text-align:center;}
+.patent-section{background:linear-gradient(135deg,#0a0e1a,#1a2040);padding:80px 48px;text-align:center;border-top:1px solid var(--border-gold);}
 .patent-inner{max-width:700px;margin:0 auto;}
-.patent-badge{display:inline-flex;padding:8px 20px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:20px;font-size:0.82rem;font-weight:600;color:var(--gold);margin-bottom:28px;letter-spacing:1px;}
-.patent-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.patent-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);margin-bottom:32px;line-height:1.7;}
-.patent-num{font-family:'JetBrains Mono',monospace;font-size:1.2rem;color:var(--gold);letter-spacing:3px;}
+.patent-badge{display:inline-flex;padding:8px 20px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:20px;font-size:0.8rem;font-weight:600;color:var(--gold);margin-bottom:28px;letter-spacing:1px;}
+.patent-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
+.patent-title em{color:var(--gold);font-style:italic;}
+.patent-sub{font-size:0.95rem;color:var(--gray);margin-bottom:32px;line-height:1.7;}
+.patent-num{font-family:'JetBrains Mono',monospace;font-size:1.3rem;color:var(--gold);letter-spacing:3px;background:rgba(240,180,41,0.08);border:1px solid var(--border-gold);padding:12px 28px;border-radius:10px;display:inline-block;}
 
-footer{background:var(--ink2);padding:40px 48px;}
-.footer-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+/* CTA */
+.cta-section{background:var(--bg);padding:80px 48px;text-align:center;}
+.cta-inner{max-width:600px;margin:0 auto;}
+.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
+.cta-title em{font-style:italic;color:var(--gold);}
+.cta-sub{font-size:0.95rem;color:var(--gray);margin-bottom:36px;line-height:1.7;}
+.btn-cta{padding:14px 36px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;margin:0 6px;}
+.btn-cta:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-cta.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:#fff;}
+.btn-cta.outline:hover{border-color:#fff;}
+
+footer{background:#060810;padding:32px 48px;}
+.footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.2);}
 .footer-links{display:flex;gap:24px;}
-.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.4);text-decoration:none;}
+.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s;}
 .footer-links a:hover{color:#fff;}
 
-@media(max-width:900px){
+@media(max-width:1024px){
   nav{padding:0 20px;}
   .nav-links{display:none;}
-  .page-hero{padding:100px 20px 60px;}
-  .hero-inner{grid-template-columns:1fr;}
+  .hero{padding:100px 20px 60px;}
   .story-section{padding:60px 20px;}
   .story-grid{grid-template-columns:1fr;}
   .values-section{padding:60px 20px;}
@@ -101,8 +157,14 @@ footer{background:var(--ink2);padding:40px 48px;}
   .roadmap-section{padding:60px 20px;}
   .roadmap-grid{grid-template-columns:repeat(2,1fr);}
   .patent-section{padding:60px 20px;}
-  footer{padding:32px 20px;}
+  .cta-section{padding:60px 20px;}
+  footer{padding:28px 20px;}
   .footer-inner{flex-direction:column;gap:16px;text-align:center;}
+}
+@media(max-width:640px){
+  .values-grid{grid-template-columns:1fr;}
+  .roadmap-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
 }
 </style>
 </head>
@@ -111,8 +173,11 @@ footer{background:var(--ink2);padding:40px 48px;}
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="/">
-      <div class="nav-logo-icon">SC</div>
-      <span class="nav-logo-text">SaveCode</span>
+      <div class="nav-logo-icon">🏠</div>
+      <div class="nav-logo-wrap">
+        <span class="nav-logo-name">SaveCode</span>
+        <span class="nav-logo-sub">Every Home Has an Identity</span>
+      </div>
     </a>
     <div class="nav-links">
       <a class="nav-link" href="/">Home</a>
@@ -122,72 +187,50 @@ footer{background:var(--ink2);padding:40px 48px;}
       <a class="nav-link" href="/contact">Contact</a>
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
-      <a class="btn-ghost" href="/">Sign In</a>
-      <a class="btn-primary" href="/#register">Get Started</a>
+      <a class="btn-login" href="/">Login</a>
+      <a class="btn-register" href="/#register">Register Your Home</a>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="page-hero">
-  <div class="hero-inner">
-    <div>
-      <div class="hero-tag">Our Story</div>
-      <h1 class="hero-title">Building America's<br>Address <em>Identity</em><br>Infrastructure</h1>
-      <p class="hero-sub">SaveCode was born from a simple frustration — and grew into a mission to give every American home a permanent, verifiable identity that protects residents, simplifies delivery, and builds the infrastructure for the future of shipping.</p>
-    </div>
-    <div class="inventor-card">
-      <div class="inv-avatar">E</div>
-      <div class="inv-name">Eman A. Eljack</div>
-      <div class="inv-title">Inventor & Founder, SaveCode</div>
-      <div class="inv-badge">🇺🇸 Patent Pending · US 63/808,302</div>
-      <div class="inv-detail"><span class="inv-detail-icon">📍</span>Everett, Washington, USA</div>
-      <div class="inv-detail"><span class="inv-detail-icon">✉️</span>eman4eljck@gmail.com</div>
-      <div class="inv-detail"><span class="inv-detail-icon">🌐</span>www.savecode.us</div>
-    </div>
-  </div>
+<div class="hero">
+  <div class="hero-eyebrow">Our Story</div>
+  <h1 class="hero-h1">Building America's<br>Address <em>Identity</em></h1>
+  <p class="hero-sub">SaveCode was born from a simple frustration — and grew into a mission to give every American home a permanent, verifiable identity forever.</p>
 </div>
 
-<!-- STORY -->
+<!-- STORY SECTION -->
 <div class="story-section">
   <div class="story-grid">
-    <div class="story-text">
-      <div class="sec-tag" style="display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;">The Problem We Solved</div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:24px;line-height:1.2;">Why We Built SaveCode</h2>
-      <p>SaveCode was born from a simple frustration — receiving tax notices, bank statements, and court documents intended for strangers who once lived at the same address. We realized this wasn't just an inconvenience. It was a systemic failure affecting millions of American homes every day.</p>
-      <p>The root cause? Addresses have no identity. A street address tells you where a place is — but it says nothing about who lives there, whether it's the right door, or whether the mail is even authorized to be delivered.</p>
-      <p>We built SaveCode to solve this problem once and for all. Every home deserves a permanent, verifiable identity — a single code that connects the physical address to its current residents, protects incoming mail, and enables the next generation of delivery technology.</p>
-      <p>Our system is the first of its kind: combining address identification, resident verification, privacy-preserving shipping, and autonomous delivery compatibility into one unified platform.</p>
+    <div>
+      <div class="story-eyebrow">The Problem We Solved</div>
+      <h2 class="story-title">Why We Built <em>SaveCode</em></h2>
+      <div class="story-text">
+        <p>SaveCode was born from a simple frustration — receiving tax notices, bank statements, and court documents intended for strangers who once lived at the same address. We realized this wasn't just an inconvenience. It was a systemic failure affecting millions of American homes every day.</p>
+        <p>The root cause? Addresses have no identity. A street address tells you where a place is — but nothing about who lives there, whether it's the right door, or if the mail is authorized to be delivered.</p>
+        <p>We built SaveCode to solve this problem once and for all. Every home deserves a permanent, verifiable identity — a single code that connects the physical address to its current residents, protects incoming mail, and enables the next generation of delivery technology.</p>
+      </div>
       <div class="story-quote">
         <div class="sq-text">"Every home in America deserves a permanent identity. Not just an address — an identity."</div>
         <div class="sq-author">— Eman A. Eljack, Founder of SaveCode</div>
       </div>
     </div>
     <div>
-      <div style="background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:24px;">
-        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop" alt="American homes" style="width:100%;height:280px;object-fit:cover;">
-        <div style="padding:24px;">
-          <div style="font-size:0.72rem;font-weight:600;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">The Mission</div>
-          <div style="font-size:0.95rem;color:var(--ink);line-height:1.65;">Give every one of America's 142 million homes a permanent digital identity — free, forever.</div>
-        </div>
+      <div class="inventor-card">
+        <div class="inv-avatar">E</div>
+        <div class="inv-name">Eman A. Eljack</div>
+        <div class="inv-title">Inventor & Founder, SaveCode</div>
+        <div class="inv-badge">🇺🇸 Patent Pending · US 63/808,302</div>
+        <div class="inv-detail"><div class="inv-detail-icon">📍</div><div class="inv-detail-text">Everett, Washington, USA</div></div>
+        <div class="inv-detail"><div class="inv-detail-icon">✉️</div><div class="inv-detail-text">eman4eljck@gmail.com</div></div>
+        <div class="inv-detail"><div class="inv-detail-icon">🌐</div><div class="inv-detail-text">www.savecode.us</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div style="background:var(--ink);border-radius:16px;padding:24px;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:6px;">142M+</div>
-          <div style="font-size:0.72rem;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;">US Homes</div>
-        </div>
-        <div style="background:var(--green);border-radius:16px;padding:24px;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;margin-bottom:6px;">Free</div>
-          <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;">Always</div>
-        </div>
-        <div style="background:var(--cream);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--ink);margin-bottom:6px;">100%</div>
-          <div style="font-size:0.72rem;color:var(--gray2);letter-spacing:1px;text-transform:uppercase;">Unique IDs</div>
-        </div>
-        <div style="background:var(--blue);border-radius:16px;padding:24px;text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:#fff;margin-bottom:6px;">2026</div>
-          <div style="font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:1px;text-transform:uppercase;">Integration</div>
-        </div>
+      <div class="stats-row">
+        <div class="stat-box blue"><div class="stat-num">142M+</div><div class="stat-label">US Homes</div></div>
+        <div class="stat-box green"><div class="stat-num">Free</div><div class="stat-label">Always</div></div>
+        <div class="stat-box gold"><div class="stat-num">100%</div><div class="stat-label">Unique IDs</div></div>
+        <div class="stat-box navy"><div class="stat-num">2026</div><div class="stat-label">Integration</div></div>
       </div>
     </div>
   </div>
@@ -196,42 +239,42 @@ footer{background:var(--ink2);padding:40px 48px;}
 <!-- VALUES -->
 <div class="values-section">
   <div class="values-inner">
-    <div class="sec-tag">What We Stand For</div>
-    <h2 class="sec-title">Our Core Values</h2>
+    <div class="section-eyebrow">What We Stand For</div>
+    <h2 class="section-title">Our Core <em>Values</em></h2>
     <div class="values-grid">
-      <div class="value-card"><span class="value-icon">⚡</span><div class="value-title">Precision</div><p class="value-desc">Every Home ID is unique. No duplicates. No errors. No exceptions. Ever.</p></div>
-      <div class="value-card"><span class="value-icon">🔒</span><div class="value-title">Privacy</div><p class="value-desc">Your personal data is yours. We never sell, share, or expose your information to anyone.</p></div>
-      <div class="value-card"><span class="value-icon">🌐</span><div class="value-title">Access</div><p class="value-desc">Free for every American home. No subscription. No hidden fees. Our service is a public good.</p></div>
-      <div class="value-card"><span class="value-icon">🤝</span><div class="value-title">Partnership</div><p class="value-desc">Built to integrate with carriers, government agencies, and businesses across America.</p></div>
+      <div class="value-card blue"><span class="value-icon">⚡</span><div class="value-title">Precision</div><p class="value-desc">Every Home ID is unique. No duplicates. No errors. No exceptions. Ever.</p></div>
+      <div class="value-card green"><span class="value-icon">🔒</span><div class="value-title">Privacy</div><p class="value-desc">Your personal data is yours. We never sell, share, or expose your information.</p></div>
+      <div class="value-card purple"><span class="value-icon">🌐</span><div class="value-title">Access</div><p class="value-desc">Free for every American home. No subscription. No hidden fees. A public good.</p></div>
+      <div class="value-card gold-card"><span class="value-icon">🤝</span><div class="value-title">Partnership</div><p class="value-desc">Built to integrate with carriers, government agencies, and businesses.</p></div>
     </div>
   </div>
 </div>
 
 <!-- ROADMAP -->
 <div class="roadmap-section">
-  <div class="sec-tag" style="display:inline-flex;padding:5px 14px;background:var(--cream);border:1px solid var(--border2);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gray);margin-bottom:16px;letter-spacing:1px;text-transform:uppercase;">Our Journey</div>
-  <h2 class="sec-title">The SaveCode Roadmap</h2>
+  <div class="section-eyebrow">Our Journey</div>
+  <h2 class="section-title">The SaveCode <em>Roadmap</em></h2>
   <div class="roadmap-grid">
-    <div class="rm-item">
+    <div class="rm-card active">
       <div class="rm-dot now">Now</div>
       <div class="rm-year">2026</div>
       <div class="rm-title">Home Registration</div>
       <p class="rm-desc">Every US home gets a permanent ID with physical door and mailbox labels.</p>
     </div>
-    <div class="rm-item">
-      <div class="rm-dot active">Q3</div>
+    <div class="rm-card active">
+      <div class="rm-dot q3">Q3</div>
       <div class="rm-year">2026</div>
       <div class="rm-title">Carrier Integration</div>
-      <p class="rm-desc">Amazon, FedEx, UPS, and USPS accept Home ID on all shipping labels.</p>
+      <p class="rm-desc">Major carriers accept Home ID on all shipping labels nationwide.</p>
     </div>
-    <div class="rm-item">
-      <div class="rm-dot future">2027</div>
+    <div class="rm-card">
+      <div class="rm-dot y27">2027</div>
       <div class="rm-year">2027</div>
       <div class="rm-title">Government Partnership</div>
       <p class="rm-desc">Official proposal to USPS as the national address identity standard.</p>
     </div>
-    <div class="rm-item">
-      <div class="rm-dot future">2028</div>
+    <div class="rm-card">
+      <div class="rm-dot y28">2028+</div>
       <div class="rm-year">2028+</div>
       <div class="rm-title">National Standard</div>
       <p class="rm-desc">SaveCode becomes the official address identity for all 142M+ US homes.</p>
@@ -243,9 +286,19 @@ footer{background:var(--ink2);padding:40px 48px;}
 <div class="patent-section">
   <div class="patent-inner">
     <div class="patent-badge">🇺🇸 Intellectual Property Protected</div>
-    <h2 class="patent-title">Patent Pending</h2>
+    <h2 class="patent-title">Patent <em>Pending</em></h2>
     <p class="patent-sub">SaveCode's Home ID system, resident registry, and last-mile verification technology are protected under US patent law. Our invention represents a new category of address infrastructure.</p>
     <div class="patent-num">US 63/808,302</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">Join the <em>Mission</em></h2>
+    <p class="cta-sub">Help us give every American home a permanent identity. Register yours for free today.</p>
+    <a class="btn-cta" href="/#register">Register Your Home — Free</a>
+    <a class="btn-cta outline" href="/contact">Contact Us</a>
   </div>
 </div>
 
