@@ -4,359 +4,137 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#0a0e1a;--bg2:#0d1220;--bg3:#111827;
-  --gold:#f0b429;--gold2:#ffd35b;
-  --white:#fff;--gray:rgba(255,255,255,0.55);
-  --border:rgba(255,255,255,0.08);--border-gold:rgba(240,180,41,0.25);
-  --green:#00a550;
-}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
-.nav-inner{width:100%;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.2rem;}
-.nav-logo-wrap{display:flex;flex-direction:column;}
-.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;}
-.nav-logo-sub{font-size:0.65rem;color:var(--gold);letter-spacing:0.5px;}
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.15s;display:inline-block;}
-.nav-link:hover{color:#fff;}
-.nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold);border-radius:0;}
-.btn-login{padding:9px 24px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-size:0.85rem;font-weight:500;color:#fff;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-login:hover{border-color:var(--gold);color:var(--gold);}
-.btn-register{padding:9px 24px;border:1.5px solid var(--gold);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-register:hover{background:var(--gold);color:#000;}
-
-/* HERO */
-.hero{padding:130px 48px 80px;text-align:center;position:relative;overflow:hidden;background:var(--bg);}
-.hero::before{content:'';position:absolute;top:0;left:0;width:35%;height:100%;background-image:radial-gradient(circle,rgba(240,180,41,0.12) 1px,transparent 1px);background-size:24px 24px;opacity:0.5;}
-.hero::after{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse at right center,rgba(79,70,229,0.12),transparent 70%);}
-.hero-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);color:#fff;margin-bottom:8px;line-height:1.1;position:relative;z-index:1;}
-.hero-h1 em{color:var(--gold);font-style:italic;}
-.hero-sub{font-size:1rem;color:var(--gray);max-width:520px;margin:20px auto 0;line-height:1.75;font-weight:300;position:relative;z-index:1;}
-
-/* CONTACT SECTION */
-.contact-wrap{max-width:1300px;margin:0 auto;padding:80px 48px;}
-.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start;}
-
-/* EMAIL CARDS */
-.contact-info{}
-.ci-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px;}
-.ci-sub{font-size:0.88rem;color:var(--gray);margin-bottom:36px;line-height:1.65;}
-
-.ci-item{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;}
-.ci-icon{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0;border:1px solid var(--border);}
-.ci-icon.blue{background:linear-gradient(135deg,#1a237e,#283593);}
-.ci-icon.gold{background:rgba(240,180,41,0.1);border-color:var(--border-gold);}
-.ci-icon.green{background:rgba(0,165,80,0.1);border-color:rgba(0,165,80,0.2);}
-.ci-icon.purple{background:linear-gradient(135deg,#4a148c,#6a1b9a);}
-.ci-label{font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
-.ci-value{font-size:0.92rem;font-weight:500;color:#fff;}
-.ci-value a{color:var(--gold);text-decoration:none;transition:opacity 0.15s;}
-.ci-value a:hover{opacity:0.8;}
-.ci-desc{font-size:0.78rem;color:var(--gray);margin-top:4px;line-height:1.5;}
-
-/* EMAIL CARDS GRID */
-.email-cards{display:flex;flex-direction:column;gap:14px;margin-top:36px;}
-.email-card{border-radius:14px;padding:20px 22px;border:1px solid var(--border);transition:all 0.2s;position:relative;overflow:hidden;}
-.email-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;}
-.email-card.blue{background:rgba(26,35,126,0.2);}
-.email-card.blue::before{background:linear-gradient(to bottom,#1a237e,#283593);}
-.email-card.gold{background:rgba(240,180,41,0.08);border-color:var(--border-gold);}
-.email-card.gold::before{background:var(--gold);}
-.email-card.purple{background:rgba(74,20,140,0.2);}
-.email-card.purple::before{background:linear-gradient(to bottom,#4a148c,#6a1b9a);}
-.email-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
-.ec-type{font-size:0.68rem;font-weight:600;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
-.ec-email{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:#fff;margin-bottom:6px;}
-.ec-desc{font-size:0.78rem;color:var(--gray);line-height:1.55;}
-
-/* CONTACT FORM */
-.contact-form{background:var(--bg2);border:1px solid var(--border-gold);border-radius:20px;padding:40px;box-shadow:0 8px 40px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.contact-form::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#4f46e5,var(--gold));}
-.form-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:#fff;margin-bottom:6px;margin-top:8px;}
-.form-sub{font-size:0.82rem;color:var(--gray);margin-bottom:28px;}
-.fg{margin-bottom:18px;}
-.fg label{display:block;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.4);margin-bottom:8px;letter-spacing:0.8px;text-transform:uppercase;}
-.fg input,.fg select,.fg textarea{width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:#fff;font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.15s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
-.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,0.2);}
-.fg select option{background:var(--bg2);}
-.fg textarea{resize:vertical;min-height:130px;}
-.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.btn-send{width:100%;padding:14px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:4px;}
-.btn-send:hover{background:var(--gold2);transform:translateY(-1px);}
-.form-success{background:rgba(0,165,80,0.12);border:1px solid rgba(0,165,80,0.25);border-radius:10px;padding:14px;font-size:0.85rem;color:#4ade80;display:none;margin-bottom:16px;text-align:center;}
-.form-success.show{display:block;}
-
-/* LOCATION */
-.location-section{background:var(--bg2);padding:80px 48px;border-top:1px solid var(--border);}
-.location-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
-.section-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:2px;text-transform:uppercase;}
-.section-title{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:16px;line-height:1.2;}
-.section-title em{color:var(--gold);font-style:italic;}
-.loc-detail{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-.loc-icon{width:44px;height:44px;border-radius:12px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);display:grid;place-items:center;font-size:1.1rem;flex-shrink:0;}
-.loc-label{font-size:0.7rem;color:var(--gold);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
-.loc-value{font-size:0.9rem;color:#fff;font-weight:500;}
-.loc-map{background:var(--bg3);border:1px solid var(--border-gold);border-radius:20px;height:300px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
-.loc-map img{width:100%;height:100%;object-fit:cover;opacity:0.35;filter:saturate(0.3);}
-.loc-map-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
-.loc-pin{font-size:2.5rem;}
-.loc-city{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;}
-.loc-state{font-size:0.8rem;color:var(--gold);letter-spacing:1px;}
-
-/* CTA */
-.cta-section{background:var(--bg);padding:80px 48px;text-align:center;border-top:1px solid var(--border-gold);}
-.cta-inner{max-width:600px;margin:0 auto;}
-.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.cta-title em{font-style:italic;color:var(--gold);}
-.cta-sub{font-size:0.95rem;color:var(--gray);margin-bottom:36px;line-height:1.7;}
-.btn-cta{padding:14px 36px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;margin:0 6px;}
-.btn-cta:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-cta.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.2);color:#fff;}
-.btn-cta.outline:hover{border-color:rgba(255,255,255,0.4);}
-
-/* TOAST */
-.toast{position:fixed;bottom:28px;right:28px;background:var(--bg2);border:1px solid var(--border-gold);border-radius:14px;padding:16px 20px;box-shadow:0 8px 40px rgba(0,0,0,0.4);z-index:600;display:none;min-width:300px;}
-.toast.show{display:flex;align-items:flex-start;gap:14px;animation:toastIn 0.3s cubic-bezier(0.16,1,0.3,1);}
-@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.toast-icon{font-size:1.3rem;flex-shrink:0;}
-.toast-title{font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:2px;}
-.toast-msg{font-size:0.78rem;color:var(--gray);}
-
-footer{background:#060810;border-top:1px solid var(--border);padding:32px 48px;}
-.footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.2);}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s;}
-.footer-links a:hover{color:var(--gold);}
-
-@media(max-width:1024px){
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .contact-wrap{padding:60px 20px;}
-  .contact-grid{grid-template-columns:1fr;}
-  .fg-row{grid-template-columns:1fr;}
-  .location-section{padding:60px 20px;}
-  .location-inner{grid-template-columns:1fr;}
-  .cta-section{padding:60px 20px;}
-  footer{padding:28px 20px;}
-  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
-}
+:root{--bg:#f8f9fc;--bg2:#ffffff;--dark:#0b1221;--blue:#1a3a6b;--gold:#c9972a;--gold2:#e8b84b;--gray:#6b7a99;--gray2:#e8ecf4;--border:#e2e8f4;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);overflow-x:hidden;}
+.flag{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:linear-gradient(90deg,#B22234 0%,#B22234 35%,#fff 35%,#fff 40%,#3C3B6E 40%);}
+nav{position:fixed;top:3px;left:0;right:0;z-index:500;background:rgba(248,249,252,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:8px;display:grid;place-items:center;}
+.logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;}
+.logo-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.logo-name span{color:var(--gold);}
+.nav-menu{display:flex;align-items:center;gap:4px;}
+.nav-menu a{font-size:0.875rem;font-weight:500;color:var(--gray);text-decoration:none;padding:8px 16px;border-radius:6px;transition:all 0.2s;}
+.nav-menu a:hover{color:var(--dark);background:var(--gray2);}
+.nav-cta{background:var(--blue)!important;color:#fff!important;border-radius:8px!important;font-weight:600!important;}
+.main{padding:120px 48px 80px;max-width:1200px;margin:0 auto;}
+.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--dark);margin-bottom:16px;letter-spacing:-0.5px;}
+.h1 em{color:var(--blue);font-style:italic;}
+.lead{font-size:1rem;color:var(--gray);line-height:1.8;max-width:480px;margin-bottom:64px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.contact-channels{display:flex;flex-direction:column;gap:16px;}
+.channel{display:flex;gap:20px;padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all 0.3s;}
+.channel:hover{border-color:rgba(26,58,107,0.2);box-shadow:0 4px 20px rgba(26,58,107,0.06);transform:translateX(4px);}
+.channel-icon{width:48px;height:48px;border-radius:10px;background:var(--gray2);display:grid;place-items:center;font-size:1.3rem;flex-shrink:0;}
+.channel-icon-blue{background:rgba(26,58,107,0.08);}
+.channel-icon-gold{background:rgba(201,151,42,0.08);}
+.channel-label{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:4px;}
+.channel-value{font-size:0.95rem;font-weight:600;color:var(--dark);}
+.channel-desc{font-size:0.78rem;color:var(--gray);margin-top:4px;line-height:1.5;}
+.form-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px;}
+.form-title{font-size:1rem;font-weight:700;color:var(--dark);margin-bottom:8px;}
+.form-sub{font-size:0.82rem;color:var(--gray);margin-bottom:28px;line-height:1.6;}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-size:0.75rem;font-weight:600;color:var(--dark);margin-bottom:8px;letter-spacing:0.3px;}
+.form-input{width:100%;padding:12px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--dark);outline:none;transition:all 0.2s;}
+.form-input:focus{border-color:var(--blue);background:var(--bg2);}
+.form-input::placeholder{color:rgba(107,122,153,0.5);}
+.form-select{appearance:none;cursor:pointer;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-textarea{resize:vertical;min-height:120px;}
+.form-btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:8px;}
+.form-btn:hover{background:#2451a3;transform:translateY(-1px);}
+.form-note{font-size:0.72rem;color:var(--gray);margin-top:12px;line-height:1.6;}
+.success-msg{display:none;padding:16px;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:8px;font-size:0.85rem;color:#16a34a;margin-top:16px;}
+footer{background:var(--dark);padding:48px;text-align:center;margin-top:80px;}
+.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.25);}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-top:12px;}
+.footer-links a{font-size:0.75rem;color:rgba(255,255,255,0.25);text-decoration:none;}
+.footer-links a:hover{color:rgba(255,255,255,0.6);}
+@media(max-width:768px){.nav-menu{display:none;}.main{padding:100px 24px 48px;}.contact-grid{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-
+<div class="flag"></div>
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="/">
-      <div class="nav-logo-icon">🏠</div>
-      <div class="nav-logo-wrap">
-        <span class="nav-logo-name">SaveCode</span>
-        <span class="nav-logo-sub">Every Home Has an Identity</span>
-      </div>
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link" href="/features">Features</a>
-      <a class="nav-link" href="/how-it-works">How It Works</a>
-      <a class="nav-link" href="/about">About</a>
-      <a class="nav-link active" href="/contact">Contact</a>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;">
-      <a class="btn-login" href="/">Login</a>
-      <a class="btn-register" href="/#register">Register Your Home</a>
-    </div>
+    <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="logo-name">Save<span>Code</span></div></a>
+    <div class="nav-menu"><a href="/features">Features</a><a href="/how-it-works">How It Works</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/waitlist" class="nav-cta">Join Waitlist</a></div>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Get In Touch</div>
-  <h1 class="hero-h1">Contact <em>SaveCode</em></h1>
-  <p class="hero-sub">Questions, partnerships, media inquiries — we respond to every message within 24 hours.</p>
-</div>
+<div class="main">
+  <div class="eyebrow">Get In Touch</div>
+  <h1 class="h1">Let's Build Something <em>Important Together</em></h1>
+  <p class="lead">Whether you're a financial institution, government agency, delivery carrier, or potential partner — we'd love to hear from you.</p>
 
-<!-- CONTACT -->
-<div class="contact-wrap">
   <div class="contact-grid">
-
-    <!-- LEFT: INFO -->
-    <div class="contact-info">
-      <div class="ci-title">We'd Love to Hear From You</div>
-      <p class="ci-sub">Whether you're a homeowner, delivery company, government agency, or potential partner — SaveCode is built for collaboration.</p>
-
-      <div class="ci-item">
-        <div class="ci-icon blue">✉️</div>
-        <div>
-          <div class="ci-label">General Inquiries</div>
-          <div class="ci-value"><a href="mailto:support@savecode.us">support@savecode.us</a></div>
-          <div class="ci-desc">Questions about registration, your Home ID, or how SaveCode works.</div>
-        </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon gold">🤝</div>
-        <div>
-          <div class="ci-label">Partnerships & Enterprise</div>
-          <div class="ci-value"><a href="mailto:partnerships@savecode.us">partnerships@savecode.us</a></div>
-          <div class="ci-desc">Carriers, government agencies, and businesses interested in integrating SaveCode.</div>
-        </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon purple">📰</div>
-        <div>
-          <div class="ci-label">Media & Press</div>
-          <div class="ci-value"><a href="mailto:press@savecode.us">press@savecode.us</a></div>
-          <div class="ci-desc">Interview requests, press kit, and patent information.</div>
-        </div>
-      </div>
-      <div class="ci-item">
-        <div class="ci-icon green">⚡</div>
-        <div>
-          <div class="ci-label">Response Time</div>
-          <div class="ci-value">Within 24 Hours</div>
-          <div class="ci-desc">We respond to every inquiry, Monday through Friday.</div>
-        </div>
-      </div>
-
-      <div class="email-cards">
-        <div class="email-card blue">
-          <div class="ec-type">📧 General Support</div>
-          <div class="ec-email">support@savecode.us</div>
-          <p class="ec-desc">Home ID help, technical support, account questions, and general inquiries.</p>
-        </div>
-        <div class="email-card gold">
-          <div class="ec-type">🤝 Partnerships</div>
-          <div class="ec-email">partnerships@savecode.us</div>
-          <p class="ec-desc">Carrier integrations, enterprise licensing, API access, and investment inquiries.</p>
-        </div>
-        <div class="email-card purple">
-          <div class="ec-type">📰 Media & Press</div>
-          <div class="ec-email">press@savecode.us</div>
-          <p class="ec-desc">Press coverage, interview requests, and media kit about SaveCode.</p>
-        </div>
+    <div class="contact-channels">
+      <a href="mailto:info@savecode.us" class="channel">
+        <div class="channel-icon channel-icon-blue">✉️</div>
+        <div><div class="channel-label">General Inquiries</div><div class="channel-value">info@savecode.us</div><div class="channel-desc">Questions about SaveCode, the platform, or our mission.</div></div>
+      </a>
+      <a href="mailto:partnerships@savecode.us" class="channel">
+        <div class="channel-icon channel-icon-gold">🤝</div>
+        <div><div class="channel-label">Partnerships</div><div class="channel-value">partnerships@savecode.us</div><div class="channel-desc">Financial institutions, carriers, government agencies, and enterprise partners.</div></div>
+      </a>
+      <a href="mailto:press@savecode.us" class="channel">
+        <div class="channel-icon">📰</div>
+        <div><div class="channel-label">Press & Media</div><div class="channel-value">press@savecode.us</div><div class="channel-desc">Media inquiries, interviews, and press kit requests.</div></div>
+      </a>
+      <div class="channel" style="cursor:default;">
+        <div class="channel-icon">📍</div>
+        <div><div class="channel-label">Headquarters</div><div class="channel-value">Everett, Washington</div><div class="channel-desc">Mangel Technologies LLC · United States of America</div></div>
       </div>
     </div>
 
-    <!-- RIGHT: FORM -->
-    <div class="contact-form">
+    <div class="form-card">
       <div class="form-title">Send Us a Message</div>
-      <p class="form-sub">Fill in the form and we'll get back to you within 24 hours.</p>
-      <div class="form-success" id="form-success">✅ Message sent! We'll get back to you within 24 hours.</div>
-      <div class="fg-row">
-        <div class="fg"><label>First Name *</label><input type="text" id="f-fname" placeholder="John"></div>
-        <div class="fg"><label>Last Name *</label><input type="text" id="f-lname" placeholder="Anderson"></div>
+      <div class="form-sub">Fill out the form below and we'll get back to you within 2 business days.</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="John"></div>
+        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Smith"></div>
       </div>
-      <div class="fg"><label>Email Address *</label><input type="email" id="f-email" placeholder="you@example.com"></div>
-      <div class="fg"><label>Organization (optional)</label><input type="text" id="f-org" placeholder="Company or Agency name"></div>
-      <div class="fg">
-        <label>Inquiry Type *</label>
-        <select id="f-type">
-          <option value="">Select inquiry type...</option>
+      <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="john@company.com"></div>
+      <div class="form-group"><label class="form-label">Organization</label><input type="text" class="form-input" placeholder="Company or Agency Name"></div>
+      <div class="form-group">
+        <label class="form-label">Inquiry Type</label>
+        <select class="form-input form-select">
+          <option value="">Select a category</option>
+          <option>Partnership Opportunity</option>
+          <option>Government / Agency Inquiry</option>
+          <option>Financial Institution</option>
+          <option>Delivery & Logistics</option>
+          <option>Press & Media</option>
+          <option>Grant & Investment</option>
           <option>General Question</option>
-          <option>Home ID Registration Help</option>
-          <option>Partnership / Enterprise</option>
-          <option>Carrier Integration</option>
-          <option>Government Partnership</option>
-          <option>Media / Press</option>
-          <option>Investment</option>
-          <option>Other</option>
         </select>
       </div>
-      <div class="fg"><label>Subject *</label><input type="text" id="f-subject" placeholder="How can we help?"></div>
-      <div class="fg"><label>Message *</label><textarea id="f-message" placeholder="Tell us more about your inquiry..."></textarea></div>
-      <button class="btn-send" onclick="sendMessage()">Send Message →</button>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input form-textarea" placeholder="Tell us about your inquiry..."></textarea></div>
+      <button class="form-btn" onclick="submitForm()">Send Message →</button>
+      <div class="success-msg" id="successMsg">✓ Thank you! We'll be in touch within 2 business days.</div>
+      <p class="form-note">🔒 Your information is kept confidential and will never be shared with third parties.</p>
     </div>
   </div>
 </div>
 
-<!-- LOCATION -->
-<div class="location-section">
-  <div class="location-inner">
-    <div>
-      <div class="section-eyebrow">Our Location</div>
-      <h2 class="section-title">Based in <em>Everett</em>,<br>Washington</h2>
-      <div class="loc-detail">
-        <div class="loc-icon">📍</div>
-        <div><div class="loc-label">Address</div><div class="loc-value">Everett, Washington 98201, USA</div></div>
-      </div>
-      <div class="loc-detail">
-        <div class="loc-icon">🕐</div>
-        <div><div class="loc-label">Business Hours</div><div class="loc-value">Monday – Friday · 9 AM – 5 PM PT</div></div>
-      </div>
-      <div class="loc-detail">
-        <div class="loc-icon">🌐</div>
-        <div><div class="loc-label">Website</div><div class="loc-value">www.savecode.us</div></div>
-      </div>
-    </div>
-    <div class="loc-map">
-      <img src="https://images.unsplash.com/photo-1619468129361-605ebea04b44?w=800&auto=format&fit=crop" alt="Pacific Northwest">
-      <div class="loc-map-overlay">
-        <div class="loc-pin">📍</div>
-        <div class="loc-city">Everett, Washington</div>
-        <div class="loc-state">PACIFIC NORTHWEST · USA</div>
-      </div>
-    </div>
-  </div>
+<div style="text-align:center;padding:24px 48px;color:#6b7a99;font-size:0.82rem;border-top:1px solid #e2e8f4;background:#ffffff;">
+SaveCode is developed by Mangel Technologies LLC, a Washington-based technology company focused on secure verification infrastructure.
 </div>
-
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-inner">
-    <h2 class="cta-title">Ready to <em>Get Started?</em></h2>
-    <p class="cta-sub">Register your Home ID for free in under a minute. Give your address a permanent identity today.</p>
-    <a class="btn-cta" href="/#register">Register Now — Free</a>
-    <a class="btn-cta outline" href="/features">See All Features</a>
-  </div>
-</div>
-
 <footer>
-  <div class="footer-inner">
-    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/features">Features</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </div>
-  </div>
+  <div class="footer-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA</div>
+  <div class="footer-links"><a href="/">Home</a><a href="/features">Features</a><a href="/about">About</a><a href="/privacy">Privacy</a></div>
 </footer>
-
-<div class="toast" id="toast">
-  <span class="toast-icon" id="t-icon">✅</span>
-  <div><div class="toast-title" id="t-title">Success</div><div class="toast-msg" id="t-msg"></div></div>
-</div>
-
 <script>
-function sendMessage(){
-  const fname=document.getElementById('f-fname').value.trim();
-  const email=document.getElementById('f-email').value.trim();
-  const type=document.getElementById('f-type').value;
-  const message=document.getElementById('f-message').value.trim();
-  if(!fname||!email||!type||!message){showToast('⚠️','Missing Fields','Please fill in all required fields.');return;}
-  document.getElementById('form-success').classList.add('show');
-  showToast('✅','Message Sent!','We\'ll get back to you within 24 hours.');
-  ['f-fname','f-lname','f-email','f-org','f-subject','f-message'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('f-type').value='';
-}
-let toastTimer;
-function showToast(icon,title,msg){
-  clearTimeout(toastTimer);
-  document.getElementById('t-icon').textContent=icon;
-  document.getElementById('t-title').textContent=title;
-  document.getElementById('t-msg').textContent=msg;
-  document.getElementById('toast').classList.add('show');
-  toastTimer=setTimeout(()=>document.getElementById('toast').classList.remove('show'),4000);
+function submitForm(){
+  document.getElementById('successMsg').style.display='block';
+  document.querySelector('.form-btn').disabled=true;
+  document.querySelector('.form-btn').textContent='Message Sent ✓';
 }
 </script>
 </body>
