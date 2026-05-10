@@ -4,347 +4,147 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Features — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#0a0e1a;
-  --bg2:#0d1220;
-  --gold:#f0b429;
-  --gold2:#ffd35b;
-  --white:#ffffff;
-  --gray:rgba(255,255,255,0.55);
-  --border:rgba(255,255,255,0.08);
-}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
-.nav-inner{width:100%;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.2rem;}
-.nav-logo-wrap{display:flex;flex-direction:column;}
-.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
-.nav-logo-sub{font-size:0.65rem;color:var(--gold);letter-spacing:0.5px;}
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.15s;display:inline-block;}
-.nav-link:hover{color:#fff;}
-.nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold);border-radius:0;}
-.btn-login{padding:9px 24px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-size:0.85rem;font-weight:500;color:#fff;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-login:hover{border-color:var(--gold);color:var(--gold);}
-.btn-register{padding:9px 24px;border:1.5px solid var(--gold);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-register:hover{background:var(--gold);color:#000;}
-
-/* HERO */
-.hero{padding:130px 48px 80px;text-align:center;position:relative;overflow:hidden;background:var(--bg);}
-.hero::before{content:'';position:absolute;top:0;left:0;width:35%;height:100%;background-image:radial-gradient(circle,rgba(240,180,41,0.15) 1px,transparent 1px);background-size:24px 24px;opacity:0.5;}
-.hero::after{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse at right center,rgba(79,70,229,0.15),transparent 70%);}
-.hero-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.12);border:1px solid rgba(240,180,41,0.3);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);color:#fff;margin-bottom:8px;line-height:1.1;position:relative;z-index:1;}
-.hero-h1 span{color:var(--gold);font-style:italic;}
-.hero-sub{font-size:1rem;color:var(--gray);max-width:560px;margin:20px auto 0;line-height:1.75;font-weight:300;position:relative;z-index:1;}
-
-/* FEATURES SECTION */
-.features-section{max-width:1300px;margin:0 auto;padding:60px 48px 80px;}
-
-/* CARDS GRID - small horizontal cards like the picture */
-.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
-
-.feat-card{border-radius:16px;padding:24px 20px;display:flex;flex-direction:row;align-items:flex-start;gap:18px;transition:all 0.2s;border:1px solid rgba(255,255,255,0.06);}
-.feat-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,0.4);border-color:rgba(255,255,255,0.15);}
-
-/* Card colors matching the picture exactly */
-.card-blue{background:linear-gradient(135deg,#1a237e,#283593);}
-.card-green{background:linear-gradient(135deg,#004d40,#00695c);}
-.card-purple{background:linear-gradient(135deg,#4a148c,#6a1b9a);}
-.card-gold{background:linear-gradient(135deg,#7a5c00,#b8860b);}
-.card-pink{background:linear-gradient(135deg,#880e4f,#c2185b);}
-.card-navy{background:linear-gradient(135deg,#0d1b3e,#1a2a5e);}
-.card-indigo{background:linear-gradient(135deg,#1a237e,#3949ab);}
-.card-teal{background:linear-gradient(135deg,#006064,#00838f);}
-.card-darkpurple{background:linear-gradient(135deg,#311b92,#4527a0);}
-
-/* Icon box */
-.feat-icon-box{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:1.4rem;flex-shrink:0;}
-.icon-blue{background:rgba(79,111,255,0.35);}
-.icon-green{background:rgba(0,168,107,0.35);}
-.icon-purple{background:rgba(156,39,176,0.35);}
-.icon-gold{background:rgba(240,180,41,0.35);}
-.icon-pink{background:rgba(233,30,99,0.35);}
-.icon-navy{background:rgba(255,255,255,0.1);}
-.icon-indigo{background:rgba(99,102,241,0.35);}
-.icon-teal{background:rgba(0,188,212,0.35);}
-.icon-darkpurple{background:rgba(103,58,183,0.35);}
-
-.feat-content{}
-.feat-name{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3;}
-.feat-desc{font-size:0.78rem;color:rgba(255,255,255,0.65);line-height:1.65;}
-.feat-tags{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;}
-.feat-tag{padding:3px 10px;border-radius:20px;font-size:0.68rem;font-weight:600;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);}
-
-/* BOTTOM BANNER */
-.bottom-banner{background:linear-gradient(135deg,#0d1220,#1a2040);border:1px solid rgba(240,180,41,0.2);border-radius:16px;padding:28px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
-.bb-left{display:flex;align-items:center;gap:20px;}
-.bb-icon{width:52px;height:52px;background:rgba(240,180,41,0.15);border:1.5px solid rgba(240,180,41,0.3);border-radius:12px;display:grid;place-items:center;font-size:1.4rem;flex-shrink:0;}
-.bb-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;}
-.bb-sub{font-size:0.82rem;color:var(--gray);}
-.bb-actions{display:flex;gap:12px;flex-shrink:0;}
-.btn-bb-outline{padding:11px 28px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;color:#fff;background:transparent;cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;}
-.btn-bb-outline:hover{border-color:#fff;}
-.btn-bb-gold{padding:11px 28px;border:1.5px solid var(--gold);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;}
-.btn-bb-gold:hover{background:var(--gold);color:#000;}
-
-/* DETAIL SECTIONS */
-.detail-section{display:grid;grid-template-columns:1fr 1fr;min-height:440px;margin-bottom:4px;}
-.detail-section.reverse{direction:rtl;}
-.detail-section.reverse>*{direction:ltr;}
-.ds-photo{overflow:hidden;position:relative;}
-.ds-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8);}
-.ds-content{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;}
-.ds-eyebrow{display:inline-flex;padding:5px 14px;background:rgba(240,180,41,0.12);border:1px solid rgba(240,180,41,0.25);border-radius:20px;font-size:0.7rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:1.5px;text-transform:uppercase;}
-.ds-title{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:16px;line-height:1.2;}
-.ds-desc{font-size:0.9rem;color:var(--gray);line-height:1.8;margin-bottom:24px;font-weight:300;}
-.ds-list{display:flex;flex-direction:column;gap:12px;}
-.ds-item{display:flex;align-items:center;gap:12px;font-size:0.85rem;color:rgba(255,255,255,0.8);}
-.ds-item-icon{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.08);display:grid;place-items:center;font-size:0.8rem;flex-shrink:0;}
-
-/* CTA */
-.cta-section{background:linear-gradient(135deg,#0a0e1a,#1a2040);padding:80px 48px;text-align:center;}
-.cta-inner{max-width:600px;margin:0 auto;}
-.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.cta-title em{font-style:italic;color:var(--gold);}
-.cta-sub{font-size:0.95rem;color:var(--gray);margin-bottom:36px;line-height:1.7;}
-.btn-cta{padding:14px 36px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;margin:0 6px;}
-.btn-cta:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-cta.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:#fff;}
-.btn-cta.outline:hover{border-color:#fff;}
-
-/* FOOTER */
-footer{background:#060810;padding:32px 48px;}
-.footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.2);}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s;}
-.footer-links a:hover{color:#fff;}
-
-@media(max-width:1024px){
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .features-section{padding:40px 20px 60px;}
-  .cards-grid{grid-template-columns:1fr 1fr;}
-  .detail-section{grid-template-columns:1fr;}
-  .detail-section.reverse{direction:ltr;}
-  .ds-photo{min-height:300px;}
-  .ds-content{padding:48px 28px;}
-  .bottom-banner{flex-direction:column;text-align:center;}
-  .bb-actions{justify-content:center;}
-  .cta-section{padding:60px 20px;}
-  footer{padding:28px 20px;}
-  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
-}
-@media(max-width:640px){
-  .cards-grid{grid-template-columns:1fr;}
-}
+:root{--bg:#f8f9fc;--bg2:#ffffff;--dark:#0b1221;--blue:#1a3a6b;--blue2:#2451a3;--gold:#c9972a;--gold2:#e8b84b;--gray:#6b7a99;--gray2:#e8ecf4;--border:#e2e8f4;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);overflow-x:hidden;}
+.flag{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:linear-gradient(90deg,#B22234 0%,#B22234 35%,#fff 35%,#fff 40%,#3C3B6E 40%);}
+nav{position:fixed;top:3px;left:0;right:0;z-index:500;background:rgba(248,249,252,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:8px;display:grid;place-items:center;}
+.logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;}
+.logo-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
+.logo-name span{color:var(--gold);}
+.nav-menu{display:flex;align-items:center;gap:4px;}
+.nav-menu a{font-size:0.875rem;font-weight:500;color:var(--gray);text-decoration:none;padding:8px 16px;border-radius:6px;transition:all 0.2s;}
+.nav-menu a:hover{color:var(--dark);background:var(--gray2);}
+.nav-cta{background:var(--blue)!important;color:#fff!important;border-radius:8px!important;font-weight:600!important;}
+.page-hero{padding:140px 48px 80px;background:var(--bg2);border-bottom:1px solid var(--border);text-align:center;}
+.page-hero-inner{max-width:680px;margin:0 auto;}
+.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:700;color:var(--dark);margin-bottom:20px;letter-spacing:-0.5px;}
+.h1 em{color:var(--blue);font-style:italic;}
+.lead{font-size:1rem;color:var(--gray);line-height:1.8;}
+.section{padding:80px 48px;max-width:1200px;margin:0 auto;}
+.section-full{padding:80px 0;}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.bg-light{background:var(--bg2);border-bottom:1px solid var(--border);}
+.bg-subtle{background:var(--bg);}
+.h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.3px;}
+.sub{font-size:0.9rem;color:var(--gray);line-height:1.8;max-width:480px;margin-bottom:40px;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+.feat{padding:32px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:all 0.3s;}
+.feat:hover{border-color:rgba(26,58,107,0.2);box-shadow:0 4px 20px rgba(26,58,107,0.06);transform:translateY(-2px);}
+.feat-icon{width:48px;height:48px;border-radius:10px;background:var(--gray2);display:grid;place-items:center;font-size:1.4rem;margin-bottom:20px;}
+.feat-title{font-size:0.95rem;font-weight:700;color:var(--dark);margin-bottom:10px;}
+.feat-desc{font-size:0.82rem;color:var(--gray);line-height:1.7;}
+.feat-tag{display:inline-block;margin-top:16px;font-size:0.68rem;font-weight:600;color:var(--blue);letter-spacing:1px;text-transform:uppercase;}
+.comparison{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px;}
+.comp-col{padding:32px;border-radius:10px;}
+.comp-col-bad{background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);}
+.comp-col-good{background:rgba(26,58,107,0.04);border:1px solid rgba(26,58,107,0.15);}
+.comp-title{font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.06);}
+.comp-title-bad{color:#dc2626;}
+.comp-title-good{color:var(--blue);}
+.comp-item{display:flex;gap:12px;margin-bottom:14px;font-size:0.83rem;color:var(--gray);line-height:1.5;}
+.comp-item::before{content:'✗';color:#ef4444;font-weight:700;flex-shrink:0;}
+.comp-item-good::before{content:'✓';color:#22c55e;}
+.cta-banner{background:var(--dark);border-radius:16px;padding:48px;text-align:center;margin-top:64px;}
+.cta-banner h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:12px;}
+.cta-banner p{font-size:0.9rem;color:rgba(255,255,255,0.55);margin-bottom:28px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.2s;}
+.btn-blue{background:var(--gold);color:#000;}
+.btn-blue:hover{background:var(--gold2);}
+footer{background:var(--dark);padding:48px;text-align:center;}
+.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.25);}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-top:12px;}
+.footer-links a{font-size:0.75rem;color:rgba(255,255,255,0.25);text-decoration:none;}
+.footer-links a:hover{color:rgba(255,255,255,0.6);}
+.reveal{opacity:0;transform:translateY(20px);transition:all 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){.nav-menu{display:none;}.page-hero,.section{padding:100px 24px 48px;}.features-grid{grid-template-columns:1fr;}.comparison{grid-template-columns:1fr;}.section-inner{padding:0 24px;}}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
+<div class="flag"></div>
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="/">
-      <div class="nav-logo-icon">🏠</div>
-      <div class="nav-logo-wrap">
-        <span class="nav-logo-name">SaveCode</span>
-        <span class="nav-logo-sub">Every Home Has an Identity</span>
-      </div>
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link active" href="/features">Features</a>
-      <a class="nav-link" href="/how-it-works">How It Works</a>
-      <a class="nav-link" href="/about">About</a>
-      <a class="nav-link" href="/contact">Contact</a>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;">
-      <a class="btn-login" href="/">Login</a>
-      <a class="btn-register" href="/#register">Register Your Home</a>
-    </div>
+    <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="logo-name">Save<span>Code</span></div></a>
+    <div class="nav-menu"><a href="/features">Features</a><a href="/how-it-works">How It Works</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/waitlist" class="nav-cta">Join Waitlist</a></div>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Features</div>
-  <h1 class="hero-h1">Powerful Features.<br><span>Real Protection.</span></h1>
-  <p class="hero-sub">SaveCode combines advanced technology and security to create the most reliable address identity system for every American home.</p>
-</div>
-
-<!-- FEATURES SECTION -->
-<div class="features-section">
-  <div class="cards-grid">
-
-    <!-- 1: Permanent Home ID - Blue -->
-    <div class="feat-card card-blue">
-      <div class="feat-icon-box icon-blue">🏠</div>
-      <div class="feat-content">
-        <div class="feat-name">Permanent Home ID</div>
-        <p class="feat-desc">Every home gets a unique, permanent ID with a QR code that represents your exact delivery location. Never changes, never duplicates.</p>
-        <div class="feat-tags"><span class="feat-tag">Core Feature</span><span class="feat-tag">Patent Pending</span></div>
-      </div>
-    </div>
-
-    <!-- 2: Last-Mile Verification - Green -->
-    <div class="feat-card card-green">
-      <div class="feat-icon-box icon-green">✅</div>
-      <div class="feat-content">
-        <div class="feat-name">Delivery Verification</div>
-        <p class="feat-desc">Drivers scan and verify at the door to ensure the package reaches the right person at the right location — every single time.</p>
-        <div class="feat-tags"><span class="feat-tag">Privacy</span><span class="feat-tag">Security</span></div>
-      </div>
-    </div>
-
-    <!-- 3: Privacy - Purple -->
-    <div class="feat-card card-purple">
-      <div class="feat-icon-box icon-purple">🔐</div>
-      <div class="feat-content">
-        <div class="feat-name">Privacy First</div>
-        <p class="feat-desc">Your personal information is encrypted and never displayed on packages or shared with unauthorized parties.</p>
-        <div class="feat-tags"><span class="feat-tag">Security</span></div>
-      </div>
-    </div>
-
-    <!-- 4: Resident Registry - Gold -->
-    <div class="feat-card card-gold">
-      <div class="feat-icon-box icon-gold">👥</div>
-      <div class="feat-content">
-        <div class="feat-name">Resident Registry</div>
-        <p class="feat-desc">Register all current residents at your address. Unregistered mail is automatically returned to sender — protecting your household.</p>
-        <div class="feat-tags"><span class="feat-tag">Accuracy</span></div>
-      </div>
-    </div>
-
-    <!-- 5: Anti-Spoofing - Pink -->
-    <div class="feat-card card-pink">
-      <div class="feat-icon-box icon-pink">🛡️</div>
-      <div class="feat-content">
-        <div class="feat-name">Anti-Spoofing System</div>
-        <p class="feat-desc">Multi-factor verification and behavioral detection prevent unauthorized use. Register once and get your protection instantly.</p>
-        <div class="feat-tags"><span class="feat-tag">Easy</span></div>
-      </div>
-    </div>
-
-    <!-- 6: Autonomous Delivery - Navy -->
-    <div class="feat-card card-navy" style="border-color:rgba(240,180,41,0.2);">
-      <div class="feat-icon-box icon-navy">🤖</div>
-      <div class="feat-content">
-        <div class="feat-name">Future Ready</div>
-        <p class="feat-desc">Built for the future of delivery including drones, robots, and autonomous vehicles. Scalable and adaptable for tomorrow's needs.</p>
-        <div class="feat-tags"><span class="feat-tag">Innovation</span><span class="feat-tag">Scalable</span></div>
-      </div>
-    </div>
-
-    <!-- 7: AANS - Indigo -->
-    <div class="feat-card card-indigo">
-      <div class="feat-icon-box icon-indigo">🏛️</div>
-      <div class="feat-content">
-        <div class="feat-name">Address Update System</div>
-        <p class="feat-desc">Moving? Notify the IRS, banks, courts, and more with one click — only the institutions you choose to update.</p>
-        <div class="feat-tags"><span class="feat-tag">Smart</span></div>
-      </div>
-    </div>
-
-    <!-- 8: Open API - Teal -->
-    <div class="feat-card card-teal">
-      <div class="feat-icon-box icon-teal">🔗</div>
-      <div class="feat-content">
-        <div class="feat-name">Open Integration API</div>
-        <p class="feat-desc">Major carriers and government agencies can integrate with SaveCode through our authenticated API with full access control.</p>
-        <div class="feat-tags"><span class="feat-tag">Enterprise</span></div>
-      </div>
-    </div>
-
-    <!-- 9: Digital Registry - Dark Purple -->
-    <div class="feat-card card-darkpurple">
-      <div class="feat-icon-box icon-darkpurple">📋</div>
-      <div class="feat-content">
-        <div class="feat-name">Digital Home Registry</div>
-        <p class="feat-desc">A complete digital record of your home's identity — residents, delivery history, and security logs — all in one secure dashboard.</p>
-        <div class="feat-tags"><span class="feat-tag">Dashboard</span></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOTTOM BANNER -->
-  <div class="bottom-banner">
-    <div class="bb-left">
-      <div class="bb-icon">✅</div>
-      <div>
-        <div class="bb-title">Secure. Accurate. Trusted by the Future.</div>
-        <div class="bb-sub">Join thousands of homes already protected with SaveCode.</div>
-      </div>
-    </div>
-    <div class="bb-actions">
-      <a class="btn-bb-outline" href="/how-it-works">Learn More</a>
-      <a class="btn-bb-gold" href="/#register">Register Your Home</a>
-    </div>
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="eyebrow">Platform Features</div>
+    <h1 class="h1">Everything You Need for <em>Verified Address Identity</em></h1>
+    <p class="lead">SaveCode provides a complete infrastructure for address verification — from resident registration to real-time fraud detection and institutional integration.</p>
   </div>
 </div>
 
-<!-- DETAIL SECTIONS -->
-<div class="detail-section">
-  <div class="ds-photo"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&auto=format&fit=crop" alt="Home"></div>
-  <div class="ds-content" style="background:#0d1220;">
-    <div class="ds-eyebrow">Permanent Home ID</div>
-    <div class="ds-title">One Code.<br>Every Home. Forever.</div>
-    <p class="ds-desc">Unlike a street address that can change or be misread — your SaveCode Home ID is a permanent digital identity that belongs to your address for life.</p>
-    <div class="ds-list">
-      <div class="ds-item"><div class="ds-item-icon">✅</div>Generated instantly from your address data</div>
-      <div class="ds-item"><div class="ds-item-icon">✅</div>Never changes — even if residents move</div>
-      <div class="ds-item"><div class="ds-item-icon">✅</div>100% unique across all 142M+ US homes</div>
+<div class="section-full bg-subtle">
+<div class="section-inner">
+  <div class="eyebrow">Core Features</div>
+  <h2 class="h2">The Complete Address Identity Platform</h2>
+  <div class="features-grid reveal">
+    <div class="feat"><div class="feat-icon">🏠</div><div class="feat-title">Home ID Assignment</div><div class="feat-desc">Every registered US address receives a unique Home Identification Code — persistently associated with the address and updatable under authorized conditions.</div><div class="feat-tag">Core Infrastructure</div></div>
+    <div class="feat"><div class="feat-icon">👨‍👩‍👧‍👦</div><div class="feat-title">Resident Registry</div><div class="feat-desc">All household members — including children and minors — registered and linked to the address. Full family protection under one verified identity.</div><div class="feat-tag">Family Protection</div></div>
+    <div class="feat"><div class="feat-icon">🔍</div><div class="feat-title">Real-Time Verification</div><div class="feat-desc">Instant address-person association checks via secure API. Financial institutions and delivery services verify in milliseconds.</div><div class="feat-tag">API Integration</div></div>
+    <div class="feat"><div class="feat-icon">⚡</div><div class="feat-title">Risk Indicators</div><div class="feat-desc">When unregistered individuals use a registered address, SaveCode immediately generates risk indicators to notify relevant parties.</div><div class="feat-tag">Fraud Detection</div></div>
+    <div class="feat"><div class="feat-icon">📬</div><div class="feat-title">Physical Verification</div><div class="feat-desc">Home ID verified via physical mail — creating an unforgeable link between the digital identity and the physical address location.</div><div class="feat-tag">Physical Layer</div></div>
+    <div class="feat"><div class="feat-icon">🔄</div><div class="feat-title">Address Updates</div><div class="feat-desc">When residents relocate, they authorize institutions to receive their new Home ID — selective, consent-based notification system.</div><div class="feat-tag">AANS System</div></div>
+    <div class="feat"><div class="feat-icon">🔐</div><div class="feat-title">Encrypted Storage</div><div class="feat-desc">All resident data encrypted end-to-end. Selective disclosure returns only binary responses — never exposing full resident information.</div><div class="feat-tag">Privacy First</div></div>
+    <div class="feat"><div class="feat-icon">📊</div><div class="feat-title">Audit Logging</div><div class="feat-desc">Every verification query logged with timestamp, requesting party, and result. Complete accountability trail for every access event.</div><div class="feat-tag">Compliance</div></div>
+    <div class="feat"><div class="feat-icon">🤝</div><div class="feat-title">Open API</div><div class="feat-desc">RESTful API with authentication, rate limiting, and access control — enabling banks, carriers, and government agencies to integrate securely.</div><div class="feat-tag">Enterprise Ready</div></div>
+  </div>
+</div>
+</div>
+
+<div class="section-full bg-light">
+<div class="section-inner">
+  <div class="eyebrow">SaveCode vs. Existing Systems</div>
+  <h2 class="h2">Why Existing Solutions Fall Short</h2>
+  <p class="sub">Current identity and credit monitoring systems notify after fraud occurs. SaveCode prevents it at the source.</p>
+  <div class="comparison reveal">
+    <div class="comp-col comp-col-bad">
+      <div class="comp-title comp-title-bad">❌ Existing Systems</div>
+      <div class="comp-item">Notify after account has already been opened</div>
+      <div class="comp-item">Cannot verify physical address ownership</div>
+      <div class="comp-item">No real-time address-person association check</div>
+      <div class="comp-item">Cannot protect children's identities proactively</div>
+      <div class="comp-item">No mechanism to detect unregistered occupants</div>
+      <div class="comp-item">Reactive — damage already done before alert</div>
+    </div>
+    <div class="comp-col comp-col-good">
+      <div class="comp-title comp-title-good">✓ SaveCode</div>
+      <div class="comp-item comp-item-good">Raises risk indicator before account is opened</div>
+      <div class="comp-item comp-item-good">Verifies address-person association in real time</div>
+      <div class="comp-item comp-item-good">Instant API-based verification for institutions</div>
+      <div class="comp-item comp-item-good">All household members including minors protected</div>
+      <div class="comp-item comp-item-good">Detects unregistered address usage immediately</div>
+      <div class="comp-item comp-item-good">Proactive — alerts before financial damage occurs</div>
     </div>
   </div>
-</div>
-
-<div class="detail-section reverse">
-  <div class="ds-photo"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=900&auto=format&fit=crop" alt="Privacy"></div>
-  <div class="ds-content" style="background:#0a0e1a;">
-    <div class="ds-eyebrow">Privacy Protection</div>
-    <div class="ds-title">Your Name.<br>Never on a Label.</div>
-    <p class="ds-desc">When you ship with SaveCode, your name and physical address are replaced by your Home ID on every label. Carriers see only the code — your identity stays private.</p>
-    <div class="ds-list">
-      <div class="ds-item"><div class="ds-item-icon">🔒</div>Name never appears on shipping labels</div>
-      <div class="ds-item"><div class="ds-item-icon">🔒</div>Address hidden from all external parties</div>
-      <div class="ds-item"><div class="ds-item-icon">🔒</div>Anti-spoofing prevents ID theft</div>
-    </div>
+  <div class="cta-banner reveal">
+    <h3>Ready to Protect Your Address?</h3>
+    <p>Join the waitlist and be first to secure your Home ID when SaveCode launches.</p>
+    <a href="/waitlist" class="btn btn-blue">Join the Waitlist — Free →</a>
   </div>
 </div>
-
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-inner">
-    <h2 class="cta-title">Ready to Protect<br>Your <em>Home?</em></h2>
-    <p class="cta-sub">Register your Home ID for free in under a minute. Join the future of American address identity.</p>
-    <a class="btn-cta" href="/#register">Register Now — Free</a>
-    <a class="btn-cta outline" href="/contact">Contact Us</a>
-  </div>
 </div>
 
+<div style="text-align:center;padding:24px 48px;color:#6b7a99;font-size:0.82rem;border-top:1px solid #e2e8f4;background:#ffffff;">
+SaveCode is developed by Mangel Technologies LLC, a Washington-based technology company focused on secure verification infrastructure.
+</div>
 <footer>
-  <div class="footer-inner">
-    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/features">Features</a>
-      <a href="/how-it-works">How It Works</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </div>
-  </div>
+  <div class="footer-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA</div>
+  <div class="footer-links"><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></div>
 </footer>
-
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach((el,i)=>{if(el.isIntersecting){setTimeout(()=>el.target.classList.add('visible'),i*100);obs.unobserve(el.target);}});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+</script>
 </body>
 </html>
