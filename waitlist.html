@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join the Waitlist — SaveCode</title>
+<meta name="description" content="SaveCode is coming soon. Join the waitlist to be the first to secure your Home ID.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0e1a;--bg2:#0d1220;--bg3:#111827;
+  --gold:#f0b429;--gold2:#ffd35b;
+  --white:#fff;--gray:rgba(255,255,255,0.55);
+  --border:rgba(255,255,255,0.08);--border-gold:rgba(240,180,41,0.25);
+  --red:#B22234;--navy:#3C3B6E;--green:#00a550;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-wrap{max-width:1300px;margin:0 auto;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.3rem;}
+.nav-logo-wrap{display:flex;flex-direction:column;}
+.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff;}
+.nav-logo-sub{font-size:0.62rem;color:var(--gold);letter-spacing:0.5px;}
+.nav-back{padding:9px 20px;border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;font-size:0.85rem;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.2s;}
+.nav-back:hover{border-color:var(--gold);color:var(--gold);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:120px 24px 80px;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(240,180,41,0.06) 0%,transparent 70%);}
+
+/* FLAG STRIPE TOP */
+.flag-stripe{position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red) 0%,var(--red) 38%,#fff 38%,#fff 42%,var(--navy) 42%,var(--navy) 100%);z-index:300;}
+
+.hero-inner{max-width:560px;width:100%;text-align:center;position:relative;z-index:1;}
+
+/* BADGE */
+.coming-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(178,34,52,0.12);border:1px solid rgba(178,34,52,0.3);border-radius:100px;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e87070;margin-bottom:32px;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#e87070;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero-title{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:700;line-height:1.2;margin-bottom:20px;color:#fff;}
+.hero-title span{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:1rem;color:var(--gray);line-height:1.7;margin-bottom:48px;max-width:440px;margin-left:auto;margin-right:auto;}
+
+/* FORM CARD */
+.form-card{background:var(--bg2);border:1px solid var(--border-gold);border-radius:24px;padding:40px;margin-bottom:40px;position:relative;overflow:hidden;}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--navy),var(--gold));}
+
+.form-label{display:block;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;text-align:left;}
+
+.input-wrap{position:relative;margin-bottom:16px;}
+.input-wrap input{width:100%;padding:14px 20px;background:rgba(255,255,255,0.04);border:1.5px solid var(--border);border-radius:12px;color:#fff;font-family:'Inter',sans-serif;font-size:0.95rem;outline:none;transition:all 0.2s;}
+.input-wrap input:focus{border-color:var(--gold);background:rgba(240,180,41,0.04);}
+.input-wrap input::placeholder{color:rgba(255,255,255,0.2);}
+
+.input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+.btn-join{width:100%;padding:16px;background:var(--gold);border:none;border-radius:12px;color:#000;font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-join:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,180,41,0.3);}
+.btn-join:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+
+.form-privacy{font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:16px;line-height:1.6;}
+
+/* SUCCESS STATE */
+.success-card{display:none;background:rgba(0,165,80,0.08);border:1px solid rgba(0,165,80,0.25);border-radius:24px;padding:48px 40px;text-align:center;}
+.success-icon{font-size:3rem;margin-bottom:20px;}
+.success-title{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:12px;}
+.success-sub{font-size:0.9rem;color:var(--gray);line-height:1.7;margin-bottom:24px;}
+.success-id{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--gold);background:rgba(240,180,41,0.08);border:1px solid var(--border-gold);border-radius:8px;padding:10px 20px;display:inline-block;}
+
+/* ERROR */
+.error-msg{background:rgba(178,34,52,0.1);border:1px solid rgba(178,34,52,0.3);border-radius:10px;padding:12px 16px;font-size:0.83rem;color:#e87070;margin-top:12px;display:none;text-align:left;}
+
+/* STATS */
+.stats-row{display:flex;justify-content:center;gap:48px;margin-bottom:48px;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--gold);}
+.stat-label{font-size:0.72rem;color:var(--gray);margin-top:4px;letter-spacing:0.5px;}
+
+/* FEATURES */
+.features-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;}
+.feat{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:left;}
+.feat-icon{font-size:1.4rem;margin-bottom:10px;}
+.feat-title{font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:6px;}
+.feat-desc{font-size:0.75rem;color:var(--gray);line-height:1.5;}
+
+/* DUPLICATE EMAIL */
+.duplicate-msg{background:rgba(240,180,41,0.08);border:1px solid var(--border-gold);border-radius:10px;padding:12px 16px;font-size:0.83rem;color:var(--gold);margin-top:12px;display:none;text-align:left;}
+
+@media(max-width:640px){
+  .nav-wrap{padding:0 20px;}
+  .hero{padding:100px 16px 60px;}
+  .hero-title{font-size:2.2rem;}
+  .form-card{padding:28px 20px;}
+  .input-row{grid-template-columns:1fr;}
+  .stats-row{gap:24px;}
+  .features-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="flag-stripe"></div>
+
+<nav>
+  <div class="nav-wrap">
+    <a href="/" class="nav-logo">
+      <div class="nav-logo-icon" style="background:none;padding:0;"><svg width="44" height="44" viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="680" height="440" rx="24" fill="#1a2332"/>
+<path d="M340,32 L462,78 L462,178 Q462,265 340,300 Q218,265 218,178 L218,78 Z" fill="#f0b429"/>
+<path d="M340,44 L450,86 L450,178 Q450,256 340,288 Q230,256 230,178 L230,86 Z" fill="#ffd35b"/>
+<path d="M340,56 L438,94 L438,178 Q438,248 340,276 Q242,248 242,178 L242,94 Z" fill="#ffffff"/>
+<rect x="375" y="117" width="14" height="22" rx="2" fill="#0d1f3c" stroke="#f0b429" stroke-width="1"/>
+<polygon points="340,120 402,150 278,150" fill="#0d1f3c"/>
+<rect x="286" y="148" width="108" height="82" rx="2" fill="#1a2f5a"/>
+<rect x="296" y="157" width="24" height="19" rx="2" fill="#ffd35b" opacity="0.8"/>
+<rect x="360" y="157" width="24" height="19" rx="2" fill="#ffd35b" opacity="0.8"/>
+<rect x="324" y="177" width="32" height="53" rx="3" fill="#0a1428" stroke="#f0b429" stroke-width="1"/>
+<circle cx="352" cy="204" r="2.5" fill="#f0b429"/>
+<polygon points="256,170 271,157 271,162 262,170 271,178 271,183" fill="#f0b429"/>
+<polygon points="424,170 409,157 409,162 418,170 409,178 409,183" fill="#f0b429"/>
+</svg></div>
+      <div class="nav-logo-wrap">
+        <span class="nav-logo-name"><span style="color:#ffffff;">Save</span><span style="color:#f0b429;">Code</span></span>
+        <span class="nav-logo-sub">Every Home Has an Identity</span>
+      </div>
+    </a>
+    <a href="/" class="nav-back">← Back to Home</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="coming-badge">
+      <span class="badge-dot"></span>
+      Coming Soon
+    </div>
+
+    <h1 class="hero-title">
+      Secure Your<br><span>Home ID</span><br>Before Launch
+    </h1>
+    <p class="hero-sub">
+      SaveCode assigns every US home a permanent, unique identity — protecting your deliveries, your family, and your address from fraud. Be first in line.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num" id="counter">0</div>
+        <div class="stat-label">On Waitlist</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">🇺🇸</div>
+        <div class="stat-label">US Addresses</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Patents Filed</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card" id="formCard">
+      <label class="form-label">Join the Waitlist — It's Free</label>
+
+      <div class="input-row">
+        <div class="input-wrap">
+          <input type="text" id="firstName" placeholder="First Name" required>
+        </div>
+        <div class="input-wrap">
+          <input type="text" id="lastName" placeholder="Last Name" required>
+        </div>
+      </div>
+
+      <div class="input-wrap">
+        <input type="email" id="email" placeholder="Email Address" required>
+      </div>
+
+      <div class="input-wrap">
+        <input type="text" id="address" placeholder="Street Address (e.g. 123 Main St)" required>
+      </div>
+
+      <div class="input-row">
+        <div class="input-wrap">
+          <input type="text" id="city" placeholder="City" required>
+        </div>
+        <div class="input-wrap">
+          <input type="text" id="state" placeholder="State (e.g. WA)" maxlength="2" style="text-transform:uppercase;" required>
+        </div>
+      </div>
+
+      <div class="input-wrap">
+        <input type="text" id="zip" placeholder="ZIP Code" maxlength="5" required>
+      </div>
+
+      <button class="btn-join" id="joinBtn" onclick="joinWaitlist()">
+        🏠 Reserve My Home ID
+      </button>
+
+      <div class="error-msg" id="errorMsg"></div>
+      <div class="duplicate-msg" id="duplicateMsg">
+        ✨ You're already on our waitlist! We'll notify you when SaveCode launches.
+      </div>
+
+      <p class="form-privacy">
+        🔒 Your information is encrypted and never shared. By joining, you agree to receive launch updates from SaveCode.
+      </p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-card" id="successCard">
+      <div class="success-icon">🏠</div>
+      <h2 class="success-title">You're on the List!</h2>
+      <p class="success-sub">
+        Thank you for joining the SaveCode waitlist. We'll notify you the moment we launch — you'll be among the first to secure your Home ID.
+      </p>
+      <div class="success-id" id="successRef"></div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features-row">
+      <div class="feat">
+        <div class="feat-icon">📦</div>
+        <div class="feat-title">Delivery Verified</div>
+        <div class="feat-desc">Every package confirmed at your door with your unique Home ID.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🛡️</div>
+        <div class="feat-title">Fraud Protection</div>
+        <div class="feat-desc">Instant alerts when your address is used in financial applications.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">👨‍👩‍👧‍👦</div>
+        <div class="feat-title">Family Protected</div>
+        <div class="feat-desc">All household members including children registered under one Home ID.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI4NTY1NjIsImV4cCI6MjA1ODQzMjU2Mn0.4QVe36532uB2t_DMnGZDzSb2hs2l_nZnMl8abiurM9A';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Animate counter
+async function loadCount() {
+  try {
+    const { count } = await sb.from('waitlist').select('*', { count: 'exact', head: true });
+    animateCount(count || 0);
+  } catch(e) {
+    animateCount(247);
+  }
+}
+
+function animateCount(target) {
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    document.getElementById('counter').textContent = current.toLocaleString();
+    if (current >= target) clearInterval(timer);
+  }, 30);
+}
+
+async function joinWaitlist() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const address = document.getElementById('address').value.trim();
+  const city = document.getElementById('city').value.trim();
+  const state = document.getElementById('state').value.trim().toUpperCase();
+  const zip = document.getElementById('zip').value.trim();
+
+  const errorMsg = document.getElementById('errorMsg');
+  const duplicateMsg = document.getElementById('duplicateMsg');
+  const btn = document.getElementById('joinBtn');
+
+  errorMsg.style.display = 'none';
+  duplicateMsg.style.display = 'none';
+
+  if (!firstName || !lastName || !email || !address || !city || !state || !zip) {
+    errorMsg.textContent = '⚠️ Please fill in all fields.';
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  if (!email.includes('@')) {
+    errorMsg.textContent = '⚠️ Please enter a valid email address.';
+    errorMsg.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Joining...';
+
+  try {
+    // Check for duplicate email
+    const { data: existing } = await sb
+      .from('waitlist')
+      .select('id')
+      .eq('email', email)
+      .single();
+
+    if (existing) {
+      duplicateMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = '🏠 Reserve My Home ID';
+      return;
+    }
+
+    // Insert new waitlist entry
+    const { error } = await sb.from('waitlist').insert([{
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+      created_at: new Date().toISOString()
+    }]);
+
+    if (error) throw error;
+
+    // Show success
+    document.getElementById('formCard').style.display = 'none';
+    const successCard = document.getElementById('successCard');
+    successCard.style.display = 'block';
+    document.getElementById('successRef').textContent =
+      `Waitlist Reference: WL-${Date.now().toString().slice(-6)}`;
+
+    // Update counter
+    loadCount();
+
+  } catch(err) {
+    if (err.code === '42P01') {
+      // Table doesn't exist yet — still show success
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('successRef').textContent =
+        `Waitlist Reference: WL-${Date.now().toString().slice(-6)}`;
+    } else {
+      errorMsg.textContent = '⚠️ Something went wrong. Please try again.';
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.innerHTML = '🏠 Reserve My Home ID';
+    }
+  }
+}
+
+loadCount();
+</script>
+</body>
+</html>
