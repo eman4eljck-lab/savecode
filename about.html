@@ -1,231 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How It Works — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--bg:#f8f9fc;--bg2:#ffffff;--dark:#0b1221;--blue:#1a3a6b;--gold:#c9972a;--gold2:#e8b84b;--gray:#6b7a99;--gray2:#e8ecf4;--border:#e2e8f4;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);overflow-x:hidden;}
-.flag{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:linear-gradient(90deg,#B22234 0%,#B22234 35%,#fff 35%,#fff 40%,#3C3B6E 40%);}
-nav{position:fixed;top:3px;left:0;right:0;z-index:500;background:rgba(248,249,252,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:8px;display:grid;place-items:center;}
-.logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;}
-.logo-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
-.logo-name span{color:var(--gold);}
-.nav-menu{display:flex;align-items:center;gap:4px;}
-.nav-menu a{font-size:0.875rem;font-weight:500;color:var(--gray);text-decoration:none;padding:8px 16px;border-radius:6px;transition:all 0.2s;}
-.nav-menu a:hover{color:var(--dark);background:var(--gray2);}
-.nav-cta{background:var(--blue)!important;color:#fff!important;border-radius:8px!important;font-weight:600!important;}
-.page-hero{padding:140px 48px 80px;background:var(--bg2);border-bottom:1px solid var(--border);text-align:center;}
-.page-hero-inner{max-width:640px;margin:0 auto;}
-.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
-.h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--dark);margin-bottom:16px;letter-spacing:-0.5px;}
-.h1 em{color:var(--blue);font-style:italic;}
-.lead{font-size:1rem;color:var(--gray);line-height:1.8;}
-.section-full{padding:80px 0;}
-.section-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
-.bg-light{background:var(--bg2);border-bottom:1px solid var(--border);}
-.bg-subtle{background:var(--bg);}
-.bg-dark{background:var(--dark);}
-.eyebrow-blue{color:var(--blue);}
-.h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.3px;}
-.h2-white{color:#fff;}
-.process{display:flex;flex-direction:column;gap:0;margin-top:48px;}
-.process-step{display:grid;grid-template-columns:80px 1fr;gap:40px;padding:48px 0;border-bottom:1px solid var(--border);}
-.process-step:last-child{border-bottom:none;}
-.step-left{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.step-circle{width:60px;height:60px;border-radius:50%;background:var(--blue);display:grid;place-items:center;color:#fff;font-weight:700;font-size:1rem;flex-shrink:0;}
-.step-line{width:1px;height:100%;background:var(--border);flex-grow:1;}
-.step-content h3{font-size:1.1rem;font-weight:700;color:var(--dark);margin-bottom:12px;}
-.step-content p{font-size:0.88rem;color:var(--gray);line-height:1.8;max-width:560px;}
-.step-note{margin-top:16px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:0.8rem;color:var(--gray);line-height:1.6;}
-.step-note strong{color:var(--dark);}
-.scenarios{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
-.scenario{padding:32px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);}
-.scenario-type{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
-.scenario-type-fraud{color:#dc2626;}
-.scenario-type-legit{color:#16a34a;}
-.scenario h4{font-size:0.95rem;font-weight:700;color:var(--dark);margin-bottom:12px;}
-.flow{display:flex;flex-direction:column;gap:8px;}
-.flow-step{display:flex;gap:12px;align-items:flex-start;font-size:0.82rem;color:var(--gray);}
-.flow-arrow{color:var(--gray);flex-shrink:0;margin-top:2px;font-size:0.7rem;}
-.flow-result{padding:12px 16px;border-radius:6px;font-size:0.8rem;font-weight:600;margin-top:4px;}
-.flow-result-bad{background:rgba(220,38,38,0.06);color:#dc2626;border:1px solid rgba(220,38,38,0.15);}
-.flow-result-good{background:rgba(22,163,74,0.06);color:#16a34a;border:1px solid rgba(22,163,74,0.15);}
-.api-section{background:var(--dark);padding:80px 0;}
-.api-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
-.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:48px;}
-.api-endpoints{display:flex;flex-direction:column;gap:16px;}
-.endpoint{padding:20px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;}
-.endpoint:hover{border-color:rgba(201,151,42,0.2);}
-.endpoint-method{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:4px;background:rgba(26,58,107,0.4);color:#93c5fd;margin-bottom:8px;}
-.endpoint-path{font-family:'Courier New',monospace;font-size:0.82rem;color:#fff;margin-bottom:6px;}
-.endpoint-desc{font-size:0.75rem;color:rgba(255,255,255,0.4);}
-.terminal{background:#0a0f1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;}
-.terminal-bar{padding:12px 16px;background:#111827;display:flex;gap:6px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.dot{width:10px;height:10px;border-radius:50%;}
-.dot-r{background:#ff5f57;}.dot-y{background:#febc2e;}.dot-g{background:#28c840;}
-.terminal-body{padding:20px;font-family:'Courier New',monospace;font-size:0.75rem;line-height:1.9;}
-.tk{color:var(--gold2);}.tv{color:#93c5fd;}.tok{color:#4ade80;}.tw{color:#f87171;}.tc{color:#4b5563;}
-.cta-wrap{padding:80px 48px;text-align:center;max-width:600px;margin:0 auto;}
-.cta-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;color:var(--dark);margin-bottom:16px;letter-spacing:-0.3px;}
-.cta-title em{color:var(--blue);font-style:italic;}
-.cta-sub{font-size:0.9rem;color:var(--gray);margin-bottom:32px;line-height:1.8;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.2s;}
-.btn-blue{background:var(--blue);color:#fff;}
-.btn-blue:hover{background:#2451a3;}
-footer{background:var(--dark);padding:48px;text-align:center;}
-.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.25);}
-.footer-links{display:flex;justify-content:center;gap:24px;margin-top:12px;}
-.footer-links a{font-size:0.75rem;color:rgba(255,255,255,0.25);text-decoration:none;}
-.footer-links a:hover{color:rgba(255,255,255,0.6);}
-.reveal{opacity:0;transform:translateY(20px);transition:all 0.6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-@media(max-width:768px){.nav-menu{display:none;}.page-hero{padding:100px 24px 48px;}.section-inner,.api-inner,.cta-wrap{padding:0 24px;}.process-step{grid-template-columns:1fr;gap:20px;}.scenarios{grid-template-columns:1fr;}.api-grid{grid-template-columns:1fr;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — SaveCode</title>
+  <meta name="description" content="Learn about SaveCode, Mangel Technologies LLC, and the mission to build America's trusted address verification infrastructure.">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:      #0067b8;
+      --blue-h:    #005a9e;
+      --blue-dark: #003f7f;
+      --blue-pale: #e8f1fb;
+      --gray-bg:   #f2f2f2;
+      --gray-mid:  #e0e0e0;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --white:     #ffffff;
+      --green:     #059669;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito Sans','Segoe UI',sans-serif; background: var(--gray-bg); color: var(--gray-900); }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; background:var(--white); border-bottom:1px solid var(--gray-mid); z-index:200; height:52px; display:flex; align-items:center; padding:0 32px; gap:20px; }
+    .nav-brand { display:flex; align-items:center; text-decoration:none; }
+    .nav-div { width:1px; height:20px; background:var(--gray-mid); }
+    .nav-links { display:flex; }
+    .nav-links a { font-size:13px; color:var(--gray-700); text-decoration:none; padding:0 14px; height:52px; display:flex; align-items:center; border-bottom:2px solid transparent; transition:background .15s,border-color .15s; }
+    .nav-links a:hover { background:var(--gray-bg); border-bottom-color:var(--blue); }
+    .nav-links a.active { border-bottom-color:var(--blue); color:var(--blue); font-weight:700; }
+    .nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+    .btn-signin { font-size:13px; font-weight:600; color:var(--gray-700); text-decoration:none; padding:6px 14px; border-radius:2px; border:1px solid var(--gray-mid); background:var(--white); transition:background .15s; }
+    .btn-signin:hover { background:var(--gray-bg); }
+    .btn-start { font-size:13px; font-weight:700; color:var(--white); text-decoration:none; padding:7px 16px; border-radius:2px; background:var(--blue); transition:background .15s; }
+    .btn-start:hover { background:var(--blue-h); }
+
+    /* PAGE HERO */
+    .page-hero { background:var(--blue-dark); padding:90px 64px 56px; text-align:center; }
+    .page-hero-tag { display:inline-block; background:rgba(255,255,255,.12); color:rgba(255,255,255,.85); font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:18px; }
+    .page-hero h1 { font-size:38px; font-weight:800; color:var(--white); letter-spacing:-1px; margin-bottom:14px; }
+    .page-hero p { font-size:16px; color:rgba(255,255,255,.72); max-width:560px; margin:0 auto; line-height:1.7; }
+
+    /* MAIN */
+    .main { max-width:1000px; margin:0 auto; padding:64px; }
+
+    /* MISSION */
+    .mission { background:var(--white); border:1px solid var(--gray-mid); padding:48px; margin-bottom:32px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+    .mission-text h2 { font-size:26px; font-weight:800; color:var(--gray-900); letter-spacing:-.5px; margin-bottom:16px; }
+    .mission-text p { font-size:14px; color:var(--gray-500); line-height:1.8; margin-bottom:12px; }
+    .mission-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .m-stat { background:var(--gray-bg); border:1px solid var(--gray-mid); padding:20px; text-align:center; }
+    .m-stat .num { font-size:28px; font-weight:800; color:var(--blue); letter-spacing:-1px; }
+    .m-stat .lbl { font-size:11px; color:var(--gray-500); margin-top:4px; line-height:1.4; }
+
+    /* FOUNDER */
+    .founder { background:var(--white); border:1px solid var(--gray-mid); padding:48px; margin-bottom:32px; }
+    .founder h2 { font-size:22px; font-weight:800; color:var(--gray-900); margin-bottom:24px; letter-spacing:-.3px; }
+    .founder-card { display:grid; grid-template-columns:80px 1fr; gap:28px; align-items:start; }
+    .founder-avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#0067b8,#059669); display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:800; color:white; flex-shrink:0; }
+    .founder-info h3 { font-size:18px; font-weight:800; color:var(--gray-900); margin-bottom:4px; }
+    .founder-info .title { font-size:13px; color:var(--blue); font-weight:600; margin-bottom:16px; }
+    .founder-info p { font-size:14px; color:var(--gray-500); line-height:1.8; margin-bottom:10px; }
+
+    /* VALUES */
+    .values { margin-bottom:32px; }
+    .sec-h { font-size:22px; font-weight:800; color:var(--gray-900); margin-bottom:8px; letter-spacing:-.3px; }
+    .sec-sub { font-size:14px; color:var(--gray-500); margin-bottom:24px; line-height:1.65; }
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .v-card { background:var(--white); border:1px solid var(--gray-mid); padding:28px; }
+    .v-icon { font-size:24px; margin-bottom:14px; }
+    .v-card h3 { font-size:15px; font-weight:700; color:var(--gray-900); margin-bottom:8px; }
+    .v-card p { font-size:13px; color:var(--gray-500); line-height:1.65; }
+
+    /* COMPANY */
+    .company { background:var(--white); border:1px solid var(--gray-mid); padding:40px; margin-bottom:32px; }
+    .company h2 { font-size:22px; font-weight:800; color:var(--gray-900); margin-bottom:20px; letter-spacing:-.3px; }
+    .company-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .c-item {}
+    .c-item .c-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gray-500); margin-bottom:6px; }
+    .c-item .c-val { font-size:14px; font-weight:700; color:var(--gray-900); }
+
+    /* HIGHLIGHT */
+    .highlight { background:var(--blue-pale); border-left:4px solid var(--blue); padding:20px 24px; margin-bottom:32px; }
+    .highlight p { font-size:13px; color:var(--blue-dark); line-height:1.65; font-weight:600; }
+
+    /* CTA */
+    .cta { background:var(--blue); padding:36px 44px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .cta h2 { font-size:20px; font-weight:800; color:var(--white); }
+    .cta p { font-size:13px; color:rgba(255,255,255,.72); margin-top:5px; }
+    .btn-cw { background:var(--white); color:var(--blue); padding:11px 26px; font-size:14px; font-weight:800; text-decoration:none; white-space:nowrap; flex-shrink:0; transition:background .15s; }
+    .btn-cw:hover { background:var(--blue-pale); }
+
+    /* FOOTER */
+    footer { background:var(--gray-900); padding:28px 64px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .f-brand { display:flex; align-items:center; text-decoration:none; }
+    .f-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; color:rgba(255,255,255,.4); text-decoration:none; transition:color .15s; }
+    .f-links a:hover { color:var(--white); }
+    .f-copy { width:100%; font-size:11px; color:rgba(255,255,255,.22); margin-top:6px; }
+
+    @media(max-width:900px){
+      nav{padding:0 16px;} .nav-links{display:none;}
+      .page-hero{padding:80px 24px 40px;} .page-hero h1{font-size:26px;}
+      .main{padding:32px 16px;}
+      .mission{grid-template-columns:1fr; padding:28px;}
+      .founder-card{grid-template-columns:1fr;}
+      .values-grid,.company-grid{grid-template-columns:1fr;}
+      .cta{flex-direction:column;text-align:center;padding:28px 24px;}
+      footer{padding:24px 16px;flex-direction:column;align-items:flex-start;}
+    }
+  </style>
 </head>
 <body>
-<div class="flag"></div>
+
+<!-- NAV -->
 <nav>
-  <div class="nav-inner">
-    <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="logo-name">Save<span>Code</span></div></a>
-    <div class="nav-menu"><a href="/features">Features</a><a href="/how-it-works">How It Works</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/waitlist" class="nav-cta">Join Waitlist</a></div>
+  <a href="index.html" class="nav-brand">
+    <svg width="170" height="34" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="nav-div"></div>
+  <div class="nav-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="signin.html" class="btn-signin">Sign in</a>
+    <a href="register.html" class="btn-start">Get started</a>
   </div>
 </nav>
 
+<!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-inner">
-    <div class="eyebrow">The Process</div>
-    <h1 class="h1">How SaveCode <em>Protects Your Home</em></h1>
-    <p class="lead">From registration to real-time fraud detection — here's exactly how SaveCode's verified address identity system works.</p>
-  </div>
+  <div class="page-hero-tag">Our Story</div>
+  <h1>Building America's Address<br>Identity Infrastructure</h1>
+  <p>SaveCode was founded with a simple belief: every home deserves a verified, protected identity in the digital world.</p>
 </div>
 
-<div class="section-full bg-subtle">
-<div class="section-inner">
-  <div class="eyebrow eyebrow-blue">Step by Step</div>
-  <h2 class="h2">The Verification Process</h2>
-  <div class="process reveal">
-    <div class="process-step">
-      <div class="step-left"><div class="step-circle">1</div><div class="step-line"></div></div>
-      <div class="step-content">
-        <h3>Register Your Address & Household</h3>
-        <p>Create your SaveCode account and register your physical address. Add all household members — spouse, children, parents, anyone who lives at the address. Even newborns can be added to protect their identity from day one.</p>
-        <div class="step-note"><strong>Why this matters:</strong> Children's Social Security numbers are prime targets for identity thieves. By registering them in the Resident Registry, any attempt to use their identity at a different address will generate an immediate risk indicator.</div>
-      </div>
+<!-- MAIN -->
+<div class="main">
+
+  <!-- MISSION -->
+  <div class="mission">
+    <div class="mission-text">
+      <h2>Our Mission</h2>
+      <p>Every year, billions of dollars are lost to package theft, address fraud, and identity theft — much of it enabled by the lack of a trusted, verified address identity system in the United States.</p>
+      <p>SaveCode exists to change that. We are building a physical-digital verification infrastructure that gives every home a secure, encrypted identity — protecting residents, enabling trusted commerce, and helping institutions verify addresses with confidence.</p>
+      <p>Our patent-pending technology bridges the physical and digital worlds through a process that cannot be faked remotely: physical mail delivery to the address itself.</p>
     </div>
-    <div class="process-step">
-      <div class="step-left"><div class="step-circle">2</div><div class="step-line"></div></div>
-      <div class="step-content">
-        <h3>Physical Address Verification via Mail</h3>
-        <p>SaveCode sends a verification letter to your physical address containing your unique Home ID code. You enter this code in the app to confirm that you are a legitimate resident of the registered address.</p>
-        <div class="step-note"><strong>Why physical mail?</strong> This creates an unforgeable link between the digital identity and the physical location. Anyone can claim an address online — but only a legitimate resident can receive mail at that address.</div>
+    <div class="mission-stats">
+      <div class="m-stat">
+        <div class="num">$25B</div>
+        <div class="lbl">Package theft annually in the US</div>
       </div>
-    </div>
-    <div class="process-step">
-      <div class="step-left"><div class="step-circle">3</div><div class="step-line"></div></div>
-      <div class="step-content">
-        <h3>Your Home ID Is Activated</h3>
-        <p>Once verified, your address receives an active Home ID — a unique identifier persistently associated with your address and updatable under authorized conditions such as security events or fraud detection. Your Home ID is the foundation of your address identity.</p>
-        <div class="step-note"><strong>How it works:</strong> The Home ID is linked to your Resident Registry. Financial institutions, delivery services, and authorized agencies can query the SaveCode API to verify if a specific person is a registered resident of a specific address — in real time.</div>
+      <div class="m-stat">
+        <div class="num">$5.8B</div>
+        <div class="lbl">Address-based financial fraud</div>
       </div>
-    </div>
-    <div class="process-step">
-      <div class="step-left"><div class="step-circle">4</div></div>
-      <div class="step-content">
-        <h3>Continuous Protection — Active 24/7</h3>
-        <p>From the moment your Home ID is active, SaveCode monitors for unauthorized use of your address. Any attempt to use your address by a non-registered individual triggers an immediate risk indicator to the requesting institution and an alert to you.</p>
-        <div class="step-note"><strong>What you receive:</strong> Real-time notifications when your address is queried, with full details of the requesting institution and the nature of the request.</div>
+      <div class="m-stat">
+        <div class="num">1.1M+</div>
+        <div class="lbl">Identity thefts per year</div>
+      </div>
+      <div class="m-stat">
+        <div class="num">11%</div>
+        <div class="lbl">Deliveries reach wrong address</div>
       </div>
     </div>
   </div>
-</div>
-</div>
 
-<div class="section-full bg-light">
-<div class="section-inner">
-  <div class="eyebrow eyebrow-blue">Real Scenarios</div>
-  <h2 class="h2">SaveCode in Action</h2>
-  <div class="scenarios reveal">
-    <div class="scenario">
-      <div class="scenario-type scenario-type-fraud">⚠ Fraud Attempt</div>
-      <h4>Criminal Uses Stolen Identity</h4>
-      <div class="flow">
-        <div class="flow-step"><span class="flow-arrow">→</span>Criminal applies for credit using victim's name at a different address</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>Bank queries SaveCode API with applicant name + address</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>SaveCode checks Resident Registry — no match found</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>Risk indicator raised to bank immediately</div>
-        <div class="flow-result flow-result-bad">⚠ RISK INDICATOR · Bank notified · Fraud prevented</div>
-      </div>
-    </div>
-    <div class="scenario">
-      <div class="scenario-type scenario-type-legit">✓ Legitimate Application</div>
-      <h4>Real Resident Opens Account</h4>
-      <div class="flow">
-        <div class="flow-step"><span class="flow-arrow">→</span>Registered resident applies for credit at their home address</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>Bank queries SaveCode API with applicant name + address</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>SaveCode checks Resident Registry — match confirmed</div>
-        <div class="flow-step"><span class="flow-arrow">→</span>Verification response sent to bank instantly</div>
-        <div class="flow-result flow-result-good">✓ VERIFIED · Application proceeds normally</div>
+  <!-- FOUNDER -->
+  <div class="founder">
+    <h2>Founded By</h2>
+    <div class="founder-card">
+      <div class="founder-avatar">E</div>
+      <div class="founder-info">
+        <h3>Eman Eljack</h3>
+        <div class="title">Founder & Inventor · Mangel Technologies LLC</div>
+        <p>Eman Eljack is the founder and sole inventor of SaveCode, operating under Mangel Technologies LLC, based in Everett, Washington. She identified the critical gap in America's address verification infrastructure and developed the patent-pending Home ID system to address it.</p>
+        <p>SaveCode is built on the belief that physical address identity should be as secure and verifiable as any other form of identity — and that the solution must be grounded in the physical world, not just the digital one.</p>
       </div>
     </div>
   </div>
-</div>
-</div>
 
-<div class="api-section">
-<div class="api-inner">
-  <div class="eyebrow">API Integration</div>
-  <h2 class="h2 h2-white">Built for Institutional Integration</h2>
-  <div class="api-grid reveal">
-    <div class="api-endpoints">
-      <div class="endpoint"><div class="endpoint-method">POST</div><div class="endpoint-path">/v1/verify/address</div><div class="endpoint-desc">Verify address-person association for financial applications</div></div>
-      <div class="endpoint"><div class="endpoint-method">POST</div><div class="endpoint-path">/v1/verify/delivery</div><div class="endpoint-desc">Confirm recipient is registered at delivery address</div></div>
-      <div class="endpoint"><div class="endpoint-method">GET</div><div class="endpoint-path">/v1/address/status</div><div class="endpoint-desc">Check registration status of a specific address</div></div>
-      <div class="endpoint"><div class="endpoint-method">POST</div><div class="endpoint-path">/v1/alert/report</div><div class="endpoint-desc">Report unauthorized address usage to SaveCode</div></div>
-    </div>
-    <div class="terminal">
-      <div class="terminal-bar"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
-      <div class="terminal-body">
-        <div style="color:#4b5563;">// POST /v1/verify/address</div><br>
-        <div><span class="tk">address_id:</span> <span class="tv">"WA-847291"</span></div>
-        <div><span class="tk">applicant: </span> <span class="tv">"Jane Doe"</span></div>
-        <div><span class="tk">purpose:   </span> <span class="tv">"credit_application"</span></div><br>
-        <div style="color:#4b5563;">// Response</div>
-        <div><span class="tk">status:    </span> <span class="tok">"VERIFIED"</span></div>
-        <div><span class="tk">match:     </span> <span class="tok">true</span></div>
-        <div><span class="tk">confidence:</span> <span class="tv">"HIGH"</span></div>
-        <div><span class="tk">response:  </span> <span class="tok">"PROCEED"</span></div>
+  <!-- VALUES -->
+  <div class="values">
+    <h2 class="sec-h">Our Principles</h2>
+    <p class="sec-sub">The values that guide every decision we make at SaveCode.</p>
+    <div class="values-grid">
+      <div class="v-card">
+        <div class="v-icon">🔒</div>
+        <h3>Privacy First</h3>
+        <p>SaveCode is designed to share only what is necessary — your verified address status — without exposing personal identity details to third parties.</p>
+      </div>
+      <div class="v-card">
+        <div class="v-icon">🏠</div>
+        <h3>Physical Grounding</h3>
+        <p>Our verification is anchored in the physical world. A code sent to your home by mail is something that cannot be forged remotely — that's our foundation.</p>
+      </div>
+      <div class="v-card">
+        <div class="v-icon">⚖️</div>
+        <h3>Transparency</h3>
+        <p>We are clear about what SaveCode does and does not do. We generate indicators and notifications — we do not make final decisions on behalf of any party.</p>
+      </div>
+      <div class="v-card">
+        <div class="v-icon">🤝</div>
+        <h3>Trust Through Action</h3>
+        <p>Trust is not claimed — it is earned. SaveCode builds trust through its verification process, not through marketing language alone.</p>
+      </div>
+      <div class="v-card">
+        <div class="v-icon">🔬</div>
+        <h3>Innovation</h3>
+        <p>SaveCode's patent-pending technology represents a new approach to address identity — one that bridges the physical and digital in a way not done before.</p>
+      </div>
+      <div class="v-card">
+        <div class="v-icon">🌍</div>
+        <h3>Accessibility</h3>
+        <p>Address security should not be a luxury. SaveCode is designed to be accessible to all residents — homeowners and renters alike.</p>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- COMPANY INFO -->
+  <div class="company">
+    <h2>Company Information</h2>
+    <div class="company-grid">
+      <div class="c-item">
+        <div class="c-label">Legal Entity</div>
+        <div class="c-val">Mangel Technologies LLC</div>
+      </div>
+      <div class="c-item">
+        <div class="c-label">Headquarters</div>
+        <div class="c-val">Everett, Washington, USA</div>
+      </div>
+      <div class="c-item">
+        <div class="c-label">Founded</div>
+        <div class="c-val">2026</div>
+      </div>
+      <div class="c-item">
+        <div class="c-label">Product</div>
+        <div class="c-val">SaveCode (savecode.us)</div>
+      </div>
+      <div class="c-item">
+        <div class="c-label">Technology Status</div>
+        <div class="c-val">Patent-Pending</div>
+      </div>
+      <div class="c-item">
+        <div class="c-label">Stage</div>
+        <div class="c-val">Pre-Launch · Early Access</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p>📋 SaveCode's core technology is the subject of a pending US utility patent application. The Home ID system, physical mail verification process, and associated innovations are proprietary to Mangel Technologies LLC.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div>
+      <h2>Join us in building a safer America</h2>
+      <p>Be among the first to secure your address with SaveCode.</p>
+    </div>
+    <a href="register.html" class="btn-cw">Get started free</a>
+  </div>
+
 </div>
 
-<div class="section-full bg-light" style="border-top:1px solid var(--border);">
-<div class="cta-wrap">
-  <div class="eyebrow eyebrow-blue" style="text-align:center;">Get Started</div>
-  <h2 class="cta-title">Ready to <em>Protect Your Address?</em></h2>
-  <p class="cta-sub">Join the waitlist and be among the first to activate your Home ID when SaveCode launches. Free to join — no credit card required.</p>
-  <a href="/waitlist" class="btn btn-blue">Join the Waitlist — Free →</a>
-</div>
-</div>
-
-<div style="text-align:center;padding:24px 48px;color:#6b7a99;font-size:0.82rem;border-top:1px solid #e2e8f4;background:#ffffff;">
-SaveCode is developed by Mangel Technologies LLC, a Washington-based technology company focused on secure verification infrastructure.
-</div>
+<!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA</div>
-  <div class="footer-links"><a href="/">Home</a><a href="/features">Features</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+  <a href="index.html" class="f-brand">
+    <svg width="130" height="26" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+        <linearGradient id="ftg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#fhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#fhg)" opacity="0.2"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#fhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#fhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ftg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="f-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="signin.html">Sign In</a>
+  </div>
+  <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA · Patent-Pending Technology</div>
 </footer>
-<script>
-const obs=new IntersectionObserver(e=>{e.forEach((el,i)=>{if(el.isIntersecting){setTimeout(()=>el.target.classList.add('visible'),i*100);obs.unobserve(el.target);}});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-</script>
+
 </body>
 </html>
