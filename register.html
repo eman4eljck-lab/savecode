@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account — SaveCode</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:      #0067b8;
+      --blue-h:    #005a9e;
+      --blue-dark: #003f7f;
+      --blue-pale: #e8f1fb;
+      --gray-bg:   #f2f2f2;
+      --gray-mid:  #e0e0e0;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --white:     #ffffff;
+      --green:     #059669;
+      --red:       #dc2626;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito Sans','Segoe UI',sans-serif;
+      background: var(--gray-bg);
+      color: var(--gray-900);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-mid);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      justify-content: space-between;
+    }
+    .nav-brand { display:flex; align-items:center; text-decoration:none; }
+    .nav-signin { font-size:13px; color:var(--gray-700); text-decoration:none; font-weight:600; }
+    .nav-signin span { color:var(--blue); }
+
+    /* MAIN LAYOUT */
+    .page {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 52px);
+    }
+
+    /* LEFT — FORM */
+    .form-side {
+      padding: 56px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--white);
+    }
+
+    .form-tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 12px;
+    }
+
+    .form-side h1 {
+      font-size: 28px; font-weight: 800;
+      color: var(--gray-900); letter-spacing: -.5px;
+      margin-bottom: 6px;
+    }
+
+    .form-side .sub {
+      font-size: 14px; color: var(--gray-500);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .form-group.full { grid-column: 1/-1; }
+
+    label {
+      font-size: 12px; font-weight: 700;
+      color: var(--gray-700); letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+
+    input {
+      padding: 11px 14px;
+      border: 1px solid var(--gray-mid);
+      font-size: 14px; font-family: inherit;
+      color: var(--gray-900); background: var(--white);
+      outline: none; border-radius: 2px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,103,184,.1); }
+    input::placeholder { color: #adb5bd; }
+
+    .password-wrap { position: relative; }
+    .password-wrap input { width: 100%; padding-right: 44px; }
+    .toggle-pw {
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-500); font-size: 16px; padding: 0;
+    }
+
+    .terms {
+      font-size: 12px; color: var(--gray-500);
+      line-height: 1.6; margin-bottom: 20px;
+    }
+    .terms a { color: var(--blue); text-decoration: none; }
+    .terms a:hover { text-decoration: underline; }
+
+    .btn-register {
+      width: 100%; padding: 13px;
+      background: var(--blue); color: var(--white);
+      border: none; border-radius: 2px;
+      font-size: 15px; font-weight: 800;
+      font-family: inherit; cursor: pointer;
+      transition: background .15s;
+      margin-bottom: 20px;
+    }
+    .btn-register:hover { background: var(--blue-h); }
+    .btn-register:disabled { background: var(--gray-mid); cursor: not-allowed; }
+
+    .signin-link {
+      font-size: 13px; color: var(--gray-500);
+      text-align: center;
+    }
+    .signin-link a { color: var(--blue); font-weight: 700; text-decoration: none; }
+    .signin-link a:hover { text-decoration: underline; }
+
+    /* SUCCESS STATE */
+    .success-state {
+      display: none;
+      text-align: center;
+      padding: 16px 0;
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      background: #e6f4ea; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 20px;
+    }
+    .success-state h2 {
+      font-size: 22px; font-weight: 800;
+      color: var(--gray-900); margin-bottom: 10px;
+    }
+    .success-state p {
+      font-size: 14px; color: var(--gray-500);
+      line-height: 1.7; margin-bottom: 24px;
+    }
+    .btn-dashboard {
+      display: inline-block;
+      background: var(--blue); color: var(--white);
+      padding: 12px 32px; border-radius: 2px;
+      font-size: 14px; font-weight: 800;
+      text-decoration: none; transition: background .15s;
+    }
+    .btn-dashboard:hover { background: var(--blue-h); }
+
+    /* RIGHT — INFO PANEL */
+    .info-side {
+      background: var(--blue-dark);
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .info-tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: rgba(255,255,255,.5); margin-bottom: 24px;
+    }
+
+    .info-side h2 {
+      font-size: 24px; font-weight: 800;
+      color: var(--white); margin-bottom: 32px;
+      letter-spacing: -.5px; line-height: 1.3;
+    }
+
+    .steps-list { display: flex; flex-direction: column; gap: 0; }
+
+    .info-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 16px;
+      padding-bottom: 28px;
+      position: relative;
+    }
+
+    .info-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 17px; top: 36px;
+      width: 2px; height: calc(100% - 8px);
+      background: rgba(255,255,255,.1);
+    }
+
+    .info-step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800;
+      color: var(--white); flex-shrink: 0;
+      position: relative; z-index: 1;
+    }
+
+    .info-step-num.done {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .info-step-text h3 {
+      font-size: 14px; font-weight: 700;
+      color: var(--white); margin-bottom: 4px;
+      margin-top: 6px;
+    }
+    .info-step-text p {
+      font-size: 12px; color: rgba(255,255,255,.55);
+      line-height: 1.6;
+    }
+
+    .info-note {
+      margin-top: 32px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 16px 20px;
+      font-size: 12px; color: rgba(255,255,255,.5);
+      line-height: 1.65;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--gray-900);
+      padding: 20px 64px;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .f-links { display: flex; gap: 20px; }
+    .f-links a { font-size: 12px; color: rgba(255,255,255,.35); text-decoration: none; transition: color .15s; }
+    .f-links a:hover { color: var(--white); }
+    .f-copy { font-size: 11px; color: rgba(255,255,255,.22); }
+
+    @media(max-width:900px){
+      .page { grid-template-columns: 1fr; }
+      .info-side { display: none; }
+      .form-side { padding: 40px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <svg width="150" height="30" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <a href="signin.html" class="nav-signin">Already have an account? <span>Sign in</span></a>
+</nav>
+
+<!-- MAIN -->
+<div class="page">
+
+  <!-- FORM SIDE -->
+  <div class="form-side">
+
+    <!-- FORM -->
+    <div id="register-form">
+      <div class="form-tag">Step 1 of 3</div>
+      <h1>Create Your Account</h1>
+      <p class="sub">Enter your details to get started. You'll register your home address after signing in.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="fname" placeholder="First name">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lname" placeholder="Last name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="you@example.com">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="password-wrap">
+          <input type="password" id="password" placeholder="Create a strong password">
+          <button class="toggle-pw" onclick="togglePassword()" type="button">👁</button>
+        </div>
+      </div>
+
+      <p class="terms">
+        By creating an account, you agree to SaveCode's
+        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        Your information is used solely for account management and address verification purposes.
+      </p>
+
+      <button class="btn-register" onclick="submitRegister()">Create Account</button>
+
+      <p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-state" id="success-state">
+      <div class="success-icon">✓</div>
+      <h2>Account Created!</h2>
+      <p>Welcome to SaveCode. Your account is ready.<br>Sign in to your dashboard to start registering your home address and request your verification PIN.</p>
+      <a href="signin.html" class="btn-dashboard">Go to Sign In →</a>
+    </div>
+
+  </div>
+
+  <!-- INFO SIDE -->
+  <div class="info-side">
+    <div class="info-tag">Your Journey with SaveCode</div>
+    <h2>Three steps to a verified Home ID</h2>
+
+    <div class="steps-list">
+      <div class="info-step">
+        <div class="info-step-num done">✓</div>
+        <div class="info-step-text">
+          <h3>Create Your Account</h3>
+          <p>You're here now. Just your name, email, and password — nothing more at this stage.</p>
+        </div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">2</div>
+        <div class="info-step-text">
+          <h3>Register Your Home Address</h3>
+          <p>After signing in, you'll submit your physical address. We'll mail a unique PIN to that address. Your application will be <strong style="color:rgba(255,255,255,.8)">pending</strong> until the PIN is received and verified.</p>
+        </div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">3</div>
+        <div class="info-step-text">
+          <h3>Enter Your PIN & Get Your Home ID</h3>
+          <p>Once you enter your PIN, your address is verified. SaveCode will automatically generate a unique, encrypted Home ID for your address.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-note">
+      🔒 Your personal information is used only for account creation and address verification. SaveCode does not sell or share your data with third parties.
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-links">
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Patent-Pending Technology</div>
+</footer>
+
+<script>
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+
+  function submitRegister() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!fname || !lname) { alert('Please enter your first and last name.'); return; }
+    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+    if (password.length < 8) { alert('Password must be at least 8 characters.'); return; }
+
+    const btn = document.querySelector('.btn-register');
+    btn.textContent = 'Creating account...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      document.getElementById('register-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
