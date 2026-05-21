@@ -1,345 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How It Works — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#0a0e1a;
-  --bg2:#0d1220;
-  --gold:#f0b429;
-  --gold2:#ffd35b;
-  --white:#ffffff;
-  --gray:rgba(255,255,255,0.55);
-  --border:rgba(255,255,255,0.08);
-  --border-gold:rgba(240,180,41,0.25);
-}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — SaveCode</title>
+  <meta name="description" content="Learn how SaveCode's physical-digital verification system works to secure your home address identity.">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:      #0067b8;
+      --blue-h:    #005a9e;
+      --blue-dark: #003f7f;
+      --blue-pale: #e8f1fb;
+      --gray-bg:   #f2f2f2;
+      --gray-mid:  #e0e0e0;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --white:     #ffffff;
+      --green:     #059669;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito Sans','Segoe UI',sans-serif; background: var(--gray-bg); color: var(--gray-900); }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,14,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:68px;display:flex;align-items:center;padding:0 48px;}
-.nav-inner{width:100%;max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.nav-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#1a2a6c,#f0b429);border-radius:10px;display:grid;place-items:center;font-size:1.2rem;}
-.nav-logo-wrap{display:flex;flex-direction:column;}
-.nav-logo-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#fff;}
-.nav-logo-sub{font-size:0.65rem;color:var(--gold);letter-spacing:0.5px;}
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nav-link{padding:8px 18px;border-radius:8px;font-size:0.85rem;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:all 0.15s;display:inline-block;}
-.nav-link:hover{color:#fff;}
-.nav-link.active{color:var(--gold);border-bottom:2px solid var(--gold);border-radius:0;}
-.btn-login{padding:9px 24px;border:1.5px solid rgba(255,255,255,0.25);border-radius:8px;font-size:0.85rem;font-weight:500;color:#fff;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-login:hover{border-color:var(--gold);color:var(--gold);}
-.btn-register{padding:9px 24px;border:1.5px solid var(--gold);border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--gold);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
-.btn-register:hover{background:var(--gold);color:#000;}
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; background:var(--white); border-bottom:1px solid var(--gray-mid); z-index:200; height:52px; display:flex; align-items:center; padding:0 32px; gap:20px; }
+    .nav-brand { display:flex; align-items:center; text-decoration:none; }
+    .nav-div { width:1px; height:20px; background:var(--gray-mid); }
+    .nav-links { display:flex; }
+    .nav-links a { font-size:13px; color:var(--gray-700); text-decoration:none; padding:0 14px; height:52px; display:flex; align-items:center; border-bottom:2px solid transparent; transition:background .15s,border-color .15s; }
+    .nav-links a:hover { background:var(--gray-bg); border-bottom-color:var(--blue); }
+    .nav-links a.active { border-bottom-color:var(--blue); color:var(--blue); font-weight:700; }
+    .nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+    .btn-signin { font-size:13px; font-weight:600; color:var(--gray-700); text-decoration:none; padding:6px 14px; border-radius:2px; border:1px solid var(--gray-mid); background:var(--white); transition:background .15s; }
+    .btn-signin:hover { background:var(--gray-bg); }
+    .btn-start { font-size:13px; font-weight:700; color:var(--white); text-decoration:none; padding:7px 16px; border-radius:2px; background:var(--blue); transition:background .15s; }
+    .btn-start:hover { background:var(--blue-h); }
 
-/* HERO */
-.hero{padding:130px 48px 80px;text-align:center;position:relative;overflow:hidden;background:var(--bg);}
-.hero::before{content:'';position:absolute;top:0;left:0;width:35%;height:100%;background-image:radial-gradient(circle,rgba(240,180,41,0.12) 1px,transparent 1px);background-size:24px 24px;opacity:0.5;}
-.hero::after{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:radial-gradient(ellipse at right center,rgba(79,70,229,0.12),transparent 70%);}
-.hero-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.12);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:1;}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.5rem);color:#fff;margin-bottom:8px;line-height:1.1;position:relative;z-index:1;}
-.hero-h1 em{color:var(--gold);font-style:italic;}
-.hero-sub{font-size:1rem;color:var(--gray);max-width:560px;margin:20px auto 0;line-height:1.75;font-weight:300;position:relative;z-index:1;}
+    /* PAGE HERO */
+    .page-hero { background:var(--blue-dark); padding:90px 64px 56px; text-align:center; }
+    .page-hero-tag { display:inline-block; background:rgba(255,255,255,.12); color:rgba(255,255,255,.85); font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:18px; }
+    .page-hero h1 { font-size:38px; font-weight:800; color:var(--white); letter-spacing:-1px; margin-bottom:14px; }
+    .page-hero p { font-size:16px; color:rgba(255,255,255,.72); max-width:560px; margin:0 auto; line-height:1.7; }
 
-/* STEPS SECTION */
-.steps-section{max-width:900px;margin:0 auto;padding:80px 48px;}
+    /* MAIN */
+    .main { max-width:1000px; margin:0 auto; padding:64px 64px; }
 
-.step{display:grid;grid-template-columns:88px 1fr;gap:32px;position:relative;margin-bottom:0;}
-.step:not(:last-child)::after{content:'';position:absolute;left:43px;top:88px;width:2px;height:calc(100% - 24px);background:linear-gradient(to bottom,rgba(240,180,41,0.3),rgba(255,255,255,0.05));}
+    /* STEPS */
+    .steps-section { margin-bottom:72px; }
+    .sec-h { font-size:22px; font-weight:800; color:var(--gray-900); margin-bottom:8px; letter-spacing:-.3px; }
+    .sec-sub { font-size:14px; color:var(--gray-500); margin-bottom:40px; line-height:1.65; }
 
-.step-num{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;flex-shrink:0;position:relative;z-index:1;border:2px solid transparent;}
-.step-num.n1{background:linear-gradient(135deg,#1a237e,#283593);border-color:rgba(240,180,41,0.3);color:var(--gold);}
-.step-num.n2{background:linear-gradient(135deg,#f0b429,#ffd35b);color:#000;border-color:transparent;}
-.step-num.n3{background:linear-gradient(135deg,#004d40,#00695c);color:#fff;border-color:transparent;}
-.step-num.n4{background:linear-gradient(135deg,#4a148c,#6a1b9a);color:#fff;border-color:transparent;}
+    .step-row {
+      display:grid; grid-template-columns:56px 1fr;
+      gap:0 24px; margin-bottom:0; position:relative;
+    }
 
-.step-content{padding:16px 0 64px;}
-.step-eyebrow{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:0.68rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
-.step-eyebrow.blue{background:rgba(26,35,126,0.4);color:#7986cb;border:1px solid rgba(121,134,203,0.2);}
-.step-eyebrow.gold{background:rgba(240,180,41,0.15);color:var(--gold);border:1px solid var(--border-gold);}
-.step-eyebrow.green{background:rgba(0,77,64,0.4);color:#4db6ac;border:1px solid rgba(77,182,172,0.2);}
-.step-eyebrow.purple{background:rgba(74,20,140,0.4);color:#ce93d8;border:1px solid rgba(206,147,216,0.2);}
-.step-title{font-family:'Playfair Display',serif;font-size:1.8rem;color:#fff;margin-bottom:16px;line-height:1.2;}
-.step-desc{font-size:0.92rem;color:var(--gray);line-height:1.8;margin-bottom:24px;font-weight:300;}
+    /* vertical line connecting steps */
+    .step-row:not(:last-child) .step-line {
+      position:absolute; left:27px; top:56px;
+      width:2px; height:calc(100% + 0px);
+      background: linear-gradient(to bottom, var(--blue), var(--blue-pale));
+    }
 
-.step-details{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;}
-.step-detail-item{display:flex;align-items:center;gap:14px;font-size:0.85rem;color:rgba(255,255,255,0.8);}
-.sdi-icon{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:0.9rem;flex-shrink:0;}
-.sdi-icon.blue{background:rgba(26,35,126,0.5);}
-.sdi-icon.gold{background:rgba(240,180,41,0.15);}
-.sdi-icon.green{background:rgba(0,77,64,0.5);}
-.sdi-icon.purple{background:rgba(74,20,140,0.5);}
+    .step-num-wrap { display:flex; flex-direction:column; align-items:center; position:relative; }
+    .step-num {
+      width:56px; height:56px; border-radius:50%;
+      background:var(--blue); color:var(--white);
+      font-size:20px; font-weight:800;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; position:relative; z-index:1;
+    }
+    .step-connector { width:2px; flex:1; background:linear-gradient(to bottom,var(--blue),var(--blue-pale)); min-height:40px; }
+    .step-row:last-child .step-connector { display:none; }
 
-.step-photo{border-radius:16px;overflow:hidden;margin-top:24px;height:220px;border:1px solid var(--border);}
-.step-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(0.75);}
+    .step-content { padding-bottom:48px; }
+    .step-content h3 { font-size:19px; font-weight:800; color:var(--gray-900); margin-bottom:8px; margin-top:14px; }
+    .step-content p { font-size:14px; color:var(--gray-500); line-height:1.75; margin-bottom:16px; }
 
-/* ID CARD */
-.id-card-demo{background:linear-gradient(135deg,#0d1220,#1a2040);border:1px solid var(--border-gold);border-radius:18px;padding:28px;margin-top:24px;position:relative;overflow:hidden;}
-.id-card-demo::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#B22234,#3C3B6E,#B22234);}
-.idc-eyebrow{font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;margin-top:8px;opacity:0.7;}
-.idc-id{font-family:'JetBrains Mono',monospace;font-size:1.6rem;color:#fff;margin-bottom:12px;letter-spacing:2px;}
-.idc-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(0,165,80,0.15);border:1px solid rgba(0,165,80,0.3);border-radius:20px;font-size:0.72rem;font-weight:600;color:#4ade80;}
+    .step-detail {
+      background:var(--white); border:1px solid var(--gray-mid);
+      padding:20px 24px; border-radius:4px;
+      display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    }
+    .detail-item { display:flex; align-items:flex-start; gap:10px; }
+    .detail-icon { font-size:16px; flex-shrink:0; margin-top:2px; }
+    .detail-text { font-size:13px; color:var(--gray-500); line-height:1.55; }
+    .detail-text strong { color:var(--gray-900); display:block; margin-bottom:2px; font-size:13px; }
 
-/* SVG ILLUSTRATION */
-.illus-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:24px;}
-.illus-title{font-size:0.82rem;font-weight:600;color:var(--gold);margin-bottom:16px;text-align:center;letter-spacing:0.5px;}
+    /* FAQ */
+    .faq-section { margin-bottom:72px; }
+    .faq-item { background:var(--white); border:1px solid var(--gray-mid); margin-bottom:8px; }
+    .faq-q {
+      padding:18px 24px; font-size:14px; font-weight:700;
+      color:var(--gray-900); cursor:pointer;
+      display:flex; justify-content:space-between; align-items:center;
+      user-select:none;
+    }
+    .faq-q:hover { background:var(--gray-bg); }
+    .faq-q .arrow { font-size:12px; color:var(--blue); transition:transform .2s; }
+    .faq-a { display:none; padding:0 24px 18px; font-size:13px; color:var(--gray-500); line-height:1.75; }
+    .faq-item.open .faq-a { display:block; }
+    .faq-item.open .arrow { transform:rotate(180deg); }
 
-/* FAQ */
-.faq-section{background:var(--bg2);padding:80px 48px;border-top:1px solid var(--border);}
-.faq-inner{max-width:800px;margin:0 auto;}
-.section-eyebrow{display:inline-flex;padding:6px 16px;background:rgba(240,180,41,0.1);border:1px solid var(--border-gold);border-radius:20px;font-size:0.72rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:2px;text-transform:uppercase;}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:40px;}
-.section-title em{color:var(--gold);font-style:italic;}
-.faq-item{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:12px;cursor:pointer;transition:all 0.2s;}
-.faq-item:hover{border-color:var(--border-gold);}
-.faq-q{font-size:0.95rem;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;}
-.faq-q span{color:var(--gold);}
-.faq-a{font-size:0.88rem;color:var(--gray);line-height:1.7;margin-top:14px;font-weight:300;}
+    /* HIGHLIGHT */
+    .highlight { background:var(--blue-pale); border-left:4px solid var(--blue); padding:20px 24px; margin-bottom:40px; }
+    .highlight p { font-size:13px; color:var(--blue-dark); line-height:1.65; font-weight:600; }
 
-/* CTA */
-.cta-section{background:var(--bg);padding:80px 48px;text-align:center;}
-.cta-inner{max-width:600px;margin:0 auto;}
-.cta-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;}
-.cta-title em{font-style:italic;color:var(--gold);}
-.cta-sub{font-size:0.95rem;color:var(--gray);margin-bottom:36px;line-height:1.7;}
-.btn-cta{padding:14px 36px;background:var(--gold);border:none;border-radius:10px;color:#000;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;margin:0 6px;}
-.btn-cta:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-cta.outline{background:transparent;border:1.5px solid rgba(255,255,255,0.25);color:#fff;}
-.btn-cta.outline:hover{border-color:#fff;}
+    /* CTA */
+    .cta { background:var(--blue); padding:36px 44px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .cta h2 { font-size:20px; font-weight:800; color:var(--white); }
+    .cta p { font-size:13px; color:rgba(255,255,255,.72); margin-top:5px; }
+    .btn-cw { background:var(--white); color:var(--blue); padding:11px 26px; font-size:14px; font-weight:800; text-decoration:none; white-space:nowrap; flex-shrink:0; transition:background .15s; }
+    .btn-cw:hover { background:var(--blue-pale); }
 
-footer{background:#060810;padding:32px 48px;}
-.footer-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.2);}
-.footer-links{display:flex;gap:24px;}
-.footer-links a{font-size:0.78rem;color:rgba(255,255,255,0.35);text-decoration:none;transition:color 0.15s;}
-.footer-links a:hover{color:#fff;}
+    /* FOOTER */
+    footer { background:var(--gray-900); padding:28px 64px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .f-brand { display:flex; align-items:center; text-decoration:none; }
+    .f-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; color:rgba(255,255,255,.4); text-decoration:none; transition:color .15s; }
+    .f-links a:hover { color:var(--white); }
+    .f-copy { width:100%; font-size:11px; color:rgba(255,255,255,.22); margin-top:6px; }
 
-@media(max-width:1024px){
-  nav{padding:0 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 20px 60px;}
-  .steps-section{padding:60px 20px;}
-  .step{grid-template-columns:68px 1fr;gap:20px;}
-  .step-num{width:68px;height:68px;font-size:1.4rem;}
-  .faq-section{padding:60px 20px;}
-  .cta-section{padding:60px 20px;}
-  footer{padding:28px 20px;}
-  .footer-inner{flex-direction:column;gap:16px;text-align:center;}
-}
-</style>
+    @media(max-width:900px){
+      nav{padding:0 16px;} .nav-links{display:none;}
+      .page-hero{padding:80px 24px 40px;} .page-hero h1{font-size:26px;}
+      .main{padding:32px 16px;}
+      .step-detail{grid-template-columns:1fr;}
+      .cta{flex-direction:column;text-align:center;padding:28px 24px;}
+      footer{padding:24px 16px;flex-direction:column;align-items:flex-start;}
+    }
+  </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-inner">
-    <a class="nav-logo" href="/">
-      <div class="nav-logo-icon">🏠</div>
-      <div class="nav-logo-wrap">
-        <span class="nav-logo-name">SaveCode</span>
-        <span class="nav-logo-sub">Every Home Has an Identity</span>
-      </div>
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link" href="/features">Features</a>
-      <a class="nav-link active" href="/how-it-works">How It Works</a>
-      <a class="nav-link" href="/about">About</a>
-      <a class="nav-link" href="/contact">Contact</a>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;">
-      <a class="btn-login" href="/">Login</a>
-      <a class="btn-register" href="/#register">Register Your Home</a>
-    </div>
+  <a href="index.html" class="nav-brand">
+    <svg width="170" height="34" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="nav-div"></div>
+  <div class="nav-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html" class="active">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="signin.html" class="btn-signin">Sign in</a>
+    <a href="register.html" class="btn-start">Get started</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Simple Process</div>
-  <h1 class="hero-h1">How SaveCode <em>Works</em></h1>
-  <p class="hero-sub">Four simple steps to give your home a permanent identity and protect every delivery — forever.</p>
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-tag">The Process</div>
+  <h1>How SaveCode Works</h1>
+  <p>A simple, secure three-step process that creates a verified identity for your physical address — backed by patent-pending technology.</p>
 </div>
 
-<!-- STEPS -->
-<div class="steps-section">
+<!-- MAIN -->
+<div class="main">
 
-  <!-- STEP 1 -->
-  <div class="step">
-    <div class="step-num n1">1</div>
-    <div class="step-content">
-      <div class="step-eyebrow blue">Getting Started</div>
-      <div class="step-title">Register Your Address</div>
-      <p class="step-desc">Enter your US address — street, unit, city, state, and ZIP code — into our secure registration system. Our proprietary algorithm instantly generates a permanent, unique Home ID that belongs to your address forever.</p>
-      <div class="step-details">
-        <div class="step-detail-item"><div class="sdi-icon blue">⚡</div>Instant ID generation — takes less than 10 seconds</div>
-        <div class="step-detail-item"><div class="sdi-icon blue">🔒</div>Your data is encrypted and never sold to anyone</div>
-        <div class="step-detail-item"><div class="sdi-icon blue">🆓</div>Completely free — forever, no credit card needed</div>
+  <!-- FOR RESIDENTS -->
+  <div class="steps-section">
+    <h2 class="sec-h">For Homeowners & Renters</h2>
+    <p class="sec-sub">Getting your Home ID is straightforward. Here's exactly what happens from registration to full protection.</p>
+
+    <div class="step-row">
+      <div class="step-num-wrap">
+        <div class="step-num">1</div>
+        <div class="step-connector"></div>
       </div>
-      <div class="id-card-demo">
-        <div class="idc-eyebrow">🇺🇸 SaveCode · Home ID · Generated</div>
-        <div class="idc-id">WA — 293847 — 9820</div>
-        <div class="idc-badge">✓ Address Verified & Registered</div>
+      <div class="step-content">
+        <h3>Create Your Account</h3>
+        <p>Register on SaveCode with your email address and the physical address you want to verify. Your account is created immediately — but full access is pending address verification.</p>
+        <div class="step-detail">
+          <div class="detail-item">
+            <div class="detail-icon">📧</div>
+            <div class="detail-text"><strong>Email Registration</strong>Provide a valid email address to create your SaveCode account.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🏠</div>
+            <div class="detail-text"><strong>Address Submission</strong>Enter the physical address you wish to register and verify.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">💳</div>
+            <div class="detail-text"><strong>One-Time Verification Fee</strong>A small one-time fee covers the cost of physical mail verification.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">⏳</div>
+            <div class="detail-text"><strong>Account Pending</strong>Your account is created and awaits address verification to become fully active.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num-wrap">
+        <div class="step-num">2</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Receive Your Verification Letter</h3>
+        <p>SaveCode sends a physical letter to your registered address via mail. The letter contains a unique 6-digit verification code. This step confirms that you have physical access to the address — something that cannot be faked digitally.</p>
+        <div class="step-detail">
+          <div class="detail-item">
+            <div class="detail-icon">✉️</div>
+            <div class="detail-text"><strong>Physical Mail Delivery</strong>A letter containing your unique 6-digit code is mailed to your address.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🔢</div>
+            <div class="detail-text"><strong>Unique 6-Digit Code</strong>Each code is unique to your address and account — it cannot be reused or transferred.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">📅</div>
+            <div class="detail-text"><strong>Delivery Window</strong>Allow standard postal delivery time for your letter to arrive.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🔒</div>
+            <div class="detail-text"><strong>Code Expires</strong>For security, codes have a limited validity window after issuance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num-wrap">
+        <div class="step-num">3</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Enter Your Code & Activate Your Home ID</h3>
+        <p>Log in to your SaveCode account and enter the 6-digit code from your letter. Once confirmed, your Home ID is activated — your address is now verified and protected.</p>
+        <div class="step-detail">
+          <div class="detail-item">
+            <div class="detail-icon">✅</div>
+            <div class="detail-text"><strong>Code Verification</strong>Enter your code in your account dashboard to confirm physical access.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🆔</div>
+            <div class="detail-text"><strong>Home ID Activated</strong>Your unique encrypted Home ID is generated and tied to your verified address.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">👨‍👩‍👧</div>
+            <div class="detail-text"><strong>Add Family Members</strong>Authorize additional household members under your Home ID.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🛡️</div>
+            <div class="detail-text"><strong>Protection Active</strong>Your address is now part of the SaveCode verified network.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num-wrap">
+        <div class="step-num">4</div>
+      </div>
+      <div class="step-content">
+        <h3>Stay Protected</h3>
+        <p>Your Home ID works quietly in the background. Delivery services, financial institutions, and authorized parties can verify your address through SaveCode — while you receive notifications of any queries made against your address.</p>
+        <div class="step-detail">
+          <div class="detail-item">
+            <div class="detail-icon">🔔</div>
+            <div class="detail-text"><strong>Activity Notifications</strong>Stay informed when your address is queried through the SaveCode network.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🔄</div>
+            <div class="detail-text"><strong>Address Updates</strong>Moving? You can update your address — subject to a new verification process.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">🔌</div>
+            <div class="detail-text"><strong>Works with Partners</strong>SaveCode integrates with delivery and financial services via our Open API.</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-icon">📱</div>
+            <div class="detail-text"><strong>Manage Your Account</strong>View and manage your Home ID, household members, and settings anytime.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- STEP 2 -->
-  <div class="step">
-    <div class="step-num n2">2</div>
-    <div class="step-content">
-      <div class="step-eyebrow gold">Physical Setup</div>
-      <div class="step-title">Place Your Home ID Label</div>
-      <p class="step-desc">Print your official SaveCode label and place it on your front door and mailbox. The label displays your Home ID and a QR code for instant verification by delivery drivers and autonomous systems.</p>
-      <div class="step-details">
-        <div class="step-detail-item"><div class="sdi-icon gold">🖨️</div>Print-ready label included after registration</div>
-        <div class="step-detail-item"><div class="sdi-icon gold">📱</div>QR code enables instant smartphone scanning</div>
-        <div class="step-detail-item"><div class="sdi-icon gold">🏠</div>Place on door AND mailbox for full coverage</div>
-      </div>
-      <div class="step-photo">
-        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&auto=format&fit=crop" alt="Home front door">
-      </div>
-    </div>
+  <!-- HIGHLIGHT -->
+  <div class="highlight">
+    <p>🛡️ SaveCode's physical mail step is the core of our verification system. Unlike digital-only methods, physical mail delivery confirms that a person has actual access to an address — a standard that cannot be bypassed remotely. This process is covered by our patent-pending technology.</p>
   </div>
 
-  <!-- STEP 3 -->
-  <div class="step">
-    <div class="step-num n3">3</div>
-    <div class="step-content">
-      <div class="step-eyebrow green">Resident Setup</div>
-      <div class="step-title">Register Your Residents</div>
-      <p class="step-desc">Add all current residents to your Home ID. Mail addressed to unregistered names is automatically flagged and returned to sender — protecting your household from sensitive mail intended for previous occupants.</p>
-      <div class="step-details">
-        <div class="step-detail-item"><div class="sdi-icon green">👤</div>Add all household members in seconds</div>
-        <div class="step-detail-item"><div class="sdi-icon green">📬</div>Unauthorized mail automatically returned to sender</div>
-        <div class="step-detail-item"><div class="sdi-icon green">🔄</div>Update anytime when residents change</div>
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h2 class="sec-h">Frequently Asked Questions</h2>
+    <p class="sec-sub">Common questions about how SaveCode works.</p>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How long does verification take?
+        <span class="arrow">▼</span>
       </div>
-      <div class="illus-wrap">
-        <div class="illus-title">Last-Mile Verification in Action</div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="100%" style="max-width:500px;display:block;margin:0 auto;border-radius:12px;">
-          <rect width="600" height="300" fill="#0d1220"/>
-          <rect x="320" y="20" width="160" height="260" rx="4" fill="#2a1f14" opacity="0.8"/>
-          <rect x="330" y="32" width="140" height="238" rx="3" fill="#3a2d20" opacity="0.8"/>
-          <circle cx="330" cy="155" r="6" fill="#f0b429"/>
-          <rect x="270" y="110" width="48" height="58" rx="7" fill="#0a0e1a"/>
-          <rect x="276" y="116" width="36" height="36" rx="3" fill="white" opacity="0.95"/>
-          <rect x="279" y="119" width="7" height="7" rx="1" fill="#0a0e1a"/>
-          <rect x="288" y="119" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="293" y="119" width="7" height="7" rx="1" fill="#0a0e1a"/>
-          <rect x="279" y="128" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="283" y="125" width="7" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="279" y="133" width="7" height="7" rx="1" fill="#0a0e1a"/>
-          <rect x="293" y="133" width="7" height="7" rx="1" fill="#0a0e1a"/>
-          <line x1="276" y1="130" x2="312" y2="130" stroke="#f0b429" stroke-width="2"><animate attributeName="y1" values="119;151;119" dur="2s" repeatCount="indefinite"/><animate attributeName="y2" values="119;151;119" dur="2s" repeatCount="indefinite"/></line>
-          <rect x="148" y="220" width="18" height="70" rx="9" fill="#1a237e"/>
-          <rect x="178" y="220" width="18" height="70" rx="9" fill="#1a237e"/>
-          <rect x="130" y="145" width="84" height="82" rx="14" fill="#1a237e"/>
-          <rect x="146" y="162" width="22" height="14" rx="3" fill="#f0b429"/>
-          <text x="157" y="172" font-family="monospace" font-size="6" fill="#000" text-anchor="middle" font-weight="bold">SC</text>
-          <circle cx="172" cy="118" r="28" fill="#f5d5b0"/>
-          <ellipse cx="172" cy="95" rx="26" ry="14" fill="#3d2b1f"/>
-          <circle cx="162" cy="116" r="3.5" fill="#3d2b1f"/>
-          <circle cx="182" cy="116" r="3.5" fill="#3d2b1f"/>
-          <path d="M 163 128 Q 172 135 181 128" stroke="#3d2b1f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <ellipse cx="172" cy="91" rx="28" ry="8" fill="#0a0e1a"/>
-          <rect x="220" y="138" width="50" height="84" rx="7" fill="#0a0e1a"/>
-          <rect x="224" y="143" width="42" height="72" rx="5" fill="#1a2332"/>
-          <rect x="227" y="150" width="36" height="56" rx="3" fill="#0d1829"/>
-          <rect x="232" y="156" width="25" height="25" rx="2" fill="white" opacity="0.95"/>
-          <rect x="234" y="158" width="6" height="6" rx="0.5" fill="#0a0e1a"/>
-          <rect x="242" y="158" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="246" y="158" width="6" height="6" rx="0.5" fill="#0a0e1a"/>
-          <rect x="234" y="166" width="3" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="238" y="163" width="6" height="3" rx="0.5" fill="#0a0e1a"/>
-          <rect x="234" y="171" width="6" height="6" rx="0.5" fill="#0a0e1a"/>
-          <rect x="246" y="171" width="6" height="6" rx="0.5" fill="#0a0e1a"/>
-          <line x1="230" y1="165" x2="259" y2="165" stroke="#f0b429" stroke-width="1.5"><animate attributeName="y1" values="156;179;156" dur="1.5s" repeatCount="indefinite"/><animate attributeName="y2" values="156;179;156" dur="1.5s" repeatCount="indefinite"/></line>
-          <rect x="227" y="193" width="36" height="16" rx="4" fill="#00a550"/>
-          <text x="245" y="205" font-family="sans-serif" font-size="7" fill="white" text-anchor="middle" font-weight="bold">✓ VERIFIED</text>
-          <circle cx="370" cy="72" r="20" fill="#00a550"><animate attributeName="r" values="18;22;18" dur="2s" repeatCount="indefinite"/></circle>
-          <path d="M 361 72 L 368 79 L 381 62" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <rect x="80" y="25" width="148" height="44" rx="10" fill="#1a2040" opacity="0.96"/>
-          <rect x="80" y="25" width="148" height="3.5" rx="10" fill="#f0b429"/>
-          <text x="154" y="48" font-family="monospace" font-size="10" fill="#fff" text-anchor="middle" font-weight="600">WA — 293847 — 9820</text>
-          <text x="154" y="63" font-family="sans-serif" font-size="7.5" fill="#4ade80" text-anchor="middle">✓ Home ID Confirmed</text>
-        </svg>
-      </div>
+      <div class="faq-a">Verification depends on standard postal delivery times to your address. Once you receive your letter and enter the code, your Home ID is activated immediately.</div>
     </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What if I don't receive my letter?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">If your letter does not arrive within a reasonable time, you can request a new code through your account dashboard. Please allow full postal delivery time before requesting a replacement.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I register more than one address?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Each SaveCode account supports one primary verified address. If you need to verify a different address, a new verification process is required. Additional address registration options may be available in the future.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Who can see my verified address status?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">Only parties with authorized access to the SaveCode network can query your address verification status. SaveCode is designed to share only your verified status — not your personal identity details — with authorized parties, subject to our Privacy Policy and applicable law.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What happens when I move?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">You can update your address through your account. A new physical mail verification will be required for your new address to maintain the integrity of the verification system.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is SaveCode available everywhere in the US?
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">SaveCode is designed for US addresses and is currently in development. Availability may vary by region at launch. Join our waitlist to be notified when SaveCode is available in your area.</div>
+    </div>
+
   </div>
 
-  <!-- STEP 4 -->
-  <div class="step">
-    <div class="step-num n4">4</div>
-    <div class="step-content">
-      <div class="step-eyebrow purple">Every Delivery</div>
-      <div class="step-title">Every Delivery Verified</div>
-      <p class="step-desc">At the moment of delivery, the driver or autonomous system scans your door label and confirms it matches the package's destination Home ID. No match — no delivery. Your package always reaches the right door.</p>
-      <div class="step-details">
-        <div class="step-detail-item"><div class="sdi-icon purple">📦</div>Package only placed at confirmed matching address</div>
-        <div class="step-detail-item"><div class="sdi-icon purple">🚁</div>Compatible with drone & robot autonomous delivery</div>
-        <div class="step-detail-item"><div class="sdi-icon purple">📲</div>Real-time notification sent to your phone</div>
-      </div>
-      <div class="step-photo">
-        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&auto=format&fit=crop" alt="Package delivery">
-      </div>
+  <!-- CTA -->
+  <div class="cta">
+    <div>
+      <h2>Ready to verify your address?</h2>
+      <p>Create your account and request your Home ID today.</p>
     </div>
+    <a href="register.html" class="btn-cw">Get started free</a>
   </div>
 
 </div>
 
-<!-- FAQ -->
-<div class="faq-section">
-  <div class="faq-inner">
-    <div class="section-eyebrow">Common Questions</div>
-    <h2 class="section-title">Frequently Asked <em>Questions</em></h2>
-    <div class="faq-item">
-      <div class="faq-q">Is SaveCode really free? <span>+</span></div>
-      <div class="faq-a">Yes, registering your Home ID is completely free. Always. SaveCode's mission is to give every American home a permanent identity, and we believe that should never cost anything.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What happens if I move? <span>+</span></div>
-      <div class="faq-a">Your Home ID stays with the address — not with you. When you move, you register a new Home ID for your new address. The old address keeps its ID for the next residents.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do carriers support SaveCode? <span>+</span></div>
-      <div class="faq-a">We are actively working on carrier integrations. Our 2026 roadmap includes partnerships with major US carriers. Early adopters will be first to benefit when integrations go live.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Is my personal data safe? <span>+</span></div>
-      <div class="faq-a">Absolutely. Your name and address are never shared with third parties. We use enterprise-grade encryption and your data is never sold. Privacy is at the core of everything SaveCode does.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Can I use SaveCode for a business address? <span>+</span></div>
-      <div class="faq-a">Yes! SaveCode works for residential and commercial addresses. Businesses can register their address and manage employee mail through our enterprise dashboard.</div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-inner">
-    <h2 class="cta-title">Ready to Get <em>Started?</em></h2>
-    <p class="cta-sub">Register your home for free in under a minute. Give your address a permanent identity today.</p>
-    <a class="btn-cta" href="/#register">Register Now — Free</a>
-    <a class="btn-cta outline" href="/features">See All Features</a>
-  </div>
-</div>
-
+<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <span class="footer-copy">© 2026 SaveCode. All rights reserved. · Patent Pending US 63/808,302</span>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="/features">Features</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </div>
+  <a href="index.html" class="f-brand">
+    <svg width="130" height="26" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+        <linearGradient id="ftg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#fhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#fhg)" opacity="0.2"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#fhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#fhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ftg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="f-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="signin.html">Sign In</a>
   </div>
+  <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA · Patent-Pending Technology</div>
 </footer>
+
+<script>
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+</script>
 
 </body>
 </html>
