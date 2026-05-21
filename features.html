@@ -1,150 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Features — SaveCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--bg:#f8f9fc;--bg2:#ffffff;--dark:#0b1221;--blue:#1a3a6b;--blue2:#2451a3;--gold:#c9972a;--gold2:#e8b84b;--gray:#6b7a99;--gray2:#e8ecf4;--border:#e2e8f4;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);overflow-x:hidden;}
-.flag{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;background:linear-gradient(90deg,#B22234 0%,#B22234 35%,#fff 35%,#fff 40%,#3C3B6E 40%);}
-nav{position:fixed;top:3px;left:0;right:0;z-index:500;background:rgba(248,249,252,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
-.logo-icon{width:36px;height:36px;background:var(--blue);border-radius:8px;display:grid;place-items:center;}
-.logo-icon svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;}
-.logo-name{font-size:1.1rem;font-weight:700;color:var(--dark);}
-.logo-name span{color:var(--gold);}
-.nav-menu{display:flex;align-items:center;gap:4px;}
-.nav-menu a{font-size:0.875rem;font-weight:500;color:var(--gray);text-decoration:none;padding:8px 16px;border-radius:6px;transition:all 0.2s;}
-.nav-menu a:hover{color:var(--dark);background:var(--gray2);}
-.nav-cta{background:var(--blue)!important;color:#fff!important;border-radius:8px!important;font-weight:600!important;}
-.page-hero{padding:140px 48px 80px;background:var(--bg2);border-bottom:1px solid var(--border);text-align:center;}
-.page-hero-inner{max-width:680px;margin:0 auto;}
-.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
-.h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:700;color:var(--dark);margin-bottom:20px;letter-spacing:-0.5px;}
-.h1 em{color:var(--blue);font-style:italic;}
-.lead{font-size:1rem;color:var(--gray);line-height:1.8;}
-.section{padding:80px 48px;max-width:1200px;margin:0 auto;}
-.section-full{padding:80px 0;}
-.section-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
-.bg-light{background:var(--bg2);border-bottom:1px solid var(--border);}
-.bg-subtle{background:var(--bg);}
-.h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:-0.3px;}
-.sub{font-size:0.9rem;color:var(--gray);line-height:1.8;max-width:480px;margin-bottom:40px;}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
-.feat{padding:32px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;transition:all 0.3s;}
-.feat:hover{border-color:rgba(26,58,107,0.2);box-shadow:0 4px 20px rgba(26,58,107,0.06);transform:translateY(-2px);}
-.feat-icon{width:48px;height:48px;border-radius:10px;background:var(--gray2);display:grid;place-items:center;font-size:1.4rem;margin-bottom:20px;}
-.feat-title{font-size:0.95rem;font-weight:700;color:var(--dark);margin-bottom:10px;}
-.feat-desc{font-size:0.82rem;color:var(--gray);line-height:1.7;}
-.feat-tag{display:inline-block;margin-top:16px;font-size:0.68rem;font-weight:600;color:var(--blue);letter-spacing:1px;text-transform:uppercase;}
-.comparison{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px;}
-.comp-col{padding:32px;border-radius:10px;}
-.comp-col-bad{background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.12);}
-.comp-col-good{background:rgba(26,58,107,0.04);border:1px solid rgba(26,58,107,0.15);}
-.comp-title{font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.06);}
-.comp-title-bad{color:#dc2626;}
-.comp-title-good{color:var(--blue);}
-.comp-item{display:flex;gap:12px;margin-bottom:14px;font-size:0.83rem;color:var(--gray);line-height:1.5;}
-.comp-item::before{content:'✗';color:#ef4444;font-weight:700;flex-shrink:0;}
-.comp-item-good::before{content:'✓';color:#22c55e;}
-.cta-banner{background:var(--dark);border-radius:16px;padding:48px;text-align:center;margin-top:64px;}
-.cta-banner h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#fff;margin-bottom:12px;}
-.cta-banner p{font-size:0.9rem;color:rgba(255,255,255,0.55);margin-bottom:28px;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.2s;}
-.btn-blue{background:var(--gold);color:#000;}
-.btn-blue:hover{background:var(--gold2);}
-footer{background:var(--dark);padding:48px;text-align:center;}
-.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.25);}
-.footer-links{display:flex;justify-content:center;gap:24px;margin-top:12px;}
-.footer-links a{font-size:0.75rem;color:rgba(255,255,255,0.25);text-decoration:none;}
-.footer-links a:hover{color:rgba(255,255,255,0.6);}
-.reveal{opacity:0;transform:translateY(20px);transition:all 0.6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-@media(max-width:768px){.nav-menu{display:none;}.page-hero,.section{padding:100px 24px 48px;}.features-grid{grid-template-columns:1fr;}.comparison{grid-template-columns:1fr;}.section-inner{padding:0 24px;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features — SaveCode</title>
+  <meta name="description" content="Explore SaveCode's features for homeowners, financial institutions, logistics providers, and authorized agencies.">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:      #0067b8;
+      --blue-h:    #005a9e;
+      --blue-dark: #003f7f;
+      --blue-pale: #e8f1fb;
+      --gray-bg:   #f2f2f2;
+      --gray-mid:  #e0e0e0;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --white:     #ffffff;
+      --green:     #059669;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito Sans','Segoe UI',sans-serif; background: var(--gray-bg); color: var(--gray-900); }
+
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; background:var(--white); border-bottom:1px solid var(--gray-mid); z-index:200; height:52px; display:flex; align-items:center; padding:0 32px; gap:20px; }
+    .nav-brand { display:flex; align-items:center; text-decoration:none; }
+    .nav-div { width:1px; height:20px; background:var(--gray-mid); }
+    .nav-links { display:flex; }
+    .nav-links a { font-size:13px; color:var(--gray-700); text-decoration:none; padding:0 14px; height:52px; display:flex; align-items:center; border-bottom:2px solid transparent; transition:background .15s,border-color .15s; }
+    .nav-links a:hover { background:var(--gray-bg); border-bottom-color:var(--blue); }
+    .nav-links a.active { border-bottom-color:var(--blue); color:var(--blue); font-weight:700; }
+    .nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+    .btn-signin { font-size:13px; font-weight:600; color:var(--gray-700); text-decoration:none; padding:6px 14px; border-radius:2px; border:1px solid var(--gray-mid); background:var(--white); transition:background .15s; }
+    .btn-signin:hover { background:var(--gray-bg); }
+    .btn-start { font-size:13px; font-weight:700; color:var(--white); text-decoration:none; padding:7px 16px; border-radius:2px; background:var(--blue); transition:background .15s; }
+    .btn-start:hover { background:var(--blue-h); }
+
+    /* PAGE HERO */
+    .page-hero { background:var(--blue-dark); padding:90px 64px 56px; text-align:center; }
+    .page-hero-tag { display:inline-block; background:rgba(255,255,255,.12); color:rgba(255,255,255,.85); font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:18px; }
+    .page-hero h1 { font-size:38px; font-weight:800; color:var(--white); letter-spacing:-1px; margin-bottom:14px; }
+    .page-hero p { font-size:16px; color:rgba(255,255,255,.72); max-width:560px; margin:0 auto; line-height:1.7; }
+
+    /* TAB NAV */
+    .tab-nav { background:var(--blue); display:flex; justify-content:center; }
+    .tab-nav a { font-size:13px; font-weight:700; color:rgba(255,255,255,.8); text-decoration:none; padding:16px 28px; border-bottom:3px solid transparent; transition:background .15s,border-color .15s,color .15s; letter-spacing:.3px; }
+    .tab-nav a:hover { background:rgba(255,255,255,.08); border-bottom-color:var(--white); color:var(--white); }
+    .tab-nav a.active { border-bottom-color:var(--white); color:var(--white); }
+
+    /* MAIN */
+    .main { max-width:1100px; margin:0 auto; padding:56px 64px; }
+
+    /* SECTION */
+    .feature-section { margin-bottom:72px; scroll-margin-top:100px; }
+    .section-header { display:flex; align-items:flex-start; gap:20px; margin-bottom:36px; padding-bottom:24px; border-bottom:2px solid var(--blue-pale); }
+    .section-icon { width:52px; height:52px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+    .icon-blue { background:var(--blue-pale); }
+    .icon-green { background:#e6f4ea; }
+    .icon-yellow { background:#fff8e1; }
+    .icon-purple { background:#f3e8ff; }
+    .section-header-text h2 { font-size:26px; font-weight:800; color:var(--gray-900); letter-spacing:-.5px; margin-bottom:6px; }
+    .section-header-text p { font-size:15px; color:var(--gray-500); line-height:1.65; max-width:600px; }
+
+    /* FEATURE CARDS */
+    .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .f-card { background:var(--white); border:1px solid var(--gray-mid); padding:26px; transition:box-shadow .2s,border-color .2s; }
+    .f-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.07); border-color:var(--blue); }
+    .f-card-icon { font-size:22px; margin-bottom:14px; }
+    .f-card h3 { font-size:15px; font-weight:700; color:var(--gray-900); margin-bottom:8px; }
+    .f-card p { font-size:13px; color:var(--gray-500); line-height:1.65; }
+
+    /* HIGHLIGHT BOX */
+    .highlight { background:var(--blue-pale); border-left:4px solid var(--blue); padding:20px 24px; margin-top:24px; border-radius:0 4px 4px 0; }
+    .highlight p { font-size:13px; color:var(--blue-dark); line-height:1.65; font-weight:600; }
+
+    /* CTA */
+    .cta { background:var(--blue); padding:36px 44px; display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:16px; }
+    .cta h2 { font-size:20px; font-weight:800; color:var(--white); }
+    .cta p { font-size:13px; color:rgba(255,255,255,.72); margin-top:5px; }
+    .btn-cw { background:var(--white); color:var(--blue); padding:11px 26px; font-size:14px; font-weight:800; text-decoration:none; white-space:nowrap; flex-shrink:0; transition:background .15s; }
+    .btn-cw:hover { background:var(--blue-pale); }
+
+    /* FOOTER */
+    footer { background:var(--gray-900); padding:28px 64px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .f-brand { display:flex; align-items:center; text-decoration:none; }
+    .f-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; color:rgba(255,255,255,.4); text-decoration:none; transition:color .15s; }
+    .f-links a:hover { color:var(--white); }
+    .f-copy { width:100%; font-size:11px; color:rgba(255,255,255,.22); margin-top:6px; }
+
+    @media(max-width:900px){
+      nav{padding:0 16px;} .nav-links{display:none;}
+      .page-hero{padding:80px 24px 40px;} .page-hero h1{font-size:26px;}
+      .tab-nav{flex-wrap:wrap;} .tab-nav a{font-size:12px;padding:12px 16px;}
+      .main{padding:32px 16px;}
+      .feature-grid{grid-template-columns:1fr;}
+      .cta{flex-direction:column;text-align:center;padding:28px 24px;}
+      footer{padding:24px 16px;flex-direction:column;align-items:flex-start;}
+    }
+  </style>
 </head>
 <body>
-<div class="flag"></div>
+
+<!-- NAV -->
 <nav>
-  <div class="nav-inner">
-    <a href="/" class="logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="logo-name">Save<span>Code</span></div></a>
-    <div class="nav-menu"><a href="/features">Features</a><a href="/how-it-works">How It Works</a><a href="/about">About</a><a href="/contact">Contact</a><a href="/waitlist" class="nav-cta">Join Waitlist</a></div>
+  <a href="index.html" class="nav-brand">
+    <svg width="170" height="34" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="nav-div"></div>
+  <div class="nav-links">
+    <a href="features.html" class="active">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="signin.html" class="btn-signin">Sign in</a>
+    <a href="register.html" class="btn-start">Get started</a>
   </div>
 </nav>
 
+<!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-inner">
-    <div class="eyebrow">Platform Features</div>
-    <h1 class="h1">Everything You Need for <em>Verified Address Identity</em></h1>
-    <p class="lead">SaveCode provides a complete infrastructure for address verification — from resident registration to real-time fraud detection and institutional integration.</p>
-  </div>
+  <div class="page-hero-tag">What SaveCode Offers</div>
+  <h1>Features Built for Everyone</h1>
+  <p>From homeowners to financial institutions — SaveCode's verified address identity infrastructure protects every party in the chain.</p>
 </div>
 
-<div class="section-full bg-subtle">
-<div class="section-inner">
-  <div class="eyebrow">Core Features</div>
-  <h2 class="h2">The Complete Address Identity Platform</h2>
-  <div class="features-grid reveal">
-    <div class="feat"><div class="feat-icon">🏠</div><div class="feat-title">Home ID Assignment</div><div class="feat-desc">Every registered US address receives a unique Home Identification Code — persistently associated with the address and updatable under authorized conditions.</div><div class="feat-tag">Core Infrastructure</div></div>
-    <div class="feat"><div class="feat-icon">👨‍👩‍👧‍👦</div><div class="feat-title">Resident Registry</div><div class="feat-desc">All household members — including children and minors — registered and linked to the address. Full family protection under one verified identity.</div><div class="feat-tag">Family Protection</div></div>
-    <div class="feat"><div class="feat-icon">🔍</div><div class="feat-title">Real-Time Verification</div><div class="feat-desc">Instant address-person association checks via secure API. Financial institutions and delivery services verify in milliseconds.</div><div class="feat-tag">API Integration</div></div>
-    <div class="feat"><div class="feat-icon">⚡</div><div class="feat-title">Risk Indicators</div><div class="feat-desc">When unregistered individuals use a registered address, SaveCode immediately generates risk indicators to notify relevant parties.</div><div class="feat-tag">Fraud Detection</div></div>
-    <div class="feat"><div class="feat-icon">📬</div><div class="feat-title">Physical Verification</div><div class="feat-desc">Home ID verified via physical mail — creating an unforgeable link between the digital identity and the physical address location.</div><div class="feat-tag">Physical Layer</div></div>
-    <div class="feat"><div class="feat-icon">🔄</div><div class="feat-title">Address Updates</div><div class="feat-desc">When residents relocate, they authorize institutions to receive their new Home ID — selective, consent-based notification system.</div><div class="feat-tag">AANS System</div></div>
-    <div class="feat"><div class="feat-icon">🔐</div><div class="feat-title">Encrypted Storage</div><div class="feat-desc">All resident data encrypted end-to-end. Selective disclosure returns only binary responses — never exposing full resident information.</div><div class="feat-tag">Privacy First</div></div>
-    <div class="feat"><div class="feat-icon">📊</div><div class="feat-title">Audit Logging</div><div class="feat-desc">Every verification query logged with timestamp, requesting party, and result. Complete accountability trail for every access event.</div><div class="feat-tag">Compliance</div></div>
-    <div class="feat"><div class="feat-icon">🤝</div><div class="feat-title">Open API</div><div class="feat-desc">RESTful API with authentication, rate limiting, and access control — enabling banks, carriers, and government agencies to integrate securely.</div><div class="feat-tag">Enterprise Ready</div></div>
-  </div>
-</div>
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <a href="#residents" class="active">🏠 Homeowners</a>
+  <a href="#financial">🏦 Financial Institutions</a>
+  <a href="#logistics">📦 Logistics & Delivery</a>
+  <a href="#agencies">🛡️ Authorized Agencies</a>
 </div>
 
-<div class="section-full bg-light">
-<div class="section-inner">
-  <div class="eyebrow">SaveCode vs. Existing Systems</div>
-  <h2 class="h2">Why Existing Solutions Fall Short</h2>
-  <p class="sub">Current identity and credit monitoring systems notify after fraud occurs. SaveCode prevents it at the source.</p>
-  <div class="comparison reveal">
-    <div class="comp-col comp-col-bad">
-      <div class="comp-title comp-title-bad">❌ Existing Systems</div>
-      <div class="comp-item">Notify after account has already been opened</div>
-      <div class="comp-item">Cannot verify physical address ownership</div>
-      <div class="comp-item">No real-time address-person association check</div>
-      <div class="comp-item">Cannot protect children's identities proactively</div>
-      <div class="comp-item">No mechanism to detect unregistered occupants</div>
-      <div class="comp-item">Reactive — damage already done before alert</div>
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HOMEOWNERS -->
+  <div class="feature-section" id="residents">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🏠</div>
+      <div class="section-header-text">
+        <h2>Homeowners & Renters</h2>
+        <p>Protect your home address from unauthorized use. SaveCode gives residents a verified digital identity tied to their physical address — without exposing personal information.</p>
+      </div>
     </div>
-    <div class="comp-col comp-col-good">
-      <div class="comp-title comp-title-good">✓ SaveCode</div>
-      <div class="comp-item comp-item-good">Raises risk indicator before account is opened</div>
-      <div class="comp-item comp-item-good">Verifies address-person association in real time</div>
-      <div class="comp-item comp-item-good">Instant API-based verification for institutions</div>
-      <div class="comp-item comp-item-good">All household members including minors protected</div>
-      <div class="comp-item comp-item-good">Detects unregistered address usage immediately</div>
-      <div class="comp-item comp-item-good">Proactive — alerts before financial damage occurs</div>
+    <div class="feature-grid">
+      <div class="f-card">
+        <div class="f-card-icon">🔐</div>
+        <h3>Verified Home ID</h3>
+        <p>A unique encrypted identifier tied to your physical address. Only you can authorize who uses it — keeping imposters out.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">👨‍👩‍👧</div>
+        <h3>Family Member Access</h3>
+        <p>Add authorized family members under the same Home ID. Everyone in your household is covered under one verified account.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📬</div>
+        <h3>Physical Mail Verification</h3>
+        <p>Your identity is confirmed via a code sent by physical mail — the gold standard for proving you actually live at an address.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🚨</div>
+        <h3>Address Activity Alerts</h3>
+        <p>Receive notifications when your address is queried through the SaveCode network — giving you visibility into how your address is being used.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔒</div>
+        <h3>Privacy-First Design</h3>
+        <p>SaveCode is designed to share only your verified address status with authorized parties — not your personal identity or private details.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📦</div>
+        <h3>Secure Package Delivery</h3>
+        <p>Delivery services verify your Home ID before releasing packages — ensuring only authorized residents receive shipments.</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <p>🛡️ SaveCode uses patent-pending technology to create a physical-digital verification bridge — confirming residency through actual physical mail delivery rather than digital self-reporting alone.</p>
     </div>
   </div>
-  <div class="cta-banner reveal">
-    <h3>Ready to Protect Your Address?</h3>
-    <p>Join the waitlist and be first to secure your Home ID when SaveCode launches.</p>
-    <a href="/waitlist" class="btn btn-blue">Join the Waitlist — Free →</a>
+
+  <!-- FINANCIAL INSTITUTIONS -->
+  <div class="feature-section" id="financial">
+    <div class="section-header">
+      <div class="section-icon icon-green">🏦</div>
+      <div class="section-header-text">
+        <h2>Financial Institutions</h2>
+        <p>Reduce address-based fraud and strengthen your verification process. SaveCode provides banks, lenders, and credit institutions with a physical address verification layer to complement existing identity checks.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="f-card">
+        <div class="f-card-icon">✅</div>
+        <h3>Address Verification Layer</h3>
+        <p>Query a customer's address verification status through the SaveCode network — adding a physical verification layer to complement your existing review process.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔍</div>
+        <h3>Fraud Risk Indicators</h3>
+        <p>SaveCode generates risk signals when an address shows unusual activity — helping institutions flag suspicious applications early.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🏛️</div>
+        <h3>Address Verification Layer</h3>
+        <p>Add a physical address verification step to complement your existing identity and onboarding processes — institutions retain full decision-making authority.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔌</div>
+        <h3>Open API Integration</h3>
+        <p>Connect SaveCode to your existing systems via our Open Integration API — designed to integrate alongside current workflows with minimal disruption.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📊</div>
+        <h3>Address Update Notifications</h3>
+        <p>Receive notifications when a verified address in your system is updated through SaveCode — supporting your internal review and audit processes.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📜</div>
+        <h3>Verification Records</h3>
+        <p>SaveCode maintains records of address verification events that institutions may use to support their own internal audit and documentation processes.</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <p>🏦 Address-based financial fraud costs institutions $5.8B annually. SaveCode's physical verification layer closes the gap that digital-only systems miss.</p>
+    </div>
   </div>
-</div>
+
+  <!-- LOGISTICS -->
+  <div class="feature-section" id="logistics">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">📦</div>
+      <div class="section-header-text">
+        <h2>Logistics & Delivery</h2>
+        <p>Confirm the right recipient at the right address before releasing packages. SaveCode reduces misdeliveries, theft claims, and costly disputes.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="f-card">
+        <div class="f-card-icon">📍</div>
+        <h3>Last-Mile Verification</h3>
+        <p>Confirm delivery point accuracy at the final mile — ensuring packages reach verified, authorized recipients every time.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🤖</div>
+        <h3>Autonomous Delivery Compatible</h3>
+        <p>SaveCode's API is designed to work with autonomous delivery systems — drones, robots, and self-driving vehicles can verify addresses automatically.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📉</div>
+        <h3>Reduce Theft Claims</h3>
+        <p>Verified delivery records create a clear chain of custody — reducing fraudulent theft claims and protecting your business.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔔</div>
+        <h3>Delivery Notifications</h3>
+        <p>Homeowners receive alerts when a delivery is verified to their address — full transparency at every step.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔌</div>
+        <h3>API Integration</h3>
+        <p>Connect your logistics platform to SaveCode's verification system in minutes via our open REST API.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📋</div>
+        <h3>Delivery Records</h3>
+        <p>Every verified delivery creates a tamper-resistant record — providing proof of delivery that protects both sender and recipient.</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <p>📦 11% of deliveries reach the wrong address. SaveCode's last-mile verification system eliminates this error — saving carriers and retailers millions annually.</p>
+    </div>
+  </div>
+
+  <!-- AGENCIES -->
+  <div class="feature-section" id="agencies">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🛡️</div>
+      <div class="section-header-text">
+        <h2>Authorized Agencies</h2>
+        <p>Organizations that have established authorized access to SaveCode's network may query address verification status to support their own internal processes — subject to applicable laws and their own policies.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="f-card">
+        <div class="f-card-icon">🏛️</div>
+        <h3>Institutional Verification Support</h3>
+        <p>Authorized organizations may use SaveCode's address verification status as one input within their own internal verification and review workflows.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🏥</div>
+        <h3>Address Accuracy Support</h3>
+        <p>Organizations can query whether an address has been verified through SaveCode — supporting accuracy in records and communications.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">👶</div>
+        <h3>Unregistered Occupant Detection</h3>
+        <p>SaveCode can generate risk indicators when addresses are associated with unusual registration patterns — supporting fraud detection workflows.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📮</div>
+        <h3>Mail Fraud Risk Indicators</h3>
+        <p>SaveCode generates alerts when address activity patterns suggest potential mail fraud risk — authorized parties are notified to review through their own processes.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">🔑</div>
+        <h3>Controlled Access</h3>
+        <p>Only parties with established authorized access may query SaveCode's network — access is governed by SaveCode's terms and applicable law.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📑</div>
+        <h3>Verification Event Logs</h3>
+        <p>SaveCode maintains logs of verification queries with timestamps and credential records — supporting authorized parties' own documentation needs.</p>
+      </div>
+    </div>
+    <div class="highlight">
+      <p>🛡️ SaveCode generates risk indicators and notifications only — it does not make final determinations, halt transactions, or take enforcement actions. All final decisions remain with the authorized party.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div>
+      <h2>Ready to protect your address?</h2>
+      <p>Create a free account and request your Home ID today.</p>
+    </div>
+    <a href="register.html" class="btn-cw">Get started free</a>
+  </div>
+
 </div>
 
-<div style="text-align:center;padding:24px 48px;color:#6b7a99;font-size:0.82rem;border-top:1px solid #e2e8f4;background:#ffffff;">
-SaveCode is developed by Mangel Technologies LLC, a Washington-based technology company focused on secure verification infrastructure.
-</div>
+<!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA</div>
-  <div class="footer-links"><a href="/">Home</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></div>
+  <a href="index.html" class="f-brand">
+    <svg width="130" height="26" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+        <linearGradient id="ftg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/>
+        </linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#fhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#fhg)" opacity="0.2"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#fhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#fhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ftg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="f-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="signin.html">Sign In</a>
+  </div>
+  <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA · Patent-Pending Technology</div>
 </footer>
-<script>
-const obs=new IntersectionObserver(e=>{e.forEach((el,i)=>{if(el.isIntersecting){setTimeout(()=>el.target.classList.add('visible'),i*100);obs.unobserve(el.target);}});},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
-</script>
+
 </body>
 </html>
