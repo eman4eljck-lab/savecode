@@ -6,835 +6,783 @@
   <title>Dashboard — SaveCode</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --blue:      #0067b8;
-      --blue-h:    #005a9e;
-      --blue-dark: #003f7f;
-      --blue-pale: #e8f1fb;
-      --gray-bg:   #f2f2f2;
-      --gray-mid:  #e0e0e0;
-      --gray-500:  #6b7280;
-      --gray-700:  #374151;
-      --gray-900:  #111827;
-      --white:     #ffffff;
-      --green:     #059669;
-      --green-pale:#e6f4ea;
-      --yellow:    #d97706;
-      --yellow-pale:#fef3c7;
-      --red:       #dc2626;
-      --red-pale:  #fef2f2;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Nunito Sans','Segoe UI',sans-serif; background: var(--gray-bg); color: var(--gray-900); }
-
-    /* TOP NAV */
-    .top-nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      background: var(--white); border-bottom: 1px solid var(--gray-mid);
-      z-index: 200; height: 52px;
-      display: flex; align-items: center;
-      padding: 0 24px; gap: 16px;
-    }
-    .nav-brand { display:flex; align-items:center; text-decoration:none; }
-    .nav-right { margin-left:auto; display:flex; align-items:center; gap:16px; }
-    .nav-user { font-size:13px; font-weight:700; color:var(--gray-700); }
-    .nav-signout { font-size:13px; color:var(--gray-500); text-decoration:none; transition:color .15s; }
-    .nav-signout:hover { color:var(--red); }
-
-    /* LAYOUT */
-    .layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      min-height: 100vh;
-      padding-top: 52px;
+      --blue:       #0067b8;
+      --blue-h:     #005a9e;
+      --blue-dark:  #003f7f;
+      --blue-pale:  #e8f1fb;
+      --gray-bg:    #f4f5f7;
+      --gray-mid:   #e0e0e0;
+      --gray-500:   #6b7280;
+      --gray-700:   #374151;
+      --gray-900:   #111827;
+      --white:      #ffffff;
+      --green:      #059669;
+      --green-pale: #ecfdf5;
+      --yellow:     #d97706;
+      --yellow-pale:#fffbeb;
+      --red:        #dc2626;
+      --red-pale:   #fef2f2;
+      --sidebar-w:  240px;
+      --nav-h:      56px;
     }
 
-    /* SIDEBAR */
+    html { scroll-behavior:smooth; }
+    body { font-family:'Nunito Sans','Segoe UI',sans-serif; background:var(--gray-bg); color:var(--gray-900); min-height:100vh; }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      position:fixed; top:0; left:0; right:0; height:var(--nav-h);
+      background:var(--white); border-bottom:1px solid var(--gray-mid);
+      z-index:300; display:flex; align-items:center; padding:0 24px; gap:16px;
+    }
+    .topnav-brand { text-decoration:none; display:flex; align-items:center; }
+    .topnav-right { margin-left:auto; display:flex; align-items:center; gap:20px; }
+    .topnav-user { display:flex; align-items:center; gap:8px; }
+    .topnav-avatar {
+      width:32px; height:32px; border-radius:50%;
+      background:linear-gradient(135deg,var(--blue),var(--green));
+      display:flex; align-items:center; justify-content:center;
+      font-size:13px; font-weight:800; color:white;
+    }
+    .topnav-name { font-size:13px; font-weight:700; color:var(--gray-900); }
+    .topnav-signout {
+      font-size:12px; color:var(--gray-500); text-decoration:none;
+      padding:6px 12px; border:1px solid var(--gray-mid); border-radius:2px;
+      transition:all .15s;
+    }
+    .topnav-signout:hover { background:var(--red-pale); color:var(--red); border-color:#fecaca; }
+
+    /* ── SIDEBAR ── */
     .sidebar {
-      background: var(--white);
-      border-right: 1px solid var(--gray-mid);
-      padding: 24px 0;
-      position: fixed;
-      top: 52px; left: 0; bottom: 0;
-      width: 220px;
-      overflow-y: auto;
+      position:fixed; top:var(--nav-h); left:0; bottom:0;
+      width:var(--sidebar-w); background:var(--white);
+      border-right:1px solid var(--gray-mid);
+      overflow-y:auto; z-index:200; padding:16px 0;
     }
 
-    .sidebar-section { margin-bottom: 8px; }
-    .sidebar-label {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 1.2px; text-transform: uppercase;
-      color: var(--gray-500); padding: 8px 20px 4px;
+    .nav-group { margin-bottom:4px; }
+    .nav-group-label {
+      font-size:10px; font-weight:800; letter-spacing:1.5px;
+      text-transform:uppercase; color:var(--gray-500);
+      padding:12px 20px 4px; display:block;
     }
-    .sidebar-link {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 20px; font-size: 13px;
-      color: var(--gray-700); text-decoration: none;
-      font-weight: 600; transition: background .15s, color .15s;
-      cursor: pointer; border: none; background: none;
-      width: 100%; text-align: left;
+    .nav-item {
+      display:flex; align-items:center; gap:10px;
+      padding:9px 20px; font-size:13px; font-weight:600;
+      color:var(--gray-700); text-decoration:none;
+      cursor:pointer; border:none; background:none;
+      width:100%; text-align:left; border-left:3px solid transparent;
+      transition:background .12s, color .12s, border-color .12s;
     }
-    .sidebar-link:hover { background: var(--gray-bg); color: var(--blue); }
-    .sidebar-link.active { background: var(--blue-pale); color: var(--blue); border-right: 3px solid var(--blue); }
-    .sidebar-link .icon { font-size: 16px; width: 20px; text-align: center; }
-
-    /* MAIN CONTENT */
-    .content { margin-left: 220px; padding: 32px; }
-
-    /* STATUS BANNER */
-    .status-banner {
-      padding: 16px 20px; margin-bottom: 24px;
-      display: flex; align-items: center; gap: 12px;
-      border-radius: 4px; font-size: 14px; font-weight: 600;
+    .nav-item:hover { background:var(--gray-bg); color:var(--blue); }
+    .nav-item.active {
+      background:var(--blue-pale); color:var(--blue);
+      border-left-color:var(--blue); font-weight:700;
     }
-    .status-banner.verified { background: var(--green-pale); color: var(--green); border: 1px solid #a7f3d0; }
-    .status-banner.pending { background: var(--yellow-pale); color: var(--yellow); border: 1px solid #fcd34d; }
-    .status-banner.new { background: var(--blue-pale); color: var(--blue); border: 1px solid #93c5fd; }
+    .nav-item .ni { font-size:15px; width:18px; text-align:center; flex-shrink:0; }
 
-    /* SECTION */
-    .section { display: none; }
-    .section.active { display: block; }
-    .section-title { font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: 4px; letter-spacing: -.3px; }
-    .section-sub { font-size: 13px; color: var(--gray-500); margin-bottom: 24px; }
-
-    /* CARDS */
-    .card { background: var(--white); border: 1px solid var(--gray-mid); padding: 28px; margin-bottom: 16px; }
-    .card-title { font-size: 14px; font-weight: 700; color: var(--gray-900); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-
-    /* HOME ID CARD */
-    .home-id-display {
-      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-      padding: 32px; color: var(--white); margin-bottom: 16px;
+    /* ── MAIN ── */
+    .main {
+      margin-left:var(--sidebar-w);
+      padding-top:var(--nav-h);
+      min-height:100vh;
     }
-    .hid-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 12px; }
-    .hid-num { font-size: 32px; font-weight: 800; letter-spacing: 4px; margin-bottom: 20px; font-family: 'Montserrat', sans-serif; }
-    .hid-row { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hid-chip { background: rgba(255,255,255,.12); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.8); }
-    .hid-chip.green { background: rgba(5,150,105,.3); color: #6ee7b7; }
+    .page-content { padding:32px 36px; max-width:1100px; }
 
-    /* STATS ROW */
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 16px; }
-    .stat-card { background: var(--white); border: 1px solid var(--gray-mid); padding: 20px; text-align: center; }
-    .stat-num { font-size: 24px; font-weight: 800; color: var(--blue); letter-spacing: -1px; }
-    .stat-lbl { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom:24px; }
+    .page-header h1 { font-size:22px; font-weight:800; color:var(--gray-900); letter-spacing:-.3px; }
+    .page-header p { font-size:13px; color:var(--gray-500); margin-top:3px; }
 
-    /* FORM ELEMENTS */
-    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    label { font-size: 11px; font-weight: 700; color: var(--gray-700); letter-spacing: .3px; text-transform: uppercase; }
+    /* ── SECTION ── */
+    .section { display:none; }
+    .section.active { display:block; }
+
+    /* ── STATUS PILL ── */
+    .status-pill {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700;
+      margin-bottom:20px;
+    }
+    .status-pill.verified { background:var(--green-pale); color:var(--green); }
+    .status-pill.pending  { background:var(--yellow-pale); color:var(--yellow); }
+
+    /* ── GRID HELPERS ── */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+
+    /* ── CARD ── */
+    .card {
+      background:var(--white); border:1px solid var(--gray-mid);
+      padding:24px; margin-bottom:16px;
+    }
+    .card-hd {
+      font-size:13px; font-weight:800; color:var(--gray-900);
+      margin-bottom:18px; display:flex; align-items:center; gap:8px;
+      padding-bottom:14px; border-bottom:1px solid var(--gray-bg);
+    }
+
+    /* ── HOME ID HERO ── */
+    .homeid-hero {
+      background:linear-gradient(135deg,#003f7f 0%,#0067b8 100%);
+      padding:28px 32px; margin-bottom:16px;
+      display:flex; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; gap:20px;
+    }
+    .homeid-left {}
+    .homeid-eyebrow {
+      font-size:10px; font-weight:700; letter-spacing:2px;
+      text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:8px;
+    }
+    .homeid-num {
+      font-family:'Montserrat',sans-serif;
+      font-size:28px; font-weight:800; color:var(--white);
+      letter-spacing:4px; margin-bottom:14px;
+    }
+    .homeid-tags { display:flex; gap:8px; flex-wrap:wrap; }
+    .homeid-tag {
+      padding:4px 12px; border-radius:20px;
+      font-size:11px; font-weight:700;
+    }
+    .homeid-tag.green { background:rgba(5,150,105,.25); color:#6ee7b7; }
+    .homeid-tag.white { background:rgba(255,255,255,.12); color:rgba(255,255,255,.75); }
+
+    .homeid-right {
+      text-align:right; color:rgba(255,255,255,.6); font-size:12px;
+    }
+    .homeid-right strong { display:block; font-size:22px; font-weight:800; color:white; margin-bottom:4px; }
+
+    /* ── STAT CARDS ── */
+    .stat-card { background:var(--white); border:1px solid var(--gray-mid); padding:18px 20px; }
+    .stat-num { font-size:26px; font-weight:800; color:var(--blue); letter-spacing:-1px; line-height:1; margin-bottom:4px; }
+    .stat-lbl { font-size:11px; color:var(--gray-500); font-weight:600; }
+
+    /* ── FORM ── */
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-group { display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
+    .form-group.full { grid-column:1/-1; }
+    label { font-size:11px; font-weight:700; color:var(--gray-700); text-transform:uppercase; letter-spacing:.4px; }
     input, select, textarea {
-      padding: 10px 14px; border: 1px solid var(--gray-mid);
-      font-size: 14px; font-family: inherit;
-      color: var(--gray-900); background: var(--white);
-      outline: none; border-radius: 2px;
-      transition: border-color .2s, box-shadow .2s;
+      padding:9px 13px; border:1px solid var(--gray-mid);
+      font-size:13px; font-family:inherit; color:var(--gray-900);
+      background:var(--white); outline:none; border-radius:2px;
+      transition:border-color .2s, box-shadow .2s;
     }
-    input:focus, select:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,103,184,.1); }
-    input::placeholder, textarea::placeholder { color: #adb5bd; }
-    input:read-only { background: var(--gray-bg); color: var(--gray-500); }
-
-    /* BUTTONS */
-    .btn { padding: 10px 20px; font-size: 13px; font-weight: 700; font-family: inherit; border-radius: 2px; cursor: pointer; border: none; transition: background .15s; }
-    .btn-primary { background: var(--blue); color: var(--white); }
-    .btn-primary:hover { background: var(--blue-h); }
-    .btn-danger { background: var(--red-pale); color: var(--red); border: 1px solid #fecaca; }
-    .btn-danger:hover { background: #fee2e2; }
-    .btn-outline { background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-mid); }
-    .btn-outline:hover { background: var(--gray-bg); }
-    .btn-green { background: var(--green-pale); color: var(--green); border: 1px solid #a7f3d0; }
-    .btn-green:hover { background: #d1fae5; }
-
-    /* MEMBERS TABLE */
-    .table { width: 100%; border-collapse: collapse; }
-    .table th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--gray-500); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--gray-mid); }
-    .table td { font-size: 13px; color: var(--gray-700); padding: 12px 14px; border-bottom: 1px solid var(--gray-bg); vertical-align: middle; }
-    .table tr:last-child td { border-bottom: none; }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-    .badge-green { background: var(--green-pale); color: var(--green); }
-    .badge-yellow { background: var(--yellow-pale); color: var(--yellow); }
-    .badge-gray { background: var(--gray-bg); color: var(--gray-500); }
-
-    /* ACTIVITY */
-    .activity-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-bg); }
-    .activity-item:last-child { border-bottom: none; }
-    .activity-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-    .activity-icon.blue { background: var(--blue-pale); }
-    .activity-icon.green { background: var(--green-pale); }
-    .activity-icon.yellow { background: var(--yellow-pale); }
-    .activity-info h4 { font-size: 13px; font-weight: 700; color: var(--gray-900); margin-bottom: 3px; }
-    .activity-info p { font-size: 12px; color: var(--gray-500); }
-    .activity-time { margin-left: auto; font-size: 11px; color: var(--gray-500); white-space: nowrap; flex-shrink: 0; }
-
-    /* INSTITUTIONS */
-    .inst-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-    .inst-card { border: 1px solid var(--gray-mid); padding: 16px; display: flex; align-items: center; gap: 12px; }
-    .inst-icon { width: 40px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .inst-icon.bl { background: var(--blue-pale); }
-    .inst-icon.gn { background: var(--green-pale); }
-    .inst-icon.yw { background: var(--yellow-pale); }
-    .inst-info { flex: 1; }
-    .inst-info h4 { font-size: 13px; font-weight: 700; color: var(--gray-900); margin-bottom: 2px; }
-    .inst-info p { font-size: 11px; color: var(--gray-500); }
-    .inst-toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
-    .inst-toggle input { opacity: 0; width: 0; height: 0; }
-    .inst-slider {
-      position: absolute; inset: 0; border-radius: 22px;
-      background: var(--gray-mid); cursor: pointer; transition: .3s;
+    input:focus, select:focus, textarea:focus {
+      border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,103,184,.08);
     }
-    .inst-slider::before {
-      content: ''; position: absolute;
-      width: 16px; height: 16px; border-radius: 50%;
-      background: var(--white); top: 3px; left: 3px; transition: .3s;
+    input::placeholder, textarea::placeholder { color:#adb5bd; }
+    input[readonly] { background:var(--gray-bg); color:var(--gray-500); cursor:default; }
+
+    /* ── BUTTONS ── */
+    .btn { padding:9px 20px; font-size:13px; font-weight:700; font-family:inherit; border:none; border-radius:2px; cursor:pointer; transition:all .15s; display:inline-flex; align-items:center; gap:6px; }
+    .btn-primary { background:var(--blue); color:white; }
+    .btn-primary:hover { background:var(--blue-h); }
+    .btn-outline { background:white; color:var(--gray-700); border:1px solid var(--gray-mid); }
+    .btn-outline:hover { background:var(--gray-bg); }
+    .btn-danger { background:var(--red-pale); color:var(--red); border:1px solid #fecaca; }
+    .btn-danger:hover { background:#fee2e2; }
+    .btn-sm { padding:5px 12px; font-size:12px; }
+
+    /* ── BADGE ── */
+    .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; }
+    .badge-green  { background:var(--green-pale); color:var(--green); }
+    .badge-yellow { background:var(--yellow-pale); color:var(--yellow); }
+    .badge-blue   { background:var(--blue-pale); color:var(--blue); }
+    .badge-gray   { background:var(--gray-bg); color:var(--gray-500); }
+
+    /* ── TABLE ── */
+    .table { width:100%; border-collapse:collapse; }
+    .table th {
+      font-size:11px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.5px; color:var(--gray-500);
+      padding:10px 14px; text-align:left;
+      border-bottom:1px solid var(--gray-mid); background:var(--gray-bg);
     }
-    .inst-toggle input:checked + .inst-slider { background: var(--blue); }
-    .inst-toggle input:checked + .inst-slider::before { transform: translateX(18px); }
+    .table td { font-size:13px; color:var(--gray-700); padding:12px 14px; border-bottom:1px solid var(--gray-bg); vertical-align:middle; }
+    .table tr:last-child td { border-bottom:none; }
+    .table tr:hover td { background:var(--gray-bg); }
 
-    /* PIN INPUT */
-    .pin-inputs { display: flex; gap: 10px; margin: 20px 0; }
-    .pin-digit {
-      width: 48px; height: 56px; text-align: center;
-      font-size: 22px; font-weight: 800; border: 2px solid var(--gray-mid);
-      border-radius: 4px; outline: none; font-family: 'Montserrat', monospace;
-      transition: border-color .2s;
+    /* ── ACTIVITY ── */
+    .act-item { display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid var(--gray-bg); }
+    .act-item:last-child { border-bottom:none; }
+    .act-dot { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .act-dot.blue   { background:var(--blue-pale); }
+    .act-dot.green  { background:var(--green-pale); }
+    .act-dot.yellow { background:var(--yellow-pale); }
+    .act-body { flex:1; }
+    .act-body h4 { font-size:13px; font-weight:700; color:var(--gray-900); margin-bottom:2px; }
+    .act-body p  { font-size:12px; color:var(--gray-500); }
+    .act-time { font-size:11px; color:var(--gray-500); white-space:nowrap; flex-shrink:0; padding-top:2px; }
+
+    /* ── TOGGLE SWITCH ── */
+    .toggle-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--gray-bg); }
+    .toggle-row:last-child { border-bottom:none; }
+    .toggle-info h4 { font-size:13px; font-weight:700; color:var(--gray-900); margin-bottom:2px; }
+    .toggle-info p  { font-size:12px; color:var(--gray-500); }
+    .toggle { position:relative; width:42px; height:24px; flex-shrink:0; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider {
+      position:absolute; inset:0; border-radius:24px;
+      background:var(--gray-mid); cursor:pointer; transition:.25s;
     }
-    .pin-digit:focus { border-color: var(--blue); }
-
-    /* PENDING STATE */
-    .pending-box {
-      background: var(--yellow-pale); border: 1px solid #fcd34d;
-      padding: 32px; text-align: center;
+    .toggle-slider::before {
+      content:''; position:absolute;
+      width:18px; height:18px; border-radius:50%;
+      background:white; top:3px; left:3px; transition:.25s;
+      box-shadow:0 1px 3px rgba(0,0,0,.2);
     }
-    .pending-icon { font-size: 40px; margin-bottom: 16px; }
-    .pending-box h3 { font-size: 18px; font-weight: 800; color: var(--gray-900); margin-bottom: 8px; }
-    .pending-box p { font-size: 14px; color: var(--gray-500); line-height: 1.7; margin-bottom: 24px; }
+    .toggle input:checked + .toggle-slider { background:var(--blue); }
+    .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
 
-    /* MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 500; align-items: center; justify-content: center; }
-    .modal-overlay.open { display: flex; }
-    .modal { background: var(--white); padding: 36px; max-width: 480px; width: 90%; }
-    .modal h3 { font-size: 18px; font-weight: 800; color: var(--gray-900); margin-bottom: 8px; }
-    .modal p { font-size: 13px; color: var(--gray-500); margin-bottom: 20px; line-height: 1.65; }
-    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; }
+    /* ── INST CARD ── */
+    .inst-list { display:flex; flex-direction:column; gap:0; }
+    .inst-item { display:flex; align-items:center; gap:14px; padding:12px 0; border-bottom:1px solid var(--gray-bg); }
+    .inst-item:last-child { border-bottom:none; }
+    .inst-ico { width:38px; height:38px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .inst-ico.bl { background:var(--blue-pale); }
+    .inst-ico.gn { background:var(--green-pale); }
+    .inst-ico.yw { background:var(--yellow-pale); }
+    .inst-txt { flex:1; }
+    .inst-txt h4 { font-size:13px; font-weight:700; color:var(--gray-900); }
+    .inst-txt p  { font-size:11px; color:var(--gray-500); }
 
-    /* NOTIFICATION */
-    .notif { display: none; position: fixed; bottom: 24px; right: 24px; background: var(--gray-900); color: var(--white); padding: 12px 20px; border-radius: 4px; font-size: 13px; font-weight: 600; z-index: 999; }
-    .notif.show { display: block; }
+    /* ── ALERT BOX ── */
+    .alert { padding:14px 18px; margin-bottom:16px; font-size:13px; font-weight:600; display:flex; align-items:flex-start; gap:10px; }
+    .alert.info    { background:var(--blue-pale); color:var(--blue-dark); border-left:4px solid var(--blue); }
+    .alert.warning { background:var(--yellow-pale); color:#92400e; border-left:4px solid var(--yellow); }
+    .alert.success { background:var(--green-pale); color:#065f46; border-left:4px solid var(--green); }
 
+    /* ── NOTIFICATION TOAST ── */
+    .toast { display:none; position:fixed; bottom:28px; right:28px; background:var(--gray-900); color:white; padding:12px 20px; font-size:13px; font-weight:600; z-index:999; border-radius:4px; box-shadow:0 4px 16px rgba(0,0,0,.2); }
+    .toast.show { display:block; animation:fadeIn .2s; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── MODAL ── */
+    .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:500; align-items:center; justify-content:center; }
+    .modal-bg.open { display:flex; }
+    .modal-box { background:white; padding:36px; max-width:440px; width:90%; }
+    .modal-box h3 { font-size:18px; font-weight:800; margin-bottom:8px; }
+    .modal-box p  { font-size:13px; color:var(--gray-500); margin-bottom:24px; line-height:1.65; }
+    .modal-actions { display:flex; gap:12px; justify-content:flex-end; }
+
+    /* ── RESPONSIVE ── */
     @media(max-width:900px){
-      .sidebar { display: none; }
-      .layout { grid-template-columns: 1fr; }
-      .content { margin-left: 0; padding: 16px; }
-      .stats-row { grid-template-columns: repeat(2,1fr); }
-      .inst-grid { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
+      .sidebar { transform:translateX(-100%); }
+      .main { margin-left:0; }
+      .page-content { padding:20px 16px; }
+      .grid-2,.grid-3,.grid-4,.form-row { grid-template-columns:1fr; }
+      .homeid-right { display:none; }
     }
+    /* ── PIN INPUT ── */
+    .pin-wrap { display:flex; gap:10px; margin:24px 0; justify-content:center; }
+    .pin-box {
+      width:52px; height:60px; text-align:center;
+      font-size:24px; font-weight:800; letter-spacing:2px;
+      border:2px solid var(--gray-mid); border-radius:4px;
+      font-family:'Montserrat',monospace; outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .pin-box:focus { border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,103,184,.1); }
+
+    /* ── PENDING BOX ── */
+    .pending-box {
+      background:var(--white); border:2px dashed var(--yellow);
+      padding:40px 32px; text-align:center; margin-bottom:16px;
+    }
+    .pending-emoji { font-size:48px; margin-bottom:16px; }
+    .pending-box h2 { font-size:20px; font-weight:800; color:var(--gray-900); margin-bottom:8px; }
+    .pending-box p { font-size:14px; color:var(--gray-500); line-height:1.7; margin-bottom:24px; max-width:440px; margin-left:auto; margin-right:auto; }
+    .pin-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--gray-700); margin-bottom:8px; }
+    .pin-error { font-size:13px; color:var(--red); margin-top:8px; display:none; }
+    .pin-success { font-size:13px; color:var(--green); font-weight:700; margin-top:8px; display:none; }
+
   </style>
 </head>
 <body>
 
 <!-- TOP NAV -->
-<div class="top-nav">
-  <a href="index.html" class="nav-brand">
+<nav class="topnav">
+  <a href="index.html" class="topnav-brand">
     <svg width="140" height="28" viewBox="0 0 340 90" fill="none">
       <defs>
-        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
-        </linearGradient>
-        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/>
-        </linearGradient>
+        <linearGradient id="lg1" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+        <linearGradient id="lg2" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/></linearGradient>
       </defs>
-      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
-      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
-      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
-      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+      <path d="M38 6L70 6L86 33L70 60L38 60L22 33Z" fill="none" stroke="url(#lg1)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16L36 30L41 30L41 50L50 50L50 41L58 41L58 50L67 50L67 30L72 30Z" fill="url(#lg1)" opacity=".12"/>
+      <path d="M54 16L36 30L41 30L41 50L50 50L50 41L58 41L58 50L67 50L67 30L72 30Z" fill="none" stroke="url(#lg1)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33L49 35L49 39C49 42 51 44.5 54 46C57 44.5 59 42 59 39L59 35Z" fill="url(#lg1)"/>
+      <path d="M52.5 39L53.8 40.5L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat,sans-serif" font-size="32" font-weight="800" fill="url(#lg2)" letter-spacing="-0.5">SaveCode</text>
     </svg>
   </a>
-  <div class="nav-right">
-    <span class="nav-user">👤 John Smith</span>
-    <a href="signin.html" class="nav-signout">Sign out</a>
+  <div class="topnav-right">
+    <div class="topnav-user">
+      <div class="topnav-avatar">JS</div>
+      <span class="topnav-name">John Smith</span>
+    </div>
+    <a href="signin.html" class="topnav-signout">Sign out</a>
   </div>
+</nav>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="nav-group">
+    <span class="nav-group-label">Overview</span>
+    <button class="nav-item active" onclick="nav(this,'overview')"><span class="ni">🏠</span> My Home ID</button>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Address</span>
+    <button class="nav-item" onclick="nav(this,'address')"><span class="ni">📍</span> My Address</button>
+    <button class="nav-item" onclick="nav(this,'update')"><span class="ni">🔄</span> Update Address</button>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Household</span>
+    <button class="nav-item" onclick="nav(this,'members')"><span class="ni">👨‍👩‍👧</span> Family Members</button>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Security</span>
+    <button class="nav-item" onclick="nav(this,'parties')"><span class="ni">🏦</span> Authorized Parties</button>
+    <button class="nav-item" onclick="nav(this,'activity')"><span class="ni">🔔</span> Activity Log</button>
+  </div>
+  <div class="nav-group">
+    <span class="nav-group-label">Account</span>
+    <button class="nav-item" onclick="nav(this,'settings')"><span class="ni">⚙️</span> Settings</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+<div class="page-content">
+
+  <!-- ══ OVERVIEW ══ -->
+  <div class="section active" id="s-overview">
+    <div class="page-header">
+      <h1>My Home ID</h1>
+      <p>Your verified address identity dashboard</p>
+    </div>
+
+    <!-- PENDING STATE -->
+    <div id="state-pending" style="display:none;">
+      <span class="status-pill pending">⏳ Address Verification Pending</span>
+
+      <div class="pending-box">
+        <div class="pending-emoji">✉️</div>
+        <h2>Your verification letter is on the way</h2>
+        <p>We've mailed a 6-digit PIN to your registered address. Once you receive the letter, enter the PIN below to verify your address and activate your Home ID.</p>
+
+        <div class="pin-label">Enter your 6-digit PIN</div>
+        <div class="pin-wrap">
+          <input class="pin-box" type="text" maxlength="1" id="p1" oninput="pinMove(this,'p2')">
+          <input class="pin-box" type="text" maxlength="1" id="p2" oninput="pinMove(this,'p3')">
+          <input class="pin-box" type="text" maxlength="1" id="p3" oninput="pinMove(this,'p4')">
+          <input class="pin-box" type="text" maxlength="1" id="p4" oninput="pinMove(this,'p5')">
+          <input class="pin-box" type="text" maxlength="1" id="p5" oninput="pinMove(this,'p6')">
+          <input class="pin-box" type="text" maxlength="1" id="p6" oninput="pinMove(this,null)">
+        </div>
+        <div class="pin-error" id="pin-error">❌ Incorrect PIN. Please check your letter and try again.</div>
+        <div class="pin-success" id="pin-success">✅ PIN verified! Generating your Home ID...</div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="verifyPin()">Verify My Address</button>
+      </div>
+
+      <div class="card">
+        <div class="card-hd">📬 What to expect</div>
+        <div class="act-item">
+          <div class="act-dot yellow">✉️</div>
+          <div class="act-body"><h4>Letter mailed to your address</h4><p>A physical letter containing your unique 6-digit PIN has been sent via postal mail.</p></div>
+          <div class="act-time">In progress</div>
+        </div>
+        <div class="act-item">
+          <div class="act-dot blue">🔢</div>
+          <div class="act-body"><h4>Enter your PIN above</h4><p>Once your letter arrives, enter the 6-digit code in the boxes above.</p></div>
+          <div class="act-time">Pending</div>
+        </div>
+        <div class="act-item">
+          <div class="act-dot green">🆔</div>
+          <div class="act-body"><h4>Home ID generated</h4><p>After verification, your unique encrypted Home ID will be created instantly.</p></div>
+          <div class="act-time">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFIED STATE -->
+    <div id="state-verified">
+    <span class="status-pill verified">✅ Address Verified — Home ID Active</span>
+
+    <div class="homeid-hero">
+      <div class="homeid-left">
+        <div class="homeid-eyebrow">Your Home ID</div>
+        <div class="homeid-num">SC · 4829 · WA</div>
+        <div class="homeid-tags">
+          <span class="homeid-tag green">✓ Verified</span>
+          <span class="homeid-tag white">123 Main St, Everett WA 98201</span>
+          <span class="homeid-tag white">Active since Jan 2026</span>
+        </div>
+      </div>
+      <div class="homeid-right">
+        <strong>2</strong> Household Members
+        <br><br>
+        <strong>5</strong> Authorized Parties
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:16px;">
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-lbl">Verifications This Month</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-lbl">Household Members</div></div>
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-lbl">Authorized Parties</div></div>
+      <div class="stat-card"><div class="stat-num">0</div><div class="stat-lbl">Active Alerts</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">🔔 Recent Activity</div>
+      <div class="act-item">
+        <div class="act-dot blue">📦</div>
+        <div class="act-body"><h4>Address queried by a delivery service</h4><p>Status returned: Verified ✓</p></div>
+        <div class="act-time">2h ago</div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot green">🏦</div>
+        <div class="act-body"><h4>Address queried by a financial institution</h4><p>Status returned: Verified ✓</p></div>
+        <div class="act-time">Yesterday</div>
+      </div>
+      <div class="act-item">
+        <div class="act-dot blue">✅</div>
+        <div class="act-body"><h4>Home ID activated</h4><p>PIN verified — Home ID SC·4829·WA generated.</p></div>
+        <div class="act-time">Jan 15</div>
+      </div>
+    </div>
+    </div><!-- end state-verified -->
+  </div>
+
+  <!-- ══ MY ADDRESS ══ -->
+  <div class="section" id="s-address">
+    <div class="page-header"><h1>My Address</h1><p>Your currently verified physical address</p></div>
+    <div class="card">
+      <div class="card-hd">📍 Verified Address</div>
+      <div class="form-row">
+        <div class="form-group"><label>Street Address</label><input readonly value="123 Main Street"></div>
+        <div class="form-group"><label>Unit / Apt</label><input readonly placeholder="—"></div>
+        <div class="form-group"><label>City</label><input readonly value="Everett"></div>
+        <div class="form-group"><label>State</label><input readonly value="Washington"></div>
+        <div class="form-group"><label>ZIP Code</label><input readonly value="98201"></div>
+        <div class="form-group"><label>Status</label><input readonly value="✓ Verified" style="color:#059669;font-weight:700;"></div>
+      </div>
+      <button class="btn btn-outline" onclick="navBtn('update')">🔄 Update My Address</button>
+    </div>
+  </div>
+
+  <!-- ══ UPDATE ADDRESS ══ -->
+  <div class="section" id="s-update">
+    <div class="page-header"><h1>Update Address</h1><p>Moving? Submit your new address for verification.</p></div>
+
+    <div class="alert warning">⚠️ Updating your address will set your Home ID to Pending until the new address is verified via physical mail PIN.</div>
+
+    <div class="card">
+      <div class="card-hd">🏠 New Address</div>
+      <div class="form-row">
+        <div class="form-group"><label>Street Address</label><input id="ua-street" placeholder="123 New Street"></div>
+        <div class="form-group"><label>Unit / Apt (optional)</label><input id="ua-unit" placeholder="Apt 2B"></div>
+        <div class="form-group"><label>City</label><input id="ua-city" placeholder="City"></div>
+        <div class="form-group"><label>State</label>
+          <select id="ua-state">
+            <option value="">Select state</option>
+            <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+            <option>California</option><option>Colorado</option><option>Florida</option>
+            <option>Georgia</option><option>Illinois</option><option>New York</option>
+            <option>Washington</option><option>Texas</option>
+          </select>
+        </div>
+        <div class="form-group"><label>ZIP Code</label><input id="ua-zip" placeholder="98201" maxlength="5"></div>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <button class="btn btn-primary" onclick="submitUpdate()">Submit Address Update</button>
+        <button class="btn btn-outline" onclick="navBtn('address')">Cancel</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">🏦 Also Notify These Parties</div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">Select which authorized parties should receive your address update notification.</p>
+      <div class="inst-list">
+        <div class="inst-item">
+          <div class="inst-ico bl">🏦</div>
+          <div class="inst-txt"><h4>My Bank</h4><p>Financial Institution</p></div>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="inst-item">
+          <div class="inst-ico gn">📦</div>
+          <div class="inst-txt"><h4>Delivery Services</h4><p>Logistics Partner</p></div>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+        <div class="inst-item">
+          <div class="inst-ico yw">🏥</div>
+          <div class="inst-txt"><h4>Healthcare Provider</h4><p>Authorized Agency</p></div>
+          <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+        </div>
+        <div class="inst-item">
+          <div class="inst-ico yw">📮</div>
+          <div class="inst-txt"><h4>Postal Services</h4><p>Mail Verification</p></div>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FAMILY MEMBERS ══ -->
+  <div class="section" id="s-members">
+    <div class="page-header"><h1>Family Members</h1><p>Authorized household members under your Home ID</p></div>
+
+    <div class="card">
+      <div class="card-hd">👨‍👩‍👧 Household Members</div>
+      <table class="table">
+        <thead><tr><th>Name</th><th>Relationship</th><th>Status</th><th>Added</th><th></th></tr></thead>
+        <tbody id="members-body">
+          <tr>
+            <td><strong>John Smith</strong> <span style="font-size:11px;color:var(--blue);font-weight:700;">(Primary)</span></td>
+            <td>Account Holder</td>
+            <td><span class="badge badge-green">✓ Verified</span></td>
+            <td>Jan 2026</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Sarah Smith</td>
+            <td>Spouse</td>
+            <td><span class="badge badge-green">✓ Verified</span></td>
+            <td>Jan 2026</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeMember(this)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">➕ Add Family Member</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input id="m-fn" placeholder="First name"></div>
+        <div class="form-group"><label>Last Name</label><input id="m-ln" placeholder="Last name"></div>
+        <div class="form-group"><label>Relationship</label>
+          <select id="m-rel">
+            <option value="">Select</option>
+            <option>Spouse / Partner</option><option>Child</option>
+            <option>Parent</option><option>Sibling</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Email (optional)</label><input id="m-email" type="email" placeholder="member@email.com"></div>
+      </div>
+      <button class="btn btn-primary" onclick="addMember()">Add Member</button>
+    </div>
+  </div>
+
+  <!-- ══ AUTHORIZED PARTIES ══ -->
+  <div class="section" id="s-parties">
+    <div class="page-header"><h1>Authorized Parties</h1><p>Control who can query your verified address status</p></div>
+
+    <div class="alert info">🔒 Only parties you authorize can access your verified address status. You can revoke access at any time.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-hd">🏦 Financial Institutions</div>
+        <div class="inst-list">
+          <div class="inst-item"><div class="inst-ico bl">🏦</div><div class="inst-txt"><h4>My Bank</h4><p>Account verification</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico bl">💳</div><div class="inst-txt"><h4>Credit Card Issuer</h4><p>Address verification</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico bl">🏠</div><div class="inst-txt"><h4>Mortgage Lender</h4><p>Address verification</p></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">📦 Logistics & Delivery</div>
+        <div class="inst-list">
+          <div class="inst-item"><div class="inst-ico gn">📦</div><div class="inst-txt"><h4>Delivery Services</h4><p>Package verification</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico gn">✈️</div><div class="inst-txt"><h4>Express Shipping</h4><p>Address confirmation</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico gn">🤖</div><div class="inst-txt"><h4>Autonomous Delivery</h4><p>Last-mile verification</p></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">🛡️ Authorized Agencies</div>
+        <div class="inst-list">
+          <div class="inst-item"><div class="inst-ico yw">🏥</div><div class="inst-txt"><h4>Healthcare Provider</h4><p>Records & billing</p></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico yw">📮</div><div class="inst-txt"><h4>Postal Services</h4><p>Mail verification</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="inst-item"><div class="inst-ico yw">🏛️</div><div class="inst-txt"><h4>Government Agency</h4><p>Residency verification</p></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">➕ Request New Party Access</div>
+        <p style="font-size:13px;color:var(--gray-500);margin-bottom:14px;">Submit a request to add a new authorized party to your network.</p>
+        <div class="form-group"><label>Organization Name</label><input placeholder="e.g. State Farm Insurance"></div>
+        <div class="form-group"><label>Type</label>
+          <select><option value="">Select type</option><option>Financial Institution</option><option>Logistics / Delivery</option><option>Healthcare</option><option>Government Agency</option><option>Other</option></select>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="toast('✅ Request submitted for review.')">Submit Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ACTIVITY LOG ══ -->
+  <div class="section" id="s-activity">
+    <div class="page-header"><h1>Activity Log</h1><p>All queries made against your Home ID</p></div>
+    <div class="card">
+      <div class="card-hd">🔔 All Activity</div>
+      <div class="act-item"><div class="act-dot blue">📦</div><div class="act-body"><h4>Delivery service queried your address</h4><p>Status returned: Verified ✓</p></div><div class="act-time">Today, 9:14 AM</div></div>
+      <div class="act-item"><div class="act-dot green">🏦</div><div class="act-body"><h4>Financial institution queried your address</h4><p>Status returned: Verified ✓</p></div><div class="act-time">Yesterday, 3:22 PM</div></div>
+      <div class="act-item"><div class="act-dot blue">📦</div><div class="act-body"><h4>Delivery service queried your address</h4><p>Status returned: Verified ✓</p></div><div class="act-time">May 18, 11:05 AM</div></div>
+      <div class="act-item"><div class="act-dot yellow">📮</div><div class="act-body"><h4>Postal service queried your address</h4><p>Status returned: Verified ✓</p></div><div class="act-time">May 17, 8:30 AM</div></div>
+      <div class="act-item"><div class="act-dot green">✅</div><div class="act-body"><h4>Home ID activated</h4><p>PIN verified — Home ID SC·4829·WA generated.</p></div><div class="act-time">Jan 15, 2:00 PM</div></div>
+    </div>
+  </div>
+
+  <!-- ══ SETTINGS ══ -->
+  <div class="section" id="s-settings">
+    <div class="page-header"><h1>Account Settings</h1><p>Manage your SaveCode account</p></div>
+
+    <div class="card">
+      <div class="card-hd">👤 Personal Information</div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input id="s-fn" value="John"></div>
+        <div class="form-group"><label>Last Name</label><input id="s-ln" value="Smith"></div>
+        <div class="form-group"><label>Email Address</label><input id="s-email" type="email" value="john.smith@email.com"></div>
+        <div class="form-group"><label>Phone (optional)</label><input id="s-phone" type="tel" placeholder="+1 (555) 000-0000"></div>
+      </div>
+      <button class="btn btn-primary" onclick="toast('✅ Settings saved successfully.')">Save Changes</button>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">🔑 Change Password</div>
+      <div class="form-row">
+        <div class="form-group"><label>Current Password</label><input type="password" placeholder="Current password"></div>
+        <div class="form-group"><label>New Password</label><input type="password" placeholder="New password (min 8 chars)"></div>
+      </div>
+      <button class="btn btn-outline" onclick="toast('✅ Password updated.')">Update Password</button>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">🔔 Notifications</div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Address Query Alerts</h4><p>Notify me when my address is queried</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Security Alerts</h4><p>Notify me of suspicious activity</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div class="toggle-info"><h4>SaveCode Updates</h4><p>Product news and announcements</p></div><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+    </div>
+
+    <div class="card" style="border-color:#fecaca;">
+      <div class="card-hd" style="color:var(--red);">⚠️ Danger Zone</div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">Deleting your account will permanently remove your Home ID and all associated data. This cannot be undone.</p>
+      <button class="btn btn-danger" onclick="openModal()">Delete My Account</button>
+    </div>
+  </div>
+
 </div>
-
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Overview</div>
-      <button class="sidebar-link active" onclick="showSection('overview')">
-        <span class="icon">🏠</span> My Home ID
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Address</div>
-      <button class="sidebar-link" onclick="showSection('address')">
-        <span class="icon">📍</span> My Address
-      </button>
-      <button class="sidebar-link" onclick="showSection('update-address')">
-        <span class="icon">🔄</span> Update Address
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Household</div>
-      <button class="sidebar-link" onclick="showSection('members')">
-        <span class="icon">👨‍👩‍👧</span> Family Members
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Security</div>
-      <button class="sidebar-link" onclick="showSection('institutions')">
-        <span class="icon">🏦</span> Authorized Parties
-      </button>
-      <button class="sidebar-link" onclick="showSection('activity')">
-        <span class="icon">🔔</span> Activity Log
-      </button>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Account</div>
-      <button class="sidebar-link" onclick="showSection('settings')">
-        <span class="icon">⚙️</span> Settings
-      </button>
-    </div>
-  </div>
-
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- ── OVERVIEW ── -->
-    <div class="section active" id="section-overview">
-      <div class="status-banner verified">
-        ✅ Your address is verified — Your Home ID is active and protected.
-      </div>
-
-      <div class="home-id-display">
-        <div class="hid-label">Your Home ID</div>
-        <div class="hid-num">SC · 4829 · WA</div>
-        <div class="hid-row">
-          <div class="hid-chip green">✓ Verified</div>
-          <div class="hid-chip">123 Main St, Everett WA</div>
-          <div class="hid-chip">Since Jan 2026</div>
-        </div>
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-num">2</div>
-          <div class="stat-lbl">Household Members</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">5</div>
-          <div class="stat-lbl">Authorized Parties</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">12</div>
-          <div class="stat-lbl">Verifications This Month</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">0</div>
-          <div class="stat-lbl">Alerts</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🔔 Recent Activity</div>
-        <div class="activity-item">
-          <div class="activity-icon blue">📦</div>
-          <div class="activity-info">
-            <h4>Address verified by a delivery service</h4>
-            <p>Your Home ID was queried to confirm delivery eligibility.</p>
-          </div>
-          <div class="activity-time">2h ago</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon green">🏦</div>
-          <div class="activity-info">
-            <h4>Address verified by a financial institution</h4>
-            <p>An authorized institution queried your verified address status.</p>
-          </div>
-          <div class="activity-time">Yesterday</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon blue">✅</div>
-          <div class="activity-info">
-            <h4>Home ID activated</h4>
-            <p>Your address verification was completed and your Home ID was generated.</p>
-          </div>
-          <div class="activity-time">Jan 15</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── MY ADDRESS ── -->
-    <div class="section" id="section-address">
-      <div class="section-title">My Address</div>
-      <div class="section-sub">Your currently verified physical address.</div>
-
-      <div class="card">
-        <div class="card-title">📍 Verified Address</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Street Address</label>
-            <input type="text" value="123 Main Street" readonly>
-          </div>
-          <div class="form-group">
-            <label>Unit / Apt (optional)</label>
-            <input type="text" value="" readonly placeholder="—">
-          </div>
-          <div class="form-group">
-            <label>City</label>
-            <input type="text" value="Everett" readonly>
-          </div>
-          <div class="form-group">
-            <label>State</label>
-            <input type="text" value="Washington" readonly>
-          </div>
-          <div class="form-group">
-            <label>ZIP Code</label>
-            <input type="text" value="98201" readonly>
-          </div>
-          <div class="form-group">
-            <label>Status</label>
-            <input type="text" value="✓ Verified" readonly style="color:#059669;font-weight:700;">
-          </div>
-        </div>
-        <button class="btn btn-outline" onclick="showSection('update-address')">🔄 Update My Address</button>
-      </div>
-    </div>
-
-    <!-- ── UPDATE ADDRESS ── -->
-    <div class="section" id="section-update-address">
-      <div class="section-title">Update Address</div>
-      <div class="section-sub">Moving? Submit your new address. A new verification PIN will be mailed to confirm you reside there.</div>
-
-      <div class="card" style="border-left:4px solid var(--yellow);background:var(--yellow-pale);padding:16px 20px;margin-bottom:16px;">
-        <p style="font-size:13px;color:var(--yellow);font-weight:600;">⚠️ Updating your address will place your Home ID in Pending status until the new address is verified via physical mail PIN.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🏠 New Address Details</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Street Address</label>
-            <input type="text" id="new-street" placeholder="123 New Street">
-          </div>
-          <div class="form-group">
-            <label>Unit / Apt (optional)</label>
-            <input type="text" id="new-unit" placeholder="Apt 2B">
-          </div>
-          <div class="form-group">
-            <label>City</label>
-            <input type="text" id="new-city" placeholder="City">
-          </div>
-          <div class="form-group">
-            <label>State</label>
-            <select id="new-state">
-              <option value="">Select state</option>
-              <option>Alabama</option><option>Alaska</option><option>Arizona</option>
-              <option>California</option><option>Colorado</option><option>Florida</option>
-              <option>Georgia</option><option>Illinois</option><option>New York</option>
-              <option selected>Washington</option><option>Texas</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>ZIP Code</label>
-            <input type="text" id="new-zip" placeholder="12345" maxlength="5">
-          </div>
-        </div>
-        <div style="display:flex;gap:12px;margin-top:8px;">
-          <button class="btn btn-primary" onclick="submitAddressUpdate()">Submit Address Update</button>
-          <button class="btn btn-outline" onclick="showSection('address')">Cancel</button>
-        </div>
-      </div>
-
-      <!-- ALSO UPDATE WITH INSTITUTIONS -->
-      <div class="card">
-        <div class="card-title">🏦 Also Update With</div>
-        <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">Select which authorized parties should be notified of your address update request.</p>
-        <div class="inst-grid">
-          <div class="inst-card">
-            <div class="inst-icon bl">🏦</div>
-            <div class="inst-info"><h4>My Bank</h4><p>Financial Institution</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon gn">📦</div>
-            <div class="inst-info"><h4>Delivery Services</h4><p>Logistics Partner</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon yw">🏥</div>
-            <div class="inst-info"><h4>Healthcare Provider</h4><p>Authorized Agency</p></div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── FAMILY MEMBERS ── -->
-    <div class="section" id="section-members">
-      <div class="section-title">Family Members</div>
-      <div class="section-sub">Authorized household members registered under your Home ID.</div>
-
-      <div class="card">
-        <div class="card-title">👨‍👩‍👧 Household Members</div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Relationship</th>
-              <th>Status</th>
-              <th>Added</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="members-table">
-            <tr>
-              <td><strong>John Smith</strong> <span style="font-size:11px;color:var(--blue);">(Primary)</span></td>
-              <td>Account Holder</td>
-              <td><span class="badge badge-green">✓ Verified</span></td>
-              <td>Jan 2026</td>
-              <td>—</td>
-            </tr>
-            <tr>
-              <td>Sarah Smith</td>
-              <td>Spouse</td>
-              <td><span class="badge badge-green">✓ Verified</span></td>
-              <td>Jan 2026</td>
-              <td><button class="btn btn-danger" style="padding:5px 12px;font-size:12px;" onclick="removeMember(this)">Remove</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <div class="card-title">➕ Add Family Member</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" id="member-fname" placeholder="First name">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" id="member-lname" placeholder="Last name">
-          </div>
-          <div class="form-group">
-            <label>Relationship</label>
-            <select id="member-rel">
-              <option value="">Select</option>
-              <option>Spouse / Partner</option>
-              <option>Child</option>
-              <option>Parent</option>
-              <option>Sibling</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Email (optional)</label>
-            <input type="email" id="member-email" placeholder="member@email.com">
-          </div>
-        </div>
-        <button class="btn btn-primary" onclick="addMember()">Add Member</button>
-      </div>
-    </div>
-
-    <!-- ── AUTHORIZED PARTIES ── -->
-    <div class="section" id="section-institutions">
-      <div class="section-title">Authorized Parties</div>
-      <div class="section-sub">Control which organizations can query your verified address status through SaveCode.</div>
-
-      <div class="card" style="border-left:4px solid var(--blue);background:var(--blue-pale);padding:16px 20px;margin-bottom:16px;">
-        <p style="font-size:13px;color:var(--blue);font-weight:600;">🔒 Only parties you authorize can access your verified address status. You can revoke access at any time.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🏦 Financial Institutions</div>
-        <div class="inst-grid">
-          <div class="inst-card">
-            <div class="inst-icon bl">🏦</div>
-            <div class="inst-info"><h4>My Bank</h4><p>Account verification</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon bl">💳</div>
-            <div class="inst-info"><h4>Credit Card Issuer</h4><p>Address verification</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon bl">🏠</div>
-            <div class="inst-info"><h4>Mortgage Lender</h4><p>Address verification</p></div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">📦 Logistics & Delivery</div>
-        <div class="inst-grid">
-          <div class="inst-card">
-            <div class="inst-icon gn">📦</div>
-            <div class="inst-info"><h4>Delivery Services</h4><p>Package verification</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon gn">✈️</div>
-            <div class="inst-info"><h4>Express Shipping</h4><p>Address confirmation</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon gn">🤖</div>
-            <div class="inst-info"><h4>Autonomous Delivery</h4><p>Last-mile verification</p></div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🛡️ Authorized Agencies</div>
-        <div class="inst-grid">
-          <div class="inst-card">
-            <div class="inst-icon yw">🏥</div>
-            <div class="inst-info"><h4>Healthcare Provider</h4><p>Records & billing</p></div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon yw">📮</div>
-            <div class="inst-info"><h4>Postal Services</h4><p>Mail verification</p></div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div class="inst-card">
-            <div class="inst-icon yw">🏛️</div>
-            <div class="inst-info"><h4>Government Agency</h4><p>Residency verification</p></div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── ACTIVITY LOG ── -->
-    <div class="section" id="section-activity">
-      <div class="section-title">Activity Log</div>
-      <div class="section-sub">A record of all queries made against your Home ID through the SaveCode network.</div>
-
-      <div class="card">
-        <div class="card-title">🔔 All Activity</div>
-        <div class="activity-item">
-          <div class="activity-icon blue">📦</div>
-          <div class="activity-info">
-            <h4>Delivery service queried your address</h4>
-            <p>Address status returned: Verified ✓</p>
-          </div>
-          <div class="activity-time">Today, 9:14 AM</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon green">🏦</div>
-          <div class="activity-info">
-            <h4>Financial institution queried your address</h4>
-            <p>Address status returned: Verified ✓</p>
-          </div>
-          <div class="activity-time">Yesterday, 3:22 PM</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon blue">📦</div>
-          <div class="activity-info">
-            <h4>Delivery service queried your address</h4>
-            <p>Address status returned: Verified ✓</p>
-          </div>
-          <div class="activity-time">May 18, 11:05 AM</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon yellow">📮</div>
-          <div class="activity-info">
-            <h4>Postal service queried your address</h4>
-            <p>Address status returned: Verified ✓</p>
-          </div>
-          <div class="activity-time">May 17, 8:30 AM</div>
-        </div>
-        <div class="activity-item">
-          <div class="activity-icon green">✅</div>
-          <div class="activity-info">
-            <h4>Home ID activated</h4>
-            <p>PIN verified — Home ID SC·4829·WA generated.</p>
-          </div>
-          <div class="activity-time">Jan 15, 2:00 PM</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SETTINGS ── -->
-    <div class="section" id="section-settings">
-      <div class="section-title">Account Settings</div>
-      <div class="section-sub">Manage your SaveCode account information and preferences.</div>
-
-      <div class="card">
-        <div class="card-title">👤 Personal Information</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" id="set-fname" value="John">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" id="set-lname" value="Smith">
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" id="set-email" value="john.smith@email.com">
-          </div>
-          <div class="form-group">
-            <label>Phone (optional)</label>
-            <input type="tel" id="set-phone" placeholder="+1 (555) 000-0000">
-          </div>
-        </div>
-        <button class="btn btn-primary" onclick="saveSettings()">Save Changes</button>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🔑 Change Password</div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Current Password</label>
-            <input type="password" placeholder="Current password">
-          </div>
-          <div class="form-group">
-            <label>New Password</label>
-            <input type="password" placeholder="New password (min 8 chars)">
-          </div>
-        </div>
-        <button class="btn btn-outline" onclick="showNotif('Password updated successfully.')">Update Password</button>
-      </div>
-
-      <div class="card">
-        <div class="card-title">🔔 Notifications</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div>
-              <div style="font-size:13px;font-weight:700;color:var(--gray-900);">Address Query Alerts</div>
-              <div style="font-size:12px;color:var(--gray-500);">Notify me when my address is queried</div>
-            </div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div>
-              <div style="font-size:13px;font-weight:700;color:var(--gray-900);">Security Alerts</div>
-              <div style="font-size:12px;color:var(--gray-500);">Notify me of suspicious activity</div>
-            </div>
-            <label class="inst-toggle"><input type="checkbox" checked><span class="inst-slider"></span></label>
-          </div>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div>
-              <div style="font-size:13px;font-weight:700;color:var(--gray-900);">SaveCode Updates</div>
-              <div style="font-size:12px;color:var(--gray-500);">Product news and announcements</div>
-            </div>
-            <label class="inst-toggle"><input type="checkbox"><span class="inst-slider"></span></label>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="border-color:var(--red);">
-        <div class="card-title" style="color:var(--red);">⚠️ Danger Zone</div>
-        <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;">Deleting your account will permanently remove your Home ID and all associated data. This action cannot be undone.</p>
-        <button class="btn btn-danger" onclick="confirmDelete()">Delete My Account</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+</main>
 
 <!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <h3 id="modal-title">Confirm Action</h3>
-    <p id="modal-body">Are you sure?</p>
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <h3>Delete Account</h3>
+    <p>This will permanently delete your SaveCode account and Home ID. This action cannot be undone. Are you sure?</p>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+      <button class="btn btn-danger" onclick="window.location.href='index.html'">Yes, Delete</button>
     </div>
   </div>
 </div>
 
-<!-- NOTIFICATION -->
-<div class="notif" id="notif"></div>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-  // Navigation
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-    document.getElementById('section-' + id).classList.add('active');
-    event.currentTarget.classList.add('active');
-    window.scrollTo(0,0);
+  // PIN state — change to 'pending' to test pending view
+  const ACCOUNT_STATE = 'verified'; // 'pending' or 'verified'
+  window.onload = function() {
+    if (ACCOUNT_STATE === 'pending') {
+      document.getElementById('state-pending').style.display = 'block';
+      document.getElementById('state-verified').style.display = 'none';
+    } else {
+      document.getElementById('state-pending').style.display = 'none';
+      document.getElementById('state-verified').style.display = 'block';
+    }
+  };
+
+  // PIN auto-move to next box
+  function pinMove(el, nextId) {
+    el.value = el.value.replace(/[^0-9]/g,'');
+    if (el.value && nextId) document.getElementById(nextId).focus();
   }
 
-  // Notification
-  function showNotif(msg) {
-    const n = document.getElementById('notif');
-    n.textContent = msg;
-    n.classList.add('show');
-    setTimeout(() => n.classList.remove('show'), 3000);
-  }
+  // Verify PIN
+  function verifyPin() {
+    const pin = ['p1','p2','p3','p4','p5','p6'].map(id => document.getElementById(id).value).join('');
+    const err = document.getElementById('pin-error');
+    const suc = document.getElementById('pin-success');
+    err.style.display = 'none';
+    suc.style.display = 'none';
 
-  // Address Update
-  function submitAddressUpdate() {
-    const street = document.getElementById('new-street').value.trim();
-    const city = document.getElementById('new-city').value.trim();
-    const zip = document.getElementById('new-zip').value.trim();
-    if (!street || !city || !zip) { alert('Please fill in all required address fields.'); return; }
-    showNotif('✅ Address update submitted. A verification PIN will be mailed to your new address.');
-    showSection('address');
-  }
+    if (pin.length < 6) { alert('Please enter all 6 digits of your PIN.'); return; }
 
-  // Add Member
-  function addMember() {
-    const fname = document.getElementById('member-fname').value.trim();
-    const lname = document.getElementById('member-lname').value.trim();
-    const rel = document.getElementById('member-rel').value;
-    if (!fname || !lname || !rel) { alert('Please fill in name and relationship.'); return; }
-    const tbody = document.getElementById('members-table');
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${fname} ${lname}</td>
-      <td>${rel}</td>
-      <td><span class="badge badge-yellow">Pending</span></td>
-      <td>Just now</td>
-      <td><button class="btn btn-danger" style="padding:5px 12px;font-size:12px;" onclick="removeMember(this)">Remove</button></td>
-    `;
-    tbody.appendChild(tr);
-    document.getElementById('member-fname').value = '';
-    document.getElementById('member-lname').value = '';
-    document.getElementById('member-rel').value = '';
-    document.getElementById('member-email').value = '';
-    showNotif('✅ ' + fname + ' ' + lname + ' added to your household.');
-  }
-
-  // Remove Member
-  function removeMember(btn) {
-    if (confirm('Remove this member from your household?')) {
-      btn.closest('tr').remove();
-      showNotif('Member removed.');
+    // Simulate verification (real check will be via Supabase)
+    if (pin === '123456') { // demo PIN
+      suc.style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('state-pending').style.display = 'none';
+        document.getElementById('state-verified').style.display = 'block';
+        toast('🎉 Address verified! Your Home ID is now active.');
+      }, 1500);
+    } else {
+      err.style.display = 'block';
+      ['p1','p2','p3','p4','p5','p6'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('p1').focus();
     }
   }
 
-  // Save Settings
-  function saveSettings() {
-    showNotif('✅ Settings saved successfully.');
+  function nav(btn, id) {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('s-' + id).classList.add('active');
+    window.scrollTo(0, 0);
   }
 
-  // Delete Account
-  function confirmDelete() {
-    document.getElementById('modal-title').textContent = 'Delete Account';
-    document.getElementById('modal-body').textContent = 'This will permanently delete your SaveCode account and Home ID. This action cannot be undone. Are you sure?';
-    document.getElementById('modal-confirm').onclick = () => { window.location.href = 'index.html'; };
-    document.getElementById('modal').classList.add('open');
+  function navBtn(id) {
+    const btn = [...document.querySelectorAll('.nav-item')].find(b => b.getAttribute('onclick')?.includes("'" + id + "'"));
+    if (btn) nav(btn, id);
   }
 
-  function closeModal() {
-    document.getElementById('modal').classList.remove('open');
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
   }
+
+  function submitUpdate() {
+    const s = document.getElementById('ua-street').value.trim();
+    const c = document.getElementById('ua-city').value.trim();
+    const z = document.getElementById('ua-zip').value.trim();
+    if (!s || !c || !z) { alert('Please fill in all required fields.'); return; }
+    toast('✅ Address update submitted. A PIN will be mailed to your new address.');
+    navBtn('address');
+  }
+
+  function addMember() {
+    const fn = document.getElementById('m-fn').value.trim();
+    const ln = document.getElementById('m-ln').value.trim();
+    const rel = document.getElementById('m-rel').value;
+    if (!fn || !ln || !rel) { alert('Please fill in name and relationship.'); return; }
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${fn} ${ln}</td><td>${rel}</td><td><span class="badge badge-yellow">Pending</span></td><td>Just now</td><td><button class="btn btn-danger btn-sm" onclick="removeMember(this)">Remove</button></td>`;
+    document.getElementById('members-body').appendChild(tr);
+    ['m-fn','m-ln','m-rel','m-email'].forEach(id => document.getElementById(id).value = '');
+    toast('✅ ' + fn + ' ' + ln + ' added to your household.');
+  }
+
+  function removeMember(btn) {
+    if (confirm('Remove this member from your household?')) {
+      btn.closest('tr').remove();
+      toast('Member removed.');
+    }
+  }
+
+  function openModal()  { document.getElementById('modal').classList.add('open'); }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
 </script>
-
 </body>
 </html>
