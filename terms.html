@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — SaveCode</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --blue:      #0067b8;
+      --blue-h:    #005a9e;
+      --blue-dark: #003f7f;
+      --blue-pale: #e8f1fb;
+      --gray-bg:   #f2f2f2;
+      --gray-mid:  #e0e0e0;
+      --gray-500:  #6b7280;
+      --gray-700:  #374151;
+      --gray-900:  #111827;
+      --white:     #ffffff;
+      --green:     #059669;
+    }
+    body { font-family:'Nunito Sans','Segoe UI',sans-serif; background:var(--gray-bg); color:var(--gray-900); }
+
+    nav { position:fixed; top:0; left:0; right:0; background:var(--white); border-bottom:1px solid var(--gray-mid); z-index:200; height:52px; display:flex; align-items:center; padding:0 32px; gap:20px; }
+    .nav-brand { display:flex; align-items:center; text-decoration:none; }
+    .nav-div { width:1px; height:20px; background:var(--gray-mid); }
+    .nav-links { display:flex; }
+    .nav-links a { font-size:13px; color:var(--gray-700); text-decoration:none; padding:0 14px; height:52px; display:flex; align-items:center; border-bottom:2px solid transparent; transition:background .15s,border-color .15s; }
+    .nav-links a:hover { background:var(--gray-bg); border-bottom-color:var(--blue); }
+    .nav-right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+    .btn-signin { font-size:13px; font-weight:600; color:var(--gray-700); text-decoration:none; padding:6px 14px; border-radius:2px; border:1px solid var(--gray-mid); background:var(--white); }
+    .btn-start { font-size:13px; font-weight:700; color:var(--white); text-decoration:none; padding:7px 16px; border-radius:2px; background:var(--blue); }
+
+    .page-hero { background:var(--blue-dark); padding:90px 64px 48px; text-align:center; }
+    .page-hero-tag { display:inline-block; background:rgba(255,255,255,.12); color:rgba(255,255,255,.85); font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:18px; }
+    .page-hero h1 { font-size:36px; font-weight:800; color:var(--white); letter-spacing:-1px; margin-bottom:10px; }
+    .page-hero p { font-size:14px; color:rgba(255,255,255,.6); }
+
+    .content { max-width:800px; margin:0 auto; padding:56px 64px; }
+
+    .last-updated { background:var(--blue-pale); border-left:4px solid var(--blue); padding:12px 18px; font-size:13px; color:var(--blue-dark); font-weight:600; margin-bottom:40px; }
+
+    .toc { background:var(--white); border:1px solid var(--gray-mid); padding:24px 28px; margin-bottom:40px; }
+    .toc h3 { font-size:14px; font-weight:800; color:var(--gray-900); margin-bottom:14px; }
+    .toc ol { padding-left:20px; }
+    .toc li { margin-bottom:6px; }
+    .toc a { font-size:13px; color:var(--blue); text-decoration:none; font-weight:600; }
+    .toc a:hover { text-decoration:underline; }
+
+    .policy-section { margin-bottom:40px; scroll-margin-top:80px; }
+    .policy-section h2 { font-size:18px; font-weight:800; color:var(--gray-900); margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--gray-mid); }
+    .policy-section h3 { font-size:15px; font-weight:700; color:var(--gray-900); margin-bottom:8px; margin-top:16px; }
+    .policy-section p { font-size:14px; color:var(--gray-700); line-height:1.8; margin-bottom:12px; }
+    .policy-section ul, .policy-section ol { padding-left:20px; margin-bottom:12px; }
+    .policy-section li { font-size:14px; color:var(--gray-700); line-height:1.8; margin-bottom:4px; }
+    .policy-section a { color:var(--blue); text-decoration:none; }
+    .policy-section a:hover { text-decoration:underline; }
+
+    .highlight-box { background:var(--blue-pale); border-left:4px solid var(--blue); padding:16px 20px; margin:16px 0; }
+    .highlight-box p { font-size:13px; color:var(--blue-dark); line-height:1.65; font-weight:600; margin:0; }
+    .warning-box { background:#fff7ed; border-left:4px solid #d97706; padding:16px 20px; margin:16px 0; }
+    .warning-box p { font-size:13px; color:#92400e; line-height:1.65; font-weight:600; margin:0; }
+
+    footer { background:var(--gray-900); padding:28px 64px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+    .f-brand { display:flex; align-items:center; text-decoration:none; }
+    .f-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; color:rgba(255,255,255,.4); text-decoration:none; transition:color .15s; }
+    .f-links a:hover { color:var(--white); }
+    .f-copy { width:100%; font-size:11px; color:rgba(255,255,255,.22); margin-top:6px; }
+
+    @media(max-width:900px){
+      nav{padding:0 16px;} .nav-links{display:none;}
+      .page-hero{padding:80px 24px 40px;} .page-hero h1{font-size:26px;}
+      .content{padding:32px 20px;}
+      footer{padding:24px 16px;flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <svg width="170" height="34" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+        <linearGradient id="ntg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0067b8"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#nhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#nhg)" opacity="0.12"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#nhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#nhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ntg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="nav-div"></div>
+  <div class="nav-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="signin.html" class="btn-signin">Sign in</a>
+    <a href="register.html" class="btn-start">Get started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-tag">Legal</div>
+  <h1>Terms of Service</h1>
+  <p>Last updated: May 24, 2026</p>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="last-updated">
+    📋 These Terms of Service ("Terms") govern your access to and use of the SaveCode platform operated by Mangel Technologies LLC ("SaveCode," "we," "us," or "our"). By creating an account or using our services, you agree to these Terms.
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#acceptance">Acceptance of Terms</a></li>
+      <li><a href="#description">Description of Services</a></li>
+      <li><a href="#eligibility">Eligibility</a></li>
+      <li><a href="#account">Account Registration</a></li>
+      <li><a href="#verification">Address Verification Process</a></li>
+      <li><a href="#prohibited">Prohibited Uses</a></li>
+      <li><a href="#fees">Fees and Payment</a></li>
+      <li><a href="#ip">Intellectual Property</a></li>
+      <li><a href="#disclaimers">Disclaimers</a></li>
+      <li><a href="#limitation">Limitation of Liability</a></li>
+      <li><a href="#termination">Termination</a></li>
+      <li><a href="#governing">Governing Law</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="policy-section" id="acceptance">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using SaveCode's website at savecode.us or any of our services, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these Terms, you may not use our services.</p>
+    <p>We reserve the right to update these Terms at any time. Your continued use of our services after any changes constitutes acceptance of the updated Terms.</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="policy-section" id="description">
+    <h2>2. Description of Services</h2>
+    <p>SaveCode is an address identity verification platform that provides:</p>
+    <ul>
+      <li>Physical address verification through a mail-based PIN process</li>
+      <li>A unique encrypted Home ID tied to a verified physical address</li>
+      <li>Address verification status queries for authorized parties</li>
+      <li>Household member management tools</li>
+      <li>Address update and re-verification services</li>
+    </ul>
+    <div class="highlight-box">
+      <p>📌 SaveCode provides address verification status indicators only. We do not make final decisions on behalf of financial institutions, delivery services, or any other party. All final decisions remain with the querying party.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="policy-section" id="eligibility">
+    <h2>3. Eligibility</h2>
+    <p>To use SaveCode, you must:</p>
+    <ul>
+      <li>Be at least 18 years of age</li>
+      <li>Be a resident of the United States</li>
+      <li>Have a valid physical address in the United States</li>
+      <li>Provide accurate and truthful information during registration</li>
+      <li>Not be prohibited from using our services under applicable law</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="policy-section" id="account">
+    <h2>4. Account Registration</h2>
+    <p>When creating a SaveCode account, you agree to:</p>
+    <ul>
+      <li>Provide accurate, complete, and current information</li>
+      <li>Maintain the security of your password and account credentials</li>
+      <li>Notify us immediately of any unauthorized access to your account</li>
+      <li>Accept responsibility for all activity that occurs under your account</li>
+    </ul>
+    <p>You may not create an account on behalf of another person without their explicit authorization, or use another person's identity or address without their knowledge and consent.</p>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="policy-section" id="verification">
+    <h2>5. Address Verification Process</h2>
+
+    <h3>Registration and PIN</h3>
+    <p>When you register a physical address, SaveCode will mail a unique verification PIN to that address. You must have physical access to the address to receive and enter the PIN. This process is designed to confirm genuine residency.</p>
+
+    <h3>Accuracy of Information</h3>
+    <p>You represent and warrant that the address you register is your current, legitimate physical address and that you have the right to register it. Registering an address that does not belong to you or that you do not reside at is a violation of these Terms and may constitute fraud.</p>
+
+    <h3>One Address Per Account</h3>
+    <p>Each SaveCode account may register one primary verified address at a time. Address updates require a new verification process.</p>
+
+    <h3>Fraud Prevention</h3>
+    <p>SaveCode actively monitors for fraudulent registration attempts. If another account attempts to register your verified address, the current registered account holder will be notified. Fraudulent registration attempts will be blocked and reported.</p>
+
+    <div class="warning-box">
+      <p>⚠️ Attempting to register an address that does not belong to you, or submitting false information, is a violation of these Terms and may result in immediate account termination and referral to appropriate authorities.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="policy-section" id="prohibited">
+    <h2>6. Prohibited Uses</h2>
+    <p>You agree not to use SaveCode to:</p>
+    <ul>
+      <li>Register an address that is not your legitimate physical residence</li>
+      <li>Submit false, misleading, or fraudulent information</li>
+      <li>Impersonate any person or entity</li>
+      <li>Interfere with or disrupt the integrity or performance of our services</li>
+      <li>Attempt to gain unauthorized access to our systems or other users' accounts</li>
+      <li>Use our services in any manner that could harm other users or third parties</li>
+      <li>Violate any applicable local, state, or federal law or regulation</li>
+      <li>Circumvent our fraud prevention mechanisms</li>
+      <li>Use automated tools to access or query our services without authorization</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="policy-section" id="fees">
+    <h2>7. Fees and Payment</h2>
+    <p>SaveCode charges a one-time verification fee for address registration, which covers the cost of physical mail verification. All fees are disclosed at the time of registration.</p>
+    <p>Payments are processed securely through Stripe. SaveCode does not store your payment card information. All transactions are subject to Stripe's terms and conditions.</p>
+    <p>Fees are non-refundable once the verification letter has been dispatched, except where required by applicable law.</p>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="policy-section" id="ip">
+    <h2>8. Intellectual Property</h2>
+    <p>SaveCode's platform, technology, and content — including the Home ID system, physical-digital verification process, and all related software — are the proprietary property of Mangel Technologies LLC and are protected by US patent law (patent pending), copyright, and other applicable intellectual property laws.</p>
+    <p>You may not reproduce, distribute, modify, or create derivative works of our platform or technology without our express written permission.</p>
+    <div class="highlight-box">
+      <p>🔒 SaveCode's core technology is the subject of a pending US utility patent application filed by Eman Eljack, sole inventor, under Mangel Technologies LLC.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="policy-section" id="disclaimers">
+    <h2>9. Disclaimers</h2>
+    <p>SaveCode provides its services "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+    <p>We do not warrant that:</p>
+    <ul>
+      <li>Our services will be uninterrupted or error-free</li>
+      <li>Results obtained from using our services will be accurate or reliable</li>
+      <li>Our verification process will prevent all instances of fraud</li>
+    </ul>
+    <p>SaveCode generates address verification status indicators. We are not responsible for decisions made by financial institutions, delivery services, or other parties based on our verification status indicators.</p>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="policy-section" id="limitation">
+    <h2>10. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, Mangel Technologies LLC shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or goodwill, arising out of or in connection with your use of our services.</p>
+    <p>Our total liability to you for any claims arising under these Terms shall not exceed the amount you paid to SaveCode in the twelve months preceding the claim.</p>
+  </div>
+
+  <!-- SECTION 11 -->
+  <div class="policy-section" id="termination">
+    <h2>11. Termination</h2>
+    <p>You may terminate your SaveCode account at any time through your account settings or by contacting us at <a href="mailto:support@savecode.us">support@savecode.us</a>.</p>
+    <p>We reserve the right to suspend or terminate your account at any time, with or without notice, for:</p>
+    <ul>
+      <li>Violation of these Terms</li>
+      <li>Fraudulent or illegal activity</li>
+      <li>Providing false information</li>
+      <li>Any conduct that we determine, in our sole discretion, is harmful to other users or our platform</li>
+    </ul>
+    <p>Upon termination, your right to use our services will immediately cease. Certain provisions of these Terms will survive termination.</p>
+  </div>
+
+  <!-- SECTION 12 -->
+  <div class="policy-section" id="governing">
+    <h2>12. Governing Law</h2>
+    <p>These Terms shall be governed by and construed in accordance with the laws of the State of Washington, United States, without regard to its conflict of law provisions.</p>
+    <p>Any disputes arising under these Terms shall be resolved in the courts located in Snohomish County, Washington, and you consent to the personal jurisdiction of such courts.</p>
+  </div>
+
+  <!-- SECTION 13 -->
+  <div class="policy-section" id="contact">
+    <h2>13. Contact Us</h2>
+    <p>If you have any questions about these Terms of Service, please contact us:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:info@savecode.us">info@savecode.us</a></li>
+      <li><strong>Support:</strong> <a href="mailto:support@savecode.us">support@savecode.us</a></li>
+      <li><strong>Company:</strong> Mangel Technologies LLC</li>
+      <li><strong>Location:</strong> Everett, Washington, USA</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="f-brand">
+    <svg width="130" height="26" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="fhg" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+        <linearGradient id="ftg" x1="100" y1="0" x2="340" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3b9ee8"/><stop offset="100%" stop-color="#34d399"/></linearGradient>
+      </defs>
+      <path d="M38 6 L70 6 L86 33 L70 60 L38 60 L22 33 Z" fill="none" stroke="url(#fhg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="url(#fhg)" opacity="0.2"/>
+      <path d="M54 16 L36 30 L41 30 L41 50 L50 50 L50 41 L58 41 L58 50 L67 50 L67 30 L72 30 Z" fill="none" stroke="url(#fhg)" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M54 33 L49 35 L49 39 C49 42 51 44.5 54 46 C57 44.5 59 42 59 39 L59 35 Z" fill="url(#fhg)"/>
+      <path d="M52.5 39 L53.8 40.5 L56.5 37.5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="44" font-family="Montserrat, sans-serif" font-size="32" font-weight="800" fill="url(#ftg)" letter-spacing="-0.5">SaveCode</text>
+    </svg>
+  </a>
+  <div class="f-links">
+    <a href="features.html">Features</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+  <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Everett, WA · Patent-Pending Technology</div>
+</footer>
+
+</body>
+</html>
