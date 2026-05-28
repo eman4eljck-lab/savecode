@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — SaveCode</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -227,10 +228,10 @@
   </a>
   <div class="topnav-right">
     <div class="topnav-user">
-      <div class="topnav-avatar">JS</div>
-      <span class="topnav-name">John Smith</span>
+      <div class="topnav-avatar" id="user-avatar">?</div>
+      <span class="topnav-name" id="user-name">Loading...</span>
     </div>
-    <a href="signin.html" class="topnav-signout">Sign out</a>
+    <a href="#" onclick="signOut()" class="topnav-signout">Sign out</a>
   </div>
 </nav>
 
@@ -580,6 +581,55 @@
 <div class="toast" id="toast"></div>
 
 <script>
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_3fWrBDNrUmwkrlpF3uG0lQ_29_rhE8F';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ── LOAD USER ──
+  async function loadUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      // Not logged in — redirect to signin
+      window.location.href = 'signin.html';
+      return;
+    }
+
+    // Get profile from public.users
+    const { data: profile } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    const fname = profile?.first_name || user.user_metadata?.first_name || '';
+    const lname = profile?.last_name  || user.user_metadata?.last_name  || '';
+    const fullName = `${fname} ${lname}`.trim() || user.email;
+    const initials = (fname[0] || '') + (lname[0] || '') || '?';
+
+    // Update nav
+    document.getElementById('user-name').textContent = fullName;
+    document.getElementById('user-avatar').textContent = initials.toUpperCase();
+
+    // Update settings form
+    const sfn = document.getElementById('s-fn');
+    const sln = document.getElementById('s-ln');
+    const sem = document.getElementById('s-email');
+    if (sfn) sfn.value = fname;
+    if (sln) sln.value = lname;
+    if (sem) sem.value = user.email;
+
+    // Set account state based on profile status
+    const status = profile?.status || 'new';
+    showState(status);
+  }
+
+  // ── SIGN OUT ──
+  async function signOut() {
+    await supabase.auth.signOut();
+    window.location.href = 'signin.html';
+  }
+
   // ── ACCOUNT STATE ──
   // Change this to test different states:
   // 'new'      = no address registered
@@ -588,7 +638,7 @@
   // 'verified' = fully verified
   const ACCOUNT_STATE = 'verified';
 
-  window.onload = function() { showState(ACCOUNT_STATE); };
+  window.onload = function() { loadUser(); };
 
   function showState(state) {
     ['new','occupied','pending','verified'].forEach(s => {
