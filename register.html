@@ -388,16 +388,21 @@
   <div class="f-copy">© 2026 SaveCode · Mangel Technologies LLC · Patent-Pending Technology</div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_3fWrBDNrUmwkrlpF3uG0lQ_29_rhE8F';
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
   function togglePassword() {
     const pw = document.getElementById('password');
     pw.type = pw.type === 'password' ? 'text' : 'password';
   }
 
-  function submitRegister() {
-    const fname = document.getElementById('fname').value.trim();
-    const lname = document.getElementById('lname').value.trim();
-    const email = document.getElementById('email').value.trim();
+  async function submitRegister() {
+    const fname    = document.getElementById('fname').value.trim();
+    const lname    = document.getElementById('lname').value.trim();
+    const email    = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
 
     if (!fname || !lname) { alert('Please enter your first and last name.'); return; }
@@ -408,10 +413,45 @@
     btn.textContent = 'Creating account...';
     btn.disabled = true;
 
-    setTimeout(() => {
+    try {
+      // 1. Create auth account in Supabase
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { first_name: fname, last_name: lname }
+        }
+      });
+
+      if (error) throw error;
+
+      // 2. Save user profile in public.users
+      const { error: profileError } = await supabase
+        .from('users')
+        .insert([{
+          id: data.user.id,
+          first_name: fname,
+          last_name: lname,
+          email: email,
+          status: 'new'
+        }]);
+
+      if (profileError) console.warn('Profile insert:', profileError.message);
+
+      // 3. Show success
       document.getElementById('register-form').style.display = 'none';
       document.getElementById('success-state').style.display = 'block';
-    }, 1000);
+
+    } catch (err) {
+      btn.textContent = 'Create Account';
+      btn.disabled = false;
+
+      if (err.message.includes('already registered')) {
+        alert('This email is already registered. Please sign in instead.');
+      } else {
+        alert('Something went wrong: ' + err.message);
+      }
+    }
   }
 </script>
 
