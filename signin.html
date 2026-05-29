@@ -335,9 +335,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor._supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function forgotPassword(e) {
     e.preventDefault();
@@ -346,7 +346,7 @@
       alert('Please enter your email address first, then click Forgot Password.');
       return;
     }
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await _supabase.auth.resetPasswordForEmail(email, {
       redirectTo: 'https://www.savecode.us/signin.html'
     });
     if (error) {
@@ -380,7 +380,7 @@
     btn.textContent = 'Signing in...';
     btn.disabled = true;
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       errorMsg.textContent = 'Incorrect email or password. Please try again.';
@@ -392,7 +392,7 @@
 
     // Check email is confirmed
     if (!data.user.email_confirmed_at) {
-      await supabase.auth.signOut();
+      await _supabase.auth.signOut();
       errorMsg.textContent = '⚠️ Please verify your email first. Check your inbox for the confirmation code.';
       errorMsg.style.display = 'block';
       errorMsg.style.color = '#d97706';
