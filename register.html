@@ -334,9 +334,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor._supabase.co';
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.sb.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
-  const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let registeredEmail = '';
   let registeredPassword = '';
@@ -398,7 +398,7 @@
 
     try {
       // Sign up — Supabase sends verification email automatically
-      const { data, error } = await _supabase.auth.signUp({
+      const { data, error } = await sb.auth.signUp({
         email,
         password: pw,
         options: {
@@ -410,7 +410,7 @@
 
       // Save to public.users
       if (data.user) {
-        await _supabase.from('users').insert([{
+        await sb.from('users').insert([{
           id: data.user.id,
           first_name: fname,
           last_name: lname,
@@ -451,7 +451,7 @@
     btn.disabled = true;
 
     try {
-      const { error } = await _supabase.auth.verifyOtp({
+      const { error } = await sb.auth.verifyOtp({
         email: registeredEmail,
         token: code,
         type: 'signup'
@@ -474,7 +474,7 @@
 
   // ── RESEND CODE ──
   async function resendCode() {
-    await _supabase.auth.resend({ type: 'signup', email: registeredEmail });
+    await sb.auth.resend({ type: 'signup', email: registeredEmail });
     alert('A new verification code has been sent to ' + registeredEmail);
   }
 
