@@ -581,13 +581,13 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.sb.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // ── LOAD USER ──
   async function loadUser() {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await sb.auth.getUser();
 
     if (!user) {
       // Not logged in — redirect to signin
@@ -626,7 +626,7 @@
 
   // ── SIGN OUT ──
   async function signOut() {
-    await supabase.auth.signOut();
+    await sb.auth.signOut();
     window.location.href = 'signin.html';
   }
 
