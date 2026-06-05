@@ -353,7 +353,7 @@
       return;
     }
     const { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://www.savecode.us/signin.html'
+      redirectTo: 'https://www.savecode.us/reset-password.html'
     });
     if (error) {
       alert('Error: ' + error.message);
