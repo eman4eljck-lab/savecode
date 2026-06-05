@@ -339,6 +339,12 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  // Restore saved email
+  window.onload = function() {
+    const saved = localStorage.getItem('sc_email');
+    if (saved) document.getElementById('email').value = saved;
+  };
+
   async function forgotPassword(e) {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
@@ -380,6 +386,9 @@
     btn.textContent = 'Signing in...';
     btn.disabled = true;
 
+    // Save email for next time
+    localStorage.setItem('sc_email', email);
+
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
     if (error) {
@@ -390,19 +399,8 @@
       return;
     }
 
-    // Check email is confirmed
-    if (!data.user.email_confirmed_at) {
-      await sb.auth.signOut();
-      errorMsg.textContent = '⚠️ Please verify your email first. Check your inbox for the confirmation code.';
-      errorMsg.style.display = 'block';
-      errorMsg.style.color = '#d97706';
-      btn.textContent = 'Sign In';
-      btn.disabled = false;
-      return;
-    }
-
     // All good — go to dashboard
-    window.location.href = 'dashboard.html';
+    window.location.href = 'https://www.savecode.us/dashboard.html';
   }
 </script>
 
