@@ -419,11 +419,10 @@
       registeredEmail = email;
       registeredPassword = pw;
 
-      // Show step 2
-      document.getElementById('sent-to-email').textContent = email;
+      // Go directly to success — PIN verification disabled until SMTP is configured
       document.getElementById('step1').style.display = 'none';
-      document.getElementById('step2').style.display = 'block';
-      document.getElementById('v1').focus();
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
 
     } catch (err) {
       btn.textContent = 'Continue →';
