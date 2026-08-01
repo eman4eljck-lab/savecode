@@ -29,8 +29,6 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* NAV */
     nav {
       background: var(--white);
       border-bottom: 1px solid var(--gray-mid);
@@ -42,16 +40,12 @@
     .nav-brand { display:flex; align-items:center; text-decoration:none; }
     .nav-register { font-size:13px; color:var(--gray-700); text-decoration:none; font-weight:600; }
     .nav-register span { color:var(--blue); }
-
-    /* PAGE */
     .page {
       flex: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: calc(100vh - 52px);
     }
-
-    /* LEFT — INFO */
     .info-side {
       background: var(--blue-dark);
       padding: 56px 48px;
@@ -59,25 +53,20 @@
       flex-direction: column;
       justify-content: center;
     }
-
     .info-tag {
       font-size: 11px; font-weight: 700;
       letter-spacing: 1.2px; text-transform: uppercase;
       color: rgba(255,255,255,.45); margin-bottom: 20px;
     }
-
     .info-side h2 {
       font-size: 28px; font-weight: 800;
       color: var(--white); margin-bottom: 12px;
       letter-spacing: -.5px; line-height: 1.25;
     }
-
     .info-side p {
       font-size: 14px; color: rgba(255,255,255,.6);
       line-height: 1.75; margin-bottom: 40px;
     }
-
-    /* HOME ID PREVIEW CARD */
     .id-card {
       background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.12);
@@ -94,9 +83,7 @@
       color: var(--white); letter-spacing: 3px;
       margin-bottom: 14px;
     }
-    .id-card-row {
-      display: flex; gap: 16px;
-    }
+    .id-card-row { display: flex; gap: 16px; }
     .id-chip {
       background: rgba(255,255,255,.1);
       padding: 5px 12px; border-radius: 20px;
@@ -104,7 +91,6 @@
       color: rgba(255,255,255,.7);
     }
     .id-chip.green { background: rgba(5,150,105,.25); color: #6ee7b7; }
-
     .info-note {
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.08);
@@ -112,8 +98,6 @@
       font-size: 12px; color: rgba(255,255,255,.4);
       line-height: 1.65;
     }
-
-    /* RIGHT — FORM */
     .form-side {
       padding: 56px 64px;
       display: flex;
@@ -121,32 +105,26 @@
       justify-content: center;
       background: var(--white);
     }
-
     .form-tag {
       font-size: 11px; font-weight: 700;
       letter-spacing: 1.2px; text-transform: uppercase;
       color: var(--blue); margin-bottom: 12px;
     }
-
     .form-side h1 {
       font-size: 28px; font-weight: 800;
       color: var(--gray-900); letter-spacing: -.5px;
       margin-bottom: 6px;
     }
-
     .form-side .sub {
       font-size: 14px; color: var(--gray-500);
       margin-bottom: 32px; line-height: 1.6;
     }
-
     .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
-
     label {
       font-size: 12px; font-weight: 700;
       color: var(--gray-700); letter-spacing: .3px;
       text-transform: uppercase;
     }
-
     input {
       padding: 11px 14px;
       border: 1px solid var(--gray-mid);
@@ -157,26 +135,20 @@
     }
     input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,103,184,.1); }
     input::placeholder { color: #adb5bd; }
-
-    .password-wrap { position:relative; }
-    .password-wrap input { width:100%; padding-right:44px; }
+    .password-wrap { position: relative; }
+    .password-wrap input { width: 100%; padding-right: 44px; }
     .toggle-pw {
-      position:absolute; right:12px; top:50%;
-      transform:translateY(-50%);
-      background:none; border:none; cursor:pointer;
-      color:var(--gray-500); padding:4px;
-      display:flex; align-items:center; justify-content:center;
-      transition:color .15s;
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--gray-500); font-size: 16px; padding: 0;
     }
-    .toggle-pw:hover { color:var(--blue); }
-
     .forgot {
       font-size: 12px; color: var(--blue);
       text-decoration: none; text-align: right;
       display: block; margin-top: 6px; font-weight: 600;
     }
     .forgot:hover { text-decoration: underline; }
-
     .btn-signin {
       width: 100%; padding: 13px;
       background: var(--blue); color: var(--white);
@@ -188,33 +160,30 @@
     }
     .btn-signin:hover { background: var(--blue-h); }
     .btn-signin:disabled { background: var(--gray-mid); cursor: not-allowed; }
-
     .divider {
       display: flex; align-items: center; gap: 12px;
       margin-bottom: 20px;
     }
     .divider-line { flex: 1; height: 1px; background: var(--gray-mid); }
     .divider-text { font-size: 12px; color: var(--gray-500); white-space: nowrap; }
-
     .register-link {
       font-size: 13px; color: var(--gray-500);
       text-align: center;
     }
-    .register-link a {
-      color: var(--blue); font-weight: 700;
-      text-decoration: none;
-    }
+    .register-link a { color: var(--blue); font-weight: 700; text-decoration: none; }
     .register-link a:hover { text-decoration: underline; }
-
-    /* ERROR */
     .error-msg {
       display: none; background: #fef2f2;
       border: 1px solid #fecaca; padding: 10px 14px;
       font-size: 13px; color: #dc2626;
       margin-bottom: 16px; border-radius: 2px;
     }
-
-    /* FOOTER */
+    .success-msg {
+      display: none; background: #f0fdf4;
+      border: 1px solid #bbf7d0; padding: 10px 14px;
+      font-size: 13px; color: #15803d;
+      margin-bottom: 16px; border-radius: 2px;
+    }
     footer {
       background: var(--gray-900);
       padding: 20px 64px;
@@ -225,7 +194,6 @@
     .f-links a { font-size: 12px; color: rgba(255,255,255,.35); text-decoration: none; transition: color .15s; }
     .f-links a:hover { color: var(--white); }
     .f-copy { font-size: 11px; color: rgba(255,255,255,.22); }
-
     @media(max-width:900px){
       .page { grid-template-columns: 1fr; }
       .info-side { display: none; }
@@ -236,7 +204,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-brand">
     <svg width="150" height="30" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -259,15 +226,11 @@
   <a href="register.html" class="nav-register">Don't have an account? <span>Get started</span></a>
 </nav>
 
-<!-- PAGE -->
 <div class="page">
-
-  <!-- INFO SIDE -->
   <div class="info-side">
     <div class="info-tag">Welcome Back</div>
     <h2>Your Home ID<br>is waiting for you</h2>
     <p>Sign in to manage your verified address, view your Home ID status, and keep your household protected.</p>
-
     <div class="id-card">
       <div class="id-card-label">Home ID — Example</div>
       <div class="id-card-num">SC · 4829 · WA</div>
@@ -277,21 +240,18 @@
         <div class="id-chip">Active</div>
       </div>
     </div>
-
     <div class="info-note">
       🔒 SaveCode uses encrypted sessions to protect your account. Never share your password or PIN with anyone.
     </div>
   </div>
 
-  <!-- FORM SIDE -->
   <div class="form-side">
     <div class="form-tag">Sign In</div>
     <h1>Welcome back</h1>
     <p class="sub">Enter your email and password to access your SaveCode account.</p>
 
-    <div class="error-msg" id="error-msg">
-      Incorrect email or password. Please try again.
-    </div>
+    <div class="error-msg" id="error-msg"></div>
+    <div class="success-msg" id="success-msg"></div>
 
     <div class="form-group">
       <label>Email Address</label>
@@ -302,14 +262,12 @@
       <label>Password</label>
       <div class="password-wrap">
         <input type="password" id="password" placeholder="Your password">
-        <button class="toggle-pw" onclick="togglePassword()" type="button" id="eye-btn">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        </button>
+        <button class="toggle-pw" onclick="togglePassword()" type="button">👁</button>
       </div>
-      <a href="#" class="forgot" onclick="forgotPassword(event)">Forgot your password?</a>
+      <a href="reset-password.html" class="forgot">Forgot your password?</a>
     </div>
 
-    <button class="btn-signin" onclick="submitSignin()">Sign In</button>
+    <button class="btn-signin" id="signin-btn" onclick="submitSignin()">Sign In</button>
 
     <div class="divider">
       <div class="divider-line"></div>
@@ -319,10 +277,8 @@
 
     <p class="register-link"><a href="register.html">Create a free account →</a></p>
   </div>
-
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="f-links">
     <a href="index.html">Home</a>
@@ -334,199 +290,98 @@
 </footer>
 
 <script>
-  
+  const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
 
-  // Restore saved email
-  window.onload = function() {
-    const saved = localStorage.getItem('sc_email');
-    if (saved) document.getElementById('email').value = saved;
-  };
-
-  async function forgotPassword(e) {
-    e.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    if (!email || !email.includes('@')) {
-      alert('Please enter your email address first, then click Forgot Password.');
-      return;
-    }
-    const { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://www.savecode.us/reset-password.html'
-    });
-    if (error) {
-      alert('Error: ' + error.message);
-    } else {
-      alert('✅ Password reset link sent to ' + email + '. Please check your inbox.');
-    }
+  // If already logged in, go to dashboard
+  const existingSession = localStorage.getItem('sc_session');
+  if (existingSession) {
+    try {
+      const s = JSON.parse(existingSession);
+      if (s.access_token && s.expires_at > Date.now() / 1000) {
+        window.location.href = 'dashboard.html';
+      }
+    } catch(e) { localStorage.removeItem('sc_session'); }
   }
 
   function togglePassword() {
-    const pw  = document.getElementById('password');
-    const btn = document.getElementById('eye-btn');
-    const isHidden = pw.type === 'password';
-    pw.type = isHidden ? 'text' : 'password';
-    btn.innerHTML = isHidden
-      ? `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
-      : `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('success-msg').style.display = 'none';
+  }
+
+  function showSuccess(msg) {
+    const el = document.getElementById('success-msg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('error-msg').style.display = 'none';
   }
 
   async function submitSignin() {
-    const email    = document.getElementById('email').value.trim();
+    const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
-    const errorMsg = document.getElementById('error-msg');
-    const btn      = document.querySelector('.btn-signin');
+    const btn = document.getElementById('signin-btn');
 
-    errorMsg.style.display = 'none';
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'none';
 
-    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
-    if (!password) { alert('Please enter your password.'); return; }
+    if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
+    if (!password) { showError('Please enter your password.'); return; }
 
     btn.textContent = 'Signing in...';
     btn.disabled = true;
 
-    // Save email for next time
-    localStorage.setItem('sc_email', email);
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      const data = await res.json();
 
-    if (error) {
-      errorMsg.textContent = 'Incorrect email or password. Please try again.';
-      errorMsg.style.display = 'block';
+      if (!res.ok) {
+        let msg = 'Incorrect email or password. Please try again.';
+        if (data.error_description) msg = data.error_description;
+        else if (data.msg) msg = data.msg;
+        showError(msg);
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+        return;
+      }
+
+      // Save session
+      localStorage.setItem('sc_session', JSON.stringify({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+        expires_at: data.expires_at || (Math.floor(Date.now()/1000) + 3600),
+        user: data.user
+      }));
+
+      showSuccess('Signed in successfully! Redirecting...');
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
+
+    } catch (err) {
+      showError('Network error. Please check your connection and try again.');
       btn.textContent = 'Sign In';
       btn.disabled = false;
-      return;
     }
-
-    // All good — go to dashboard
-    window.location.href = 'https://www.savecode.us/dashboard.html';
   }
+
+  // Allow Enter key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitSignin();
+  });
 </script>
 
-<script>
-  // Supabase REST API — no external library needed
-  const SUPA_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
-  const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
-
-  const sb = {
-    auth: {
-      async signUp({ email, password, options }) {
-        const res = await fetch(`${SUPA_URL}/auth/v1/signup`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
-          body: JSON.stringify({ email, password, data: options?.data || {} })
-        });
-        const data = await res.json();
-        if (!res.ok) return { data: null, error: data };
-        return { data: { user: data.user || data }, error: null };
-      },
-      async signInWithPassword({ email, password }) {
-        const res = await fetch(`${SUPA_URL}/auth/v1/token?grant_type=password`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (!res.ok) return { data: null, error: data };
-        localStorage.setItem('sb_token', data.access_token);
-        localStorage.setItem('sb_user', JSON.stringify(data.user));
-        return { data: { user: data.user, session: data }, error: null };
-      },
-      async getUser() {
-        const token = localStorage.getItem('sb_token');
-        if (!token) return { data: { user: null } };
-        const res = await fetch(`${SUPA_URL}/auth/v1/user`, {
-          headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token}` }
-        });
-        if (!res.ok) return { data: { user: null } };
-        const user = await res.json();
-        return { data: { user } };
-      },
-      async signOut() {
-        const token = localStorage.getItem('sb_token');
-        await fetch(`${SUPA_URL}/auth/v1/logout`, {
-          method: 'POST',
-          headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token}` }
-        });
-        localStorage.removeItem('sb_token');
-        localStorage.removeItem('sb_user');
-      },
-      async resetPasswordForEmail(email, { redirectTo }) {
-        const res = await fetch(`${SUPA_URL}/auth/v1/recover`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
-          body: JSON.stringify({ email, redirect_to: redirectTo })
-        });
-        return res.ok ? { error: null } : { error: await res.json() };
-      },
-      async updateUser({ password }) {
-        const token = localStorage.getItem('sb_token');
-        const res = await fetch(`${SUPA_URL}/auth/v1/user`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ password })
-        });
-        return res.ok ? { error: null } : { error: await res.json() };
-      },
-      async verifyOtp({ email, token, type }) {
-        const res = await fetch(`${SUPA_URL}/auth/v1/verify`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
-          body: JSON.stringify({ email, token, type })
-        });
-        const data = await res.json();
-        if (!res.ok) return { error: data };
-        if (data.access_token) {
-          localStorage.setItem('sb_token', data.access_token);
-          localStorage.setItem('sb_user', JSON.stringify(data.user));
-        }
-        return { data, error: null };
-      },
-      async resend({ type, email }) {
-        const res = await fetch(`${SUPA_URL}/auth/v1/resend`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPA_KEY },
-          body: JSON.stringify({ type, email })
-        });
-        return res.ok ? { error: null } : { error: await res.json() };
-      }
-    },
-    from(table) {
-      const token = localStorage.getItem('sb_token');
-      return {
-        async insert(rows) {
-          const res = await fetch(`${SUPA_URL}/rest/v1/${table}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': SUPA_KEY,
-              'Authorization': `Bearer ${token || SUPA_KEY}`,
-              'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify(rows[0] || rows)
-          });
-          return res.ok ? { error: null } : { error: await res.json() };
-        },
-        async select(cols) {
-          const res = await fetch(`${SUPA_URL}/rest/v1/${table}?select=${cols||'*'}`, {
-            headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token || SUPA_KEY}` }
-          });
-          const data = await res.json();
-          return { data, error: res.ok ? null : data };
-        },
-        eq(col, val) {
-          const token2 = localStorage.getItem('sb_token');
-          return {
-            async single() {
-              const res = await fetch(`${SUPA_URL}/rest/v1/${table}?${col}=eq.${val}&select=*`, {
-                headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${token2 || SUPA_KEY}`, 'Accept': 'application/vnd.pgrst.object+json' }
-              });
-              const data = await res.json();
-              return { data: res.ok ? data : null, error: res.ok ? null : data };
-            }
-          };
-        }
-      };
-    }
-  };
-</script>
 </body>
 </html>
