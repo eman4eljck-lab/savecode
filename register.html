@@ -400,27 +400,40 @@
         return;
       }
 
-      // 2. If we have a session (email confirmation disabled), also save to users table
-      if (data.access_token) {
+      // 2. Save user info to users table and session
+      const userId = data.user?.id;
+      const token = data.access_token;
+
+      // Always save pending registration info to localStorage
+      localStorage.setItem('sc_pending_user', JSON.stringify({
+        first_name: fname,
+        last_name: lname,
+        email: email
+      }));
+
+      if (token && userId) {
+        // Email confirmation is OFF — we have a token, save to users table now
         await fetch(`${SUPABASE_URL}/rest/v1/users`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${data.access_token}`,
+            'Authorization': `Bearer ${token}`,
             'Prefer': 'return=minimal'
           },
           body: JSON.stringify({
-            id: data.user.id,
+            id: userId,
             email: email,
-            name: `${fname} ${lname}`,
+            first_name: fname,
+            last_name: lname,
+            name: fname + ' ' + lname,
             status: 'new',
             role: 'user'
           })
         });
 
         localStorage.setItem('sc_session', JSON.stringify({
-          access_token: data.access_token,
+          access_token: token,
           refresh_token: data.refresh_token,
           expires_at: data.expires_at || (Math.floor(Date.now()/1000) + 3600),
           user: data.user
