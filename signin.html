@@ -298,8 +298,14 @@
   if (existingSession) {
     try {
       const s = JSON.parse(existingSession);
-      if (s.access_token && s.expires_at > Date.now() / 1000) {
+      const now = Math.floor(Date.now() / 1000);
+      const exp = s.expires_at || 0;
+      // Valid session: has token and not expired
+      if (s.access_token && (exp === 0 || exp > now)) {
         window.location.href = 'dashboard.html';
+      } else {
+        // Expired - clear it
+        localStorage.removeItem('sc_session');
       }
     } catch(e) { localStorage.removeItem('sc_session'); }
   }
@@ -360,10 +366,12 @@
       }
 
       // Save session
+      // expires_in is seconds from now, expires_at is unix timestamp
+      const expiresAt = data.expires_at || (Math.floor(Date.now()/1000) + (data.expires_in || 3600));
       localStorage.setItem('sc_session', JSON.stringify({
         access_token: data.access_token,
         refresh_token: data.refresh_token,
-        expires_at: data.expires_at || (Math.floor(Date.now()/1000) + 3600),
+        expires_at: expiresAt,
         user: data.user
       }));
 
