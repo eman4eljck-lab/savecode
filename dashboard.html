@@ -369,6 +369,10 @@
         <label>Street Address</label>
         <input type="text" id="addr-street" placeholder="123 Main Street">
       </div>
+      <div class="addr-group full">
+        <label>Unit / Apt No / Suite <span style="font-weight:400;text-transform:none;color:#9ca3af;">(optional)</span></label>
+        <input type="text" id="addr-unit" placeholder="Apt 4B, Unit 2, Suite 100, Floor 3">
+      </div>
     </div>
     <div class="addr-row">
       <div class="addr-group">
@@ -405,6 +409,85 @@
     <div class="addr-msg" id="addr-msg"></div>
   </div>
 
+  <!-- UPDATE ADDRESS SECTION (shown for verified users) -->
+  <div class="address-section" id="update-address-section" style="display:none;">
+    <h3>📦 Update Your Home Address</h3>
+    <p>Moving to a new address? Submit your new address below. SaveCode will automatically notify your banks, credit bureaus, and delivery partners — and mail a new verification PIN to confirm your new address.</p>
+
+    <!-- AANS Notification Preview -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:16px 20px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#64748b;margin-bottom:12px;">
+        🔔 Authorized Address Notification System (AANS) — Parties to be Notified
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">🏦 Banks &amp; Credit Unions</div>
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">📊 Credit Bureaus (Equifax, Experian, TransUnion)</div>
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">📦 Delivery Partners (USPS, UPS, FedEx, Amazon)</div>
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">🏛️ Government Agencies</div>
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">🏥 Insurance Providers</div>
+        <div style="background:white;border:1px solid #e2e8f0;padding:10px 14px;font-size:12px;font-weight:700;color:#374151;">🛒 Retail &amp; Subscriptions</div>
+      </div>
+      <div style="font-size:11px;color:#94a3b8;margin-top:10px;">⚡ Powered by SaveCode AANS — Patent-Pending Technology</div>
+    </div>
+
+    <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#92400e;">
+      ⚠️ Your current address will remain active until your new address is verified with the mailed PIN.
+    </div>
+
+    <div class="addr-row">
+      <div class="addr-group full">
+        <label>New Street Address</label>
+        <input type="text" id="new-addr-street" placeholder="123 Main Street">
+      </div>
+      <div class="addr-group full">
+        <label>Unit / Apt No / Suite <span style="font-weight:400;text-transform:none;color:#9ca3af;">(optional)</span></label>
+        <input type="text" id="new-addr-unit" placeholder="Apt 4B, Unit 2, Suite 100">
+      </div>
+    </div>
+    <div class="addr-row">
+      <div class="addr-group">
+        <label>City</label>
+        <input type="text" id="new-addr-city" placeholder="Seattle">
+      </div>
+      <div class="addr-group">
+        <label>State</label>
+        <select id="new-addr-state">
+          <option value="">Select state…</option>
+          <option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+          <option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+          <option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+          <option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+          <option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+          <option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+          <option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+          <option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+          <option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+          <option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+          <option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+          <option>VT</option><option>VA</option><option selected>WA</option><option>WV</option>
+          <option>WI</option><option>WY</option>
+        </select>
+      </div>
+    </div>
+    <div class="addr-row">
+      <div class="addr-group">
+        <label>ZIP Code</label>
+        <input type="text" id="new-addr-zip" placeholder="98201" maxlength="5">
+      </div>
+    </div>
+
+    <!-- Confirmation checkbox -->
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;margin-top:4px;">
+      <input type="checkbox" id="update-confirm" style="margin-top:3px;width:16px;height:16px;cursor:pointer;">
+      <label for="update-confirm" style="font-size:13px;color:#374151;font-weight:600;text-transform:none;letter-spacing:0;cursor:pointer;">
+        I confirm this is my new physical address and I authorize SaveCode to notify my financial institutions, credit bureaus, and delivery partners via the AANS system.
+      </label>
+    </div>
+
+    <button class="btn-submit-addr" id="update-addr-btn" onclick="submitNewAddress()">Submit New Address &amp; Notify Partners</button>
+    <div class="addr-msg" id="update-addr-msg"></div>
+  </div>
+
   <!-- ACTIONS -->
   <div class="section-title">Quick Actions</div>
   <div class="actions-grid">
@@ -428,6 +511,11 @@
       <div class="action-title">Explore Features</div>
       <div class="action-desc">See how SaveCode protects your address identity and prevents fraud.</div>
     </a>
+    <div class="action-card" id="action-update-address" style="display:none;" onclick="document.getElementById('update-address-section').scrollIntoView({behavior:'smooth'})">
+      <div class="action-icon">🏠</div>
+      <div class="action-title">Update My Address</div>
+      <div class="action-desc">Moving? Update your address and notify your banks, credit bureaus, and delivery partners automatically.</div>
+    </div>
   </div>
 
 </div>
@@ -590,6 +678,9 @@
       const homeId = userData.home_id || generateHomeId(userData);
       homeidDisplay.textContent = homeId;
       homeidChips.innerHTML = '<div class="homeid-chip green">✓ Verified</div><div class="homeid-chip">Active</div>';
+      // Show update address section for verified users
+      document.getElementById('update-address-section').style.display = 'block';
+      document.getElementById('action-update-address').style.display = 'block';
 
     } else if (status === 'blocked') {
       banner.className = 'status-banner blocked';
@@ -642,7 +733,10 @@
 
     btn.textContent = 'Submitting…'; btn.disabled = true;
 
-    const fullAddress = `${street}, ${city}, ${state} ${zip}`;
+    const unit = document.getElementById('addr-unit').value.trim();
+    const fullAddress = unit
+      ? `${street}, ${unit}, ${city}, ${state} ${zip}`
+      : `${street}, ${city}, ${state} ${zip}`;
     const userId = currentSession.user?.id;
 
     try {
@@ -752,6 +846,69 @@
       msg.textContent = 'Network error. Please try again.';
       msg.className = 'pin-msg error';
       btn.textContent = 'Verify PIN'; btn.disabled = false;
+    }
+  }
+
+  async function submitNewAddress() {
+    const street = document.getElementById('new-addr-street').value.trim();
+    const unit = document.getElementById('new-addr-unit').value.trim();
+    const city = document.getElementById('new-addr-city').value.trim();
+    const state = document.getElementById('new-addr-state').value;
+    const zip = document.getElementById('new-addr-zip').value.trim();
+    const confirmed = document.getElementById('update-confirm').checked;
+    const btn = document.getElementById('update-addr-btn');
+    const msg = document.getElementById('update-addr-msg');
+
+    msg.textContent = ''; msg.className = 'addr-msg';
+
+    if (!street) { msg.textContent = 'Please enter your new street address.'; msg.className = 'addr-msg error'; return; }
+    if (!city) { msg.textContent = 'Please enter your city.'; msg.className = 'addr-msg error'; return; }
+    if (!state) { msg.textContent = 'Please select your state.'; msg.className = 'addr-msg error'; return; }
+    if (!zip || zip.length !== 5 || isNaN(zip)) { msg.textContent = 'Please enter a valid 5-digit ZIP code.'; msg.className = 'addr-msg error'; return; }
+    if (!confirmed) { msg.textContent = 'Please confirm the address update by checking the box above.'; msg.className = 'addr-msg error'; return; }
+
+    btn.textContent = 'Submitting…'; btn.disabled = true;
+
+    const fullAddress = unit
+      ? `${street}, ${unit}, ${city}, ${state} ${zip}`
+      : `${street}, ${city}, ${state} ${zip}`;
+
+    const userId = currentSession.user?.id;
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${currentSession.access_token}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          address: fullAddress,
+          status: 'pending',
+          home_id: null,
+          verification_pin: null
+        })
+      });
+
+      if (res.ok || res.status === 204) {
+        msg.textContent = '✓ New address submitted! A verification PIN will be mailed within 5-7 business days. AANS notifications have been queued for your banks, credit bureaus, and delivery partners.';
+        msg.className = 'addr-msg success';
+        btn.textContent = 'Address Updated';
+        setTimeout(() => location.reload(), 3000);
+      } else {
+        msg.textContent = 'Failed to update address. Please try again.';
+        msg.className = 'addr-msg error';
+        btn.textContent = 'Submit New Address & Notify Partners';
+        btn.disabled = false;
+      }
+
+    } catch(err) {
+      msg.textContent = 'Network error. Please check your connection and try again.';
+      msg.className = 'addr-msg error';
+      btn.textContent = 'Submit New Address & Notify Partners';
+      btn.disabled = false;
     }
   }
 
