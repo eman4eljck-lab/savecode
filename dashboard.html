@@ -409,6 +409,63 @@
     <div class="addr-msg" id="addr-msg"></div>
   </div>
 
+  <!-- RESIDENTS SECTION (shown for verified users) -->
+  <div class="address-section" id="residents-section" style="display:none;">
+    <h3>👨‍👩‍👧‍👦 Household Residents</h3>
+    <p>Add the people who live with you at this address. Each resident will be registered under your Home ID as an authorized occupant. This helps protect your household from fraud and ensures all residents are recognized by SaveCode-connected institutions.</p>
+
+    <!-- Current Residents List -->
+    <div id="residents-list" style="margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Current Residents</div>
+      <div id="residents-items">
+        <div style="font-size:13px;color:#9ca3af;padding:12px 0;">Loading residents...</div>
+      </div>
+    </div>
+
+    <!-- Add Resident Form -->
+    <div style="border-top:1px solid #e0e0e0;padding-top:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6b7280;margin-bottom:14px;">Add a Resident</div>
+      <div class="addr-row">
+        <div class="addr-group">
+          <label>First Name</label>
+          <input type="text" id="res-fname" placeholder="First name">
+        </div>
+        <div class="addr-group">
+          <label>Last Name</label>
+          <input type="text" id="res-lname" placeholder="Last name">
+        </div>
+      </div>
+      <div class="addr-row">
+        <div class="addr-group">
+          <label>Relationship</label>
+          <select id="res-relation">
+            <option value="">Select relationship...</option>
+            <option>Spouse / Partner</option>
+            <option>Child</option>
+            <option>Parent</option>
+            <option>Sibling</option>
+            <option>Grandparent</option>
+            <option>Grandchild</option>
+            <option>Roommate</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="addr-group">
+          <label>Date of Birth <span style="font-weight:400;text-transform:none;color:#9ca3af;">(optional)</span></label>
+          <input type="date" id="res-dob">
+        </div>
+      </div>
+      <div class="addr-row">
+        <div class="addr-group full">
+          <label>Email <span style="font-weight:400;text-transform:none;color:#9ca3af;">(optional — for notifications)</span></label>
+          <input type="email" id="res-email" placeholder="resident@example.com">
+        </div>
+      </div>
+      <button class="btn-submit-addr" id="add-resident-btn" onclick="addResident()">+ Add Resident to Home ID</button>
+      <div class="addr-msg" id="resident-msg"></div>
+    </div>
+  </div>
+
   <!-- UPDATE ADDRESS SECTION (shown for verified users) -->
   <div class="address-section" id="update-address-section" style="display:none;">
     <h3>📦 Update Your Home Address</h3>
@@ -515,6 +572,11 @@
       <div class="action-icon">🏠</div>
       <div class="action-title">Update My Address</div>
       <div class="action-desc">Moving? Update your address and notify your banks, credit bureaus, and delivery partners automatically.</div>
+    </div>
+    <div class="action-card" id="action-residents" style="display:none;" onclick="document.getElementById('residents-section').scrollIntoView({behavior:'smooth'})">
+      <div class="action-icon">👨‍👩‍👧‍👦</div>
+      <div class="action-title">Manage Residents</div>
+      <div class="action-desc">Add or remove family members and housemates registered under your Home ID.</div>
     </div>
   </div>
 
@@ -678,9 +740,12 @@
       const homeId = userData.home_id || generateHomeId(userData);
       homeidDisplay.textContent = homeId;
       homeidChips.innerHTML = '<div class="homeid-chip green">✓ Verified</div><div class="homeid-chip">Active</div>';
-      // Show update address section for verified users
+      // Show update address + residents sections for verified users
       document.getElementById('update-address-section').style.display = 'block';
       document.getElementById('action-update-address').style.display = 'block';
+      document.getElementById('residents-section').style.display = 'block';
+      document.getElementById('action-residents').style.display = 'block';
+      loadResidents();
 
     } else if (status === 'blocked') {
       banner.className = 'status-banner blocked';
@@ -846,6 +911,130 @@
       msg.textContent = 'Network error. Please try again.';
       msg.className = 'pin-msg error';
       btn.textContent = 'Verify PIN'; btn.disabled = false;
+    }
+  }
+
+  // =====================
+  // RESIDENTS MANAGEMENT
+  // =====================
+
+  async function loadResidents() {
+    const userId = currentSession.user?.id;
+    const container = document.getElementById('residents-items');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/residents?home_owner_id=eq.${userId}&select=*&order=created_at.asc`, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${currentSession.access_token}`
+        }
+      });
+
+      if (!res.ok) { container.innerHTML = '<div style="font-size:13px;color:#9ca3af;padding:12px 0;">No residents added yet.</div>'; return; }
+
+      const rows = await res.json();
+
+      if (!rows || rows.length === 0) {
+        container.innerHTML = '<div style="font-size:13px;color:#9ca3af;padding:12px 0;">No additional residents added yet. Add your family members below.</div>';
+        return;
+      }
+
+      container.innerHTML = rows.map((r, i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f9fafb;border:1px solid #e5e7eb;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1d4ed8;font-size:14px;">
+              ${(r.first_name||'?')[0].toUpperCase()}
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:14px;color:#111827;">${r.first_name} ${r.last_name}</div>
+              <div style="font-size:12px;color:#6b7280;">${r.relationship || 'Resident'}${r.email ? ' · ' + r.email : ''}</div>
+            </div>
+          </div>
+          <button onclick="removeResident('${r.id}')" style="background:none;border:1px solid #fecaca;color:#dc2626;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Remove</button>
+        </div>
+      `).join('');
+
+    } catch(err) {
+      container.innerHTML = '<div style="font-size:13px;color:#9ca3af;padding:12px 0;">Could not load residents.</div>';
+    }
+  }
+
+  async function addResident() {
+    const fname = document.getElementById('res-fname').value.trim();
+    const lname = document.getElementById('res-lname').value.trim();
+    const relation = document.getElementById('res-relation').value;
+    const dob = document.getElementById('res-dob').value;
+    const email = document.getElementById('res-email').value.trim();
+    const btn = document.getElementById('add-resident-btn');
+    const msg = document.getElementById('resident-msg');
+
+    msg.textContent = ''; msg.className = 'addr-msg';
+
+    if (!fname || !lname) { msg.textContent = 'Please enter the resident's first and last name.'; msg.className = 'addr-msg error'; return; }
+    if (!relation) { msg.textContent = 'Please select the relationship.'; msg.className = 'addr-msg error'; return; }
+
+    btn.textContent = 'Adding…'; btn.disabled = true;
+
+    const userId = currentSession.user?.id;
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/residents`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${currentSession.access_token}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          home_owner_id: userId,
+          first_name: fname,
+          last_name: lname,
+          relationship: relation,
+          date_of_birth: dob || null,
+          email: email || null
+        })
+      });
+
+      if (res.ok || res.status === 201) {
+        msg.textContent = `✓ ${fname} ${lname} added to your Home ID.`;
+        msg.className = 'addr-msg success';
+        document.getElementById('res-fname').value = '';
+        document.getElementById('res-lname').value = '';
+        document.getElementById('res-relation').value = '';
+        document.getElementById('res-dob').value = '';
+        document.getElementById('res-email').value = '';
+        btn.textContent = '+ Add Resident to Home ID';
+        btn.disabled = false;
+        loadResidents();
+      } else {
+        msg.textContent = 'Failed to add resident. Please try again.';
+        msg.className = 'addr-msg error';
+        btn.textContent = '+ Add Resident to Home ID';
+        btn.disabled = false;
+      }
+
+    } catch(err) {
+      msg.textContent = 'Network error. Please try again.';
+      msg.className = 'addr-msg error';
+      btn.textContent = '+ Add Resident to Home ID';
+      btn.disabled = false;
+    }
+  }
+
+  async function removeResident(residentId) {
+    if (!confirm('Remove this resident from your Home ID?')) return;
+    const userId = currentSession.user?.id;
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/residents?id=eq.${residentId}&home_owner_id=eq.${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${currentSession.access_token}`
+        }
+      });
+      loadResidents();
+    } catch(err) {
+      alert('Could not remove resident. Please try again.');
     }
   }
 
