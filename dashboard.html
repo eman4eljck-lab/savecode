@@ -245,6 +245,36 @@
     .addr-msg.error { color:var(--red); }
     .addr-msg.success { color:var(--green); }
 
+    /* SECURITY ALERT */
+    .security-alert {
+      background:#fef2f2; border:2px solid #dc2626;
+      padding:20px 24px; margin-bottom:28px;
+      display:none;
+    }
+    .security-alert-header {
+      display:flex; align-items:center; gap:10px; margin-bottom:10px;
+    }
+    .security-alert-header h3 {
+      font-size:15px; font-weight:800; color:#dc2626; margin:0;
+    }
+    .security-alert p { font-size:13px; color:#7f1d1d; line-height:1.6; margin-bottom:12px; }
+    .security-alert-details {
+      background:#fff5f5; border:1px solid #fecaca;
+      padding:12px 16px; font-size:12px; color:#991b1b;
+      font-family: monospace; margin-bottom:16px;
+    }
+    .btn-dismiss-alert {
+      padding:8px 20px; background:#dc2626; color:white;
+      border:none; font-size:12px; font-weight:800;
+      font-family:inherit; cursor:pointer; margin-right:8px;
+    }
+    .btn-contact-support {
+      padding:8px 20px; background:none; color:#dc2626;
+      border:1px solid #dc2626; font-size:12px; font-weight:800;
+      font-family:inherit; cursor:pointer; text-decoration:none;
+      display:inline-block;
+    }
+
     footer {
       background:var(--gray-900);
       padding:18px 48px;
@@ -319,6 +349,21 @@
       <h3 id="status-title"></h3>
       <p id="status-desc"></p>
     </div>
+  </div>
+
+  <!-- SECURITY ALERT (shown when suspicious activity detected) -->
+  <div class="security-alert" id="security-alert">
+    <div class="security-alert-header">
+      <span style="font-size:24px;">🚨</span>
+      <h3>Suspicious Activity Detected — Your Address</h3>
+    </div>
+    <p>Someone attempted to register your verified address under a different account. This attempt was <strong>blocked automatically</strong> by SaveCode. Your Home ID remains protected.</p>
+    <div class="security-alert-details" id="alert-details">
+      Attempted registration blocked · Your address is secure
+    </div>
+    <p>If this was not you or a family member, we recommend contacting support immediately.</p>
+    <button class="btn-dismiss-alert" onclick="dismissAlert()">Dismiss Alert</button>
+    <a href="contact.html" class="btn-contact-support">Contact Support</a>
   </div>
 
   <!-- HOME ID CARD -->
@@ -545,6 +590,113 @@
     <div class="addr-msg" id="update-addr-msg"></div>
   </div>
 
+  <!-- SHARE HOME ID SECTION (shown for verified users) -->
+  <div class="address-section" id="share-section" style="display:none;">
+    <h3>🔗 Share Your Home ID</h3>
+    <p>Choose which institutions and partners you authorize to verify your Home ID. You are in full control — only the parties you select can access your address verification.</p>
+
+    <div style="background:#fffbeb;border:1px solid #fde68a;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#92400e;">
+      🔒 SaveCode never shares your personal address — only a binary <strong>verified / not verified</strong> response to authorized parties.
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;" id="share-partners-grid">
+
+      <!-- Banks -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">🏦</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Banks & Credit Cards</div>
+            <div style="font-size:11px;color:#6b7280;">Address verification for accounts & loans</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-banks" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-banks')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-banks"></span>
+        </label>
+      </div>
+
+      <!-- Credit Bureaus -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">📊</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Credit Bureaus</div>
+            <div style="font-size:11px;color:#6b7280;">Equifax, Experian, TransUnion</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-credit" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-credit')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-credit"></span>
+        </label>
+      </div>
+
+      <!-- Delivery -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">📦</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Delivery Partners</div>
+            <div style="font-size:11px;color:#6b7280;">USPS, UPS, FedEx, Amazon</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-delivery" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-delivery')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-delivery"></span>
+        </label>
+      </div>
+
+      <!-- Government -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">🏛️</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Government & IRS</div>
+            <div style="font-size:11px;color:#6b7280;">Tax documents & federal agencies</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-gov" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-gov')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-gov"></span>
+        </label>
+      </div>
+
+      <!-- Insurance -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">🏥</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Insurance Providers</div>
+            <div style="font-size:11px;color:#6b7280;">Health, home & auto insurance</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-insurance" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-insurance')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-insurance"></span>
+        </label>
+      </div>
+
+      <!-- Retail -->
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:22px;">🛒</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:#111827;">Retail & Subscriptions</div>
+            <div style="font-size:11px;color:#6b7280;">Online stores & subscription services</div>
+          </div>
+        </div>
+        <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;">
+          <input type="checkbox" id="share-retail" onchange="updateSharing()" style="opacity:0;width:0;height:0;">
+          <span onclick="toggleShare('share-retail')" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#e0e0e0;border-radius:24px;transition:.3s;" id="toggle-retail"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <button class="btn-submit-addr" id="save-sharing-btn" onclick="saveSharing()">Save Sharing Preferences</button>
+    <div class="addr-msg" id="sharing-msg"></div>
+  </div>
+
   <!-- ACTIONS -->
   <div class="section-title">Quick Actions</div>
   <div class="actions-grid">
@@ -577,6 +729,11 @@
       <div class="action-icon">👨‍👩‍👧‍👦</div>
       <div class="action-title">Manage Residents</div>
       <div class="action-desc">Add or remove family members and housemates registered under your Home ID.</div>
+    </div>
+    <div class="action-card" id="action-share" style="display:none;" onclick="document.getElementById('share-section').scrollIntoView({behavior:'smooth'})">
+      <div class="action-icon">🔗</div>
+      <div class="action-title">Share My Home ID</div>
+      <div class="action-desc">Control which institutions can verify your Home ID — banks, credit bureaus, delivery, and more.</div>
     </div>
   </div>
 
@@ -746,6 +903,15 @@
       document.getElementById('residents-section').style.display = 'block';
       document.getElementById('action-residents').style.display = 'block';
       loadResidents();
+    } else if (status === 'pending') {
+      // Also show residents for pending users
+      document.getElementById('residents-section').style.display = 'block';
+      document.getElementById('action-residents').style.display = 'block';
+      document.getElementById('share-section').style.display = 'block';
+      document.getElementById('action-share').style.display = 'block';
+      loadResidents();
+      loadSharingPrefs();
+      checkForAlerts();
 
     } else if (status === 'blocked') {
       banner.className = 'status-banner blocked';
@@ -758,6 +924,12 @@
       homeidDisplay.textContent = 'Access Blocked';
       homeidDisplay.classList.add('pending-text');
       homeidChips.innerHTML = '<div class="homeid-chip" style="background:rgba(220,38,38,.3);color:#fca5a5;">🚫 Blocked</div>';
+    }
+
+    // Show residents section for ALL users (new, pending, verified)
+    if (status !== 'blocked') {
+      document.getElementById('residents-section').style.display = 'block';
+      document.getElementById('action-residents').style.display = 'block';
     }
 
     // Show dashboard
@@ -796,7 +968,7 @@
     if (!state) { msg.textContent = 'Please select your state.'; msg.className = 'addr-msg error'; return; }
     if (!zip || zip.length !== 5 || isNaN(zip)) { msg.textContent = 'Please enter a valid 5-digit ZIP code.'; msg.className = 'addr-msg error'; return; }
 
-    btn.textContent = 'Submitting…'; btn.disabled = true;
+    btn.textContent = 'Checking address…'; btn.disabled = true;
 
     const unit = document.getElementById('addr-unit').value.trim();
     const fullAddress = unit
@@ -805,7 +977,51 @@
     const userId = currentSession.user?.id;
 
     try {
-      // Update users table with address and status = pending
+      // ✅ STEP 1: Check if this address already has a verified Home ID
+      const checkRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/users?address=eq.${encodeURIComponent(fullAddress)}&status=eq.verified&select=id,email,name`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${currentSession.access_token}`
+          }
+        }
+      );
+
+      if (checkRes.ok) {
+        const existing = await checkRes.json();
+        // Address already has a VERIFIED owner who is NOT this user
+        if (existing && existing.length > 0 && existing[0].id !== userId) {
+          // 🚨 BLOCK — Log suspicious activity
+          await fetch(`${SUPABASE_URL}/rest/v1/address_alerts`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${currentSession.access_token}`,
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              address: fullAddress,
+              owner_id: existing[0].id,
+              attempted_by: userId,
+              attempted_email: currentSession.user?.email,
+              alert_type: 'duplicate_registration_attempt',
+              status: 'blocked'
+            })
+          });
+
+          msg.textContent = '🚫 This address is already registered with a verified Home ID. If you live at this address, please contact support.';
+          msg.className = 'addr-msg error';
+          btn.textContent = 'Submit Address & Request PIN';
+          btn.disabled = false;
+          return;
+        }
+      }
+
+      btn.textContent = 'Submitting…';
+
+      // ✅ STEP 2: Safe to proceed — submit address
       const res = await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
@@ -821,7 +1037,6 @@
       });
 
       if (!res.ok) {
-        // If PATCH fails (no record), try INSERT
         await fetch(`${SUPABASE_URL}/rest/v1/users`, {
           method: 'POST',
           headers: {
@@ -1099,6 +1314,152 @@
       btn.textContent = 'Submit New Address & Notify Partners';
       btn.disabled = false;
     }
+  }
+
+  // =====================
+  // SHARING PREFERENCES
+  // =====================
+
+  const SHARE_KEYS = ['banks','credit','delivery','gov','insurance','retail'];
+
+  function toggleShare(id) {
+    const cb = document.getElementById(id);
+    cb.checked = !cb.checked;
+    const toggleId = id.replace('share-', 'toggle-');
+    const toggle = document.getElementById(toggleId);
+    toggle.style.background = cb.checked ? '#059669' : '#e0e0e0';
+    if (cb.checked) {
+      toggle.innerHTML = '<span style="position:absolute;content:\'\';height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:translateX(20px);display:block;"></span>';
+    } else {
+      toggle.innerHTML = '<span style="position:absolute;content:\'\';height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:translateX(0);display:block;"></span>';
+    }
+  }
+
+  async function loadSharingPrefs() {
+    const userId = currentSession.user?.id;
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/sharing_preferences?user_id=eq.${userId}&select=*`, {
+        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${currentSession.access_token}` }
+      });
+      if (!res.ok) { initToggles({}); return; }
+      const rows = await res.json();
+      const prefs = rows && rows[0] ? rows[0] : {};
+      initToggles(prefs);
+    } catch(e) { initToggles({}); }
+  }
+
+  function initToggles(prefs) {
+    SHARE_KEYS.forEach(key => {
+      const cb = document.getElementById('share-' + key);
+      const toggle = document.getElementById('toggle-' + key);
+      if (!cb || !toggle) return;
+      const isOn = prefs['share_' + key] === true;
+      cb.checked = isOn;
+      toggle.style.background = isOn ? '#059669' : '#e0e0e0';
+      toggle.innerHTML = `<span style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;transform:translateX(${isOn ? 20 : 0}px);display:block;"></span>`;
+    });
+  }
+
+  async function saveSharing() {
+    const userId = currentSession.user?.id;
+    const btn = document.getElementById('save-sharing-btn');
+    const msg = document.getElementById('sharing-msg');
+    msg.textContent = ''; msg.className = 'addr-msg';
+    btn.textContent = 'Saving…'; btn.disabled = true;
+
+    const prefs = { user_id: userId };
+    SHARE_KEYS.forEach(key => {
+      prefs['share_' + key] = document.getElementById('share-' + key).checked;
+    });
+
+    try {
+      // Try PATCH first
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/sharing_preferences?user_id=eq.${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${currentSession.access_token}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(prefs)
+      });
+
+      if (!res.ok || res.status === 404) {
+        // Insert if not exists
+        await fetch(`${SUPABASE_URL}/rest/v1/sharing_preferences`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${currentSession.access_token}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(prefs)
+        });
+      }
+
+      msg.textContent = '✓ Sharing preferences saved successfully.';
+      msg.className = 'addr-msg success';
+    } catch(e) {
+      msg.textContent = 'Network error. Please try again.';
+      msg.className = 'addr-msg error';
+    }
+    btn.textContent = 'Save Sharing Preferences';
+    btn.disabled = false;
+  }
+
+  function updateSharing() {} // handled by toggleShare
+
+  // =====================
+  // SECURITY ALERT SYSTEM
+  // =====================
+
+  async function checkForAlerts() {
+    const userId = currentSession.user?.id;
+    if (!userId || userData.status !== 'verified') return;
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/address_alerts?owner_id=eq.${userId}&dismissed=eq.false&select=*&order=created_at.desc&limit=1`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${currentSession.access_token}`
+          }
+        }
+      );
+      if (!res.ok) return;
+      const alerts = await res.json();
+      if (alerts && alerts.length > 0) {
+        const alert = alerts[0];
+        const alertEl = document.getElementById('security-alert');
+        const detailsEl = document.getElementById('alert-details');
+        const date = new Date(alert.created_at).toLocaleString('en-US');
+        detailsEl.textContent = `Blocked attempt · ${date} · From: ${alert.attempted_email || 'Unknown'} · Address: ${alert.address}`;
+        alertEl.style.display = 'block';
+        alertEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    } catch(e) {}
+  }
+
+  async function dismissAlert() {
+    const userId = currentSession.user?.id;
+    try {
+      await fetch(
+        `${SUPABASE_URL}/rest/v1/address_alerts?owner_id=eq.${userId}&dismissed=eq.false`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${currentSession.access_token}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({ dismissed: true })
+        }
+      );
+    } catch(e) {}
+    document.getElementById('security-alert').style.display = 'none';
   }
 
   function signOut() {
