@@ -264,7 +264,7 @@
         <input type="password" id="password" placeholder="Your password">
         <button class="toggle-pw" onclick="togglePassword()" type="button">👁</button>
       </div>
-      <a href="reset-password.html" class="forgot">Forgot your password?</a>
+      <a href="#" class="forgot" onclick="sendResetEmail(event)">Forgot your password?</a>
     </div>
 
     <button class="btn-signin" id="signin-btn" onclick="submitSignin()">Sign In</button>
@@ -290,6 +290,22 @@
 </footer>
 
 <script>
+  // Check if this is a password recovery redirect from Supabase
+  (function() {
+    const hash = window.location.hash.substring(1);
+    const query = window.location.search.substring(1);
+    const hashParams = new URLSearchParams(hash);
+    const queryParams = new URLSearchParams(query);
+    const type = hashParams.get('type') || queryParams.get('type');
+    const accessToken = hashParams.get('access_token') || queryParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token') || queryParams.get('refresh_token');
+    if (type === 'recovery' && (accessToken || refreshToken)) {
+      // Redirect to reset-password page with all params
+      const params = hash || query;
+      window.location.href = 'reset-password.html#' + params;
+    }
+  })();
+
   const SUPABASE_URL = 'https://kpnqaexdqnljzhxnplor.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbnFhZXhkcW5sanpoeG5wbG9yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MDE4ODQsImV4cCI6MjA5MjI3Nzg4NH0.XOM-ssOnnOimKATQLnrTLYEqYpOK_NwZdrWhVtVyq8k';
 
@@ -383,6 +399,21 @@
       btn.textContent = 'Sign In';
       btn.disabled = false;
     }
+  }
+
+  async function sendResetEmail(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) {
+      showError('Please enter your email address first, then click Forgot Password.');
+      return;
+    }
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email, redirect_to: 'https://savecode.us/reset-password.html' })
+    });
+    showSuccess('Password reset email sent! Check your inbox and click the link.');
   }
 
   // Allow Enter key
