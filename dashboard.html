@@ -756,6 +756,47 @@
   let currentSession = null;
   let userData = null;
 
+  // =====================
+  // ENCRYPTION FUNCTIONS
+  // Uses Web Crypto API (built into all modern browsers)
+  // =====================
+  const CRYPTO_KEY_RAW = 'savecode-2026-mangel-tech-secure';
+
+  async function getCryptoKey() {
+    const keyData = new TextEncoder().encode(CRYPTO_KEY_RAW.padEnd(32, '0').slice(0, 32));
+    return crypto.subtle.importKey('raw', keyData, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+  }
+
+  async function encryptData(text) {
+    if (!text) return text;
+    try {
+      const key = await getCryptoKey();
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const encoded = new TextEncoder().encode(text);
+      const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
+      const combined = new Uint8Array(iv.length + encrypted.byteLength);
+      combined.set(iv);
+      combined.set(new Uint8Array(encrypted), iv.length);
+      return btoa(String.fromCharCode(...combined));
+    } catch(e) {
+      return text; // fallback to plain if crypto fails
+    }
+  }
+
+  async function decryptData(encryptedText) {
+    if (!encryptedText || encryptedText === '***ENCRYPTED***') return '(encrypted)';
+    try {
+      const combined = Uint8Array.from(atob(encryptedText), c => c.charCodeAt(0));
+      const iv = combined.slice(0, 12);
+      const data = combined.slice(12);
+      const key = await getCryptoKey();
+      const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+      return new TextDecoder().decode(decrypted);
+    } catch(e) {
+      return '(encrypted)';
+    }
+  }
+
   async function init() {
     // Check session
     const stored = localStorage.getItem('sc_session');
@@ -871,6 +912,9 @@
       homeidDisplay.classList.add('pending-text');
       homeidChips.innerHTML = '<div class="homeid-chip yellow">⏳ Pending Registration</div>';
       document.getElementById('address-section').style.display = 'block';
+      document.getElementById('residents-section').style.display = 'block';
+      document.getElementById('action-residents').style.display = 'block';
+      loadResidents();
 
     } else if (status === 'pending') {
       banner.className = 'status-banner pending';
@@ -885,6 +929,9 @@
       homeidChips.innerHTML = '<div class="homeid-chip yellow">📬 PIN Mailed</div>';
       document.getElementById('pin-section').style.display = 'block';
       document.getElementById('action-pin').style.display = 'block';
+      document.getElementById('residents-section').style.display = 'block';
+      document.getElementById('action-residents').style.display = 'block';
+      loadResidents();
 
     } else if (status === 'verified') {
       banner.className = 'status-banner verified';
@@ -897,14 +944,8 @@
       const homeId = userData.home_id || generateHomeId(userData);
       homeidDisplay.textContent = homeId;
       homeidChips.innerHTML = '<div class="homeid-chip green">✓ Verified</div><div class="homeid-chip">Active</div>';
-      // Show update address + residents sections for verified users
       document.getElementById('update-address-section').style.display = 'block';
       document.getElementById('action-update-address').style.display = 'block';
-      document.getElementById('residents-section').style.display = 'block';
-      document.getElementById('action-residents').style.display = 'block';
-      loadResidents();
-    } else if (status === 'pending') {
-      // Also show residents for pending users
       document.getElementById('residents-section').style.display = 'block';
       document.getElementById('action-residents').style.display = 'block';
       document.getElementById('share-section').style.display = 'block';
@@ -924,12 +965,6 @@
       homeidDisplay.textContent = 'Access Blocked';
       homeidDisplay.classList.add('pending-text');
       homeidChips.innerHTML = '<div class="homeid-chip" style="background:rgba(220,38,38,.3);color:#fca5a5;">🚫 Blocked</div>';
-    }
-
-    // Show residents section for ALL users (new, pending, verified)
-    if (status !== 'blocked') {
-      document.getElementById('residents-section').style.display = 'block';
-      document.getElementById('action-residents').style.display = 'block';
     }
 
     // Show dashboard
@@ -1021,7 +1056,9 @@
 
       btn.textContent = 'Submitting…';
 
-      // ✅ STEP 2: Safe to proceed — submit address
+      // ✅ STEP 2: Encrypt address before saving
+      const encryptedAddress = await encryptData(fullAddress);
+
       const res = await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
@@ -1031,7 +1068,7 @@
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          address: fullAddress,
+          address: encryptedAddress,
           status: 'pending'
         })
       });
@@ -1289,7 +1326,7 @@
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({
-          address: fullAddress,
+          address: await encryptData(fullAddress),
           status: 'pending',
           home_id: null,
           verification_pin: null
