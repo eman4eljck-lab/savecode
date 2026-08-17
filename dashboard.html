@@ -1136,7 +1136,22 @@
       const rows = await res.json();
       const row = rows && rows[0];
 
-      if (row && row.verification_pin && String(row.verification_pin) === pin) {
+      // Decrypt stored PIN and compare with user input
+      const storedPin = row?.verification_pin;
+      let pinMatch = false;
+
+      if (storedPin) {
+        try {
+          // Try to decrypt the stored PIN
+          const decryptedPin = await decryptData(storedPin);
+          pinMatch = decryptedPin === pin || String(storedPin) === pin;
+        } catch(e) {
+          // Fallback: plain text comparison
+          pinMatch = String(storedPin) === pin;
+        }
+      }
+
+      if (row && pinMatch) {
         // Correct PIN — update to verified
         await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${userId}`, {
           method: 'PATCH',
