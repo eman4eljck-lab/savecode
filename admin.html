@@ -538,9 +538,26 @@ function closePinModal() {
   currentPINUserId = null;
 }
 
+// Encrypt PIN using same method as dashboard
+async function encryptPIN(pin) {
+  const keyRaw = 'savecode-2026-mangel-tech-secure';
+  const keyData = new TextEncoder().encode(keyRaw.padEnd(32,'0').slice(0,32));
+  const key = await crypto.subtle.importKey('raw', keyData, {name:'AES-GCM'}, false, ['encrypt']);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encoded = new TextEncoder().encode(pin);
+  const encrypted = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, encoded);
+  const combined = new Uint8Array(iv.length + encrypted.byteLength);
+  combined.set(iv);
+  combined.set(new Uint8Array(encrypted), iv.length);
+  return btoa(String.fromCharCode(...combined));
+}
+
 async function confirmPIN() {
   if (!currentPIN || !currentPINUserId) return;
   try {
+    // Encrypt PIN before saving — never stored in plain text
+    const encryptedPIN = await encryptPIN(currentPIN);
+
     await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${currentPINUserId}`, {
       method: 'PATCH',
       headers: {
@@ -549,9 +566,9 @@ async function confirmPIN() {
         'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}`,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ verification_pin: currentPIN })
+      body: JSON.stringify({ verification_pin: encryptedPIN })
     });
-    showToast('📬', 'PIN Saved!', `PIN ${currentPIN} saved. Please mail it to the address.`);
+    showToast('📬', 'PIN Saved & Encrypted!', `PIN ${currentPIN} encrypted and saved. Mail it to the address.`);
     closePinModal();
     loadPending();
     loadDashboard();
