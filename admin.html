@@ -435,7 +435,7 @@ async function loadDashboard() {
               <span style="color:${statusColors[s]};font-weight:600;">${s.toUpperCase()}</span>
             </div>
           </div>
-          ${s === 'pending' ? `<button class="action-btn success" data-uid="${u.id}" data-email="${u.email}" data-addr="${encodeURIComponent(u.address||'No address')}" onclick="showPinModalEncoded(this)">📬 Send PIN</button>` : ''}
+          `<button class="action-btn success" data-uid="${u.id}" data-email="${u.email}" data-addr="${encodeURIComponent(u.address||'No address yet')}" onclick="showPinModalEncoded(this)">📬 PIN</button>`
         </div>`;
     }).join('');
 
@@ -555,9 +555,7 @@ async function encryptPIN(pin) {
 async function confirmPIN() {
   if (!currentPIN || !currentPINUserId) return;
   try {
-    // Encrypt PIN before saving — never stored in plain text
-    const encryptedPIN = await encryptPIN(currentPIN);
-
+    // Save PIN as plain text
     await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${currentPINUserId}`, {
       method: 'PATCH',
       headers: {
@@ -566,9 +564,9 @@ async function confirmPIN() {
         'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}`,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ verification_pin: encryptedPIN })
+      body: JSON.stringify({ verification_pin: currentPIN, status: 'pending' })
     });
-    showToast('📬', 'PIN Saved & Encrypted!', `PIN ${currentPIN} encrypted and saved. Mail it to the address.`);
+    showToast('📬', 'PIN Saved!', `PIN ${currentPIN} saved. Send it to the user.`);
     closePinModal();
     loadPending();
     loadDashboard();
