@@ -343,6 +343,7 @@ const ADMIN_EMAIL = 'eman4eljck@gmail.com';
 let session = null;
 let currentPIN = null;
 let currentPINUserId = null;
+let currentPINEmail = null;
 
 // ── LOGIN ──
 async function doLogin() {
@@ -435,7 +436,7 @@ async function loadDashboard() {
               <span style="color:${statusColors[s]};font-weight:600;">${s.toUpperCase()}</span>
             </div>
           </div>
-          `<button class="action-btn success" data-uid="${u.id}" data-email="${u.email}" data-addr="${encodeURIComponent(u.address||'No address yet')}" onclick="showPinModalEncoded(this)">📬 PIN</button>`
+          <button class="action-btn success" data-uid="${u.id}" data-email="${u.email}" data-addr="${encodeURIComponent(u.address||'No address yet')}" onclick="showPinModalEncoded(this)">📬 PIN</button>
         </div>`;
     }).join('');
 
@@ -500,7 +501,7 @@ async function loadPending() {
     }
     tbody.innerHTML = users.map(u => {
       const name = u.name || ((u.first_name||'') + ' ' + (u.last_name||'')).trim() || '—';
-      const hasPIN = u.verification_pin && u.verification_pin !== '000000';
+      const hasPIN = !!u.verification_pin;
       return `
         <tr>
           <td>${u.email||'—'}</td>
@@ -525,6 +526,7 @@ function showPinModalEncoded(btn) {
 function showPinModal(userId, email, address) {
   currentPIN = Math.floor(100000 + Math.random() * 900000).toString();
   currentPINUserId = userId;
+  currentPINEmail = email;
   document.getElementById('modal-pin').textContent = currentPIN;
   document.getElementById('modal-address').innerHTML = `
     <strong>📧 Email:</strong> ${email}<br>
@@ -536,9 +538,10 @@ function closePinModal() {
   document.getElementById('pin-modal').classList.remove('show');
   currentPIN = null;
   currentPINUserId = null;
+  currentPINEmail = null;
 }
 
-// Encrypt PIN using same method as dashboard
+// Encrypt PIN using same method/key as dashboard.html (AES-GCM 256-bit)
 async function encryptPIN(pin) {
   const keyRaw = 'savecode-2026-mangel-tech-secure';
   const keyData = new TextEncoder().encode(keyRaw.padEnd(32,'0').slice(0,32));
@@ -552,10 +555,29 @@ async function encryptPIN(pin) {
   return btoa(String.fromCharCode(...combined));
 }
 
+// TEMPORARY (Eman knows the users personally): email the plain PIN via our
+// secure /api/send-pin Vercel serverless function (key stays server-side).
+// This is a stand-in for physical mail verification and should be replaced by
+// real mail delivery before public launch, per SaveCode's address-ownership model.
+async function sendPinEmail(toEmail, pin) {
+  try {
+    const res = await fetch('/api/send-pin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to: toEmail, pin: pin })
+    });
+    return res.ok;
+  } catch(e) {
+    console.error('send-pin fetch error:', e);
+    return false;
+  }
+}
+
 async function confirmPIN() {
   if (!currentPIN || !currentPINUserId) return;
   try {
-    // Save PIN as plain text
+    // Encrypt PIN before saving to Supabase (same AES-GCM method as dashboard.html)
+    const encryptedPIN = await encryptPIN(currentPIN);
     await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${currentPINUserId}`, {
       method: 'PATCH',
       headers: {
@@ -564,9 +586,17 @@ async function confirmPIN() {
         'Authorization': `Bearer ${session?.access_token || SUPABASE_KEY}`,
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ verification_pin: currentPIN, status: 'pending' })
+      body: JSON.stringify({ verification_pin: encryptedPIN, status: 'pending' })
     });
-    showToast('📬', 'PIN Saved!', `PIN ${currentPIN} saved. Send it to the user.`);
+
+    // TEMP: email the PIN instead of physical mail (Eman knows these users personally)
+    const emailSent = currentPINEmail ? await sendPinEmail(currentPINEmail, currentPIN) : false;
+
+    if (emailSent) {
+      showToast('📬', 'PIN Sent!', `PIN ${currentPIN} saved (encrypted) and emailed to ${currentPINEmail}.`);
+    } else {
+      showToast('📬', 'PIN Saved!', `PIN ${currentPIN} saved (encrypted). Email failed — send it manually.`);
+    }
     closePinModal();
     loadPending();
     loadDashboard();
