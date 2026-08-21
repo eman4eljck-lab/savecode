@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /dashboard
+Disallow: /dashboard.html
+Disallow: /reset-password.html
+Disallow: /api/
+
+Sitemap: https://www.savecode.us/sitemap.xml
