@@ -380,6 +380,37 @@
     btn.textContent = 'Creating account...';
     btn.disabled = true;
 
+    // Block registration if this email is already registered as a resident
+    // under another homeowner's account. Runs BEFORE Supabase Auth signup so
+    // we never create an auth account only to reject it afterward.
+    // Fails open (allows registration) on any technical failure of this
+    // check itself — a network/RLS hiccup here must never block every new
+    // registration on the site — but logs a console warning either way.
+    try {
+      const residentCheckRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/residents_email_exists`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ check_email: email })
+      });
+      if (residentCheckRes.ok) {
+        const alreadyResident = await residentCheckRes.json();
+        if (alreadyResident === true) {
+          showError('This email is already registered as a resident under another homeowner\'s account. Please contact the homeowner or support if you believe this is an error.');
+          btn.textContent = 'Create Account';
+          btn.disabled = false;
+          return;
+        }
+      } else {
+        console.warn('Resident duplicate-check request failed (status ' + residentCheckRes.status + ') — proceeding with registration.');
+      }
+    } catch (checkErr) {
+      console.warn('Resident duplicate-check failed — proceeding with registration.', checkErr);
+    }
+
     try {
       // 1. Sign up with Supabase Auth
       const res = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
