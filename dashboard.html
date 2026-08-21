@@ -797,6 +797,32 @@
     }
   }
 
+  // =====================
+  // DETERMINISTIC ADDRESS HASH
+  // Used for duplicate-address detection. Unlike encryptData() (random IV,
+  // non-deterministic), this always produces the same hash for the same
+  // normalized address, so it can be matched with a plain equality query.
+  // The hash cannot be reversed to recover the actual address.
+  // =====================
+  function normalizeAddressText(address) {
+    return address
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, ' ')      // collapse whitespace
+      .replace(/\s*,\s*/g, ',')  // normalize comma spacing
+      .replace(/,+/g, ',')       // collapse repeated commas
+      .replace(/,$/, '');        // drop trailing comma
+  }
+
+  async function normalizeAndHashAddress(address) {
+    const normalized = normalizeAddressText(address);
+    const encoded = new TextEncoder().encode(normalized);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', encoded);
+    return Array.from(new Uint8Array(hashBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+
   async function init() {
     // Check session
     const stored = localStorage.getItem('sc_session');
@@ -1047,8 +1073,11 @@
       btn.textContent = 'Checking address…';
 
       // ✅ STEP 1: Check if this address already has a verified or pending Home ID
+      // (compared by deterministic hash, since `address` itself is encrypted
+      // with a random IV and can never equal a plaintext value)
+      const addressHash = await normalizeAndHashAddress(fullAddress);
       const checkRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/users?address=eq.${encodeURIComponent(fullAddress)}&status=in.(verified,pending)&select=id,email,name`,
+        `${SUPABASE_URL}/rest/v1/users?address_hash=eq.${addressHash}&status=in.(verified,pending)&select=id,email,name`,
         {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
@@ -1103,6 +1132,7 @@
         },
         body: JSON.stringify({
           address: encryptedAddress,
+          address_hash: addressHash,
           status: 'pending'
         })
       });
@@ -1123,6 +1153,7 @@
             first_name: (userData.name || '').split(' ')[0] || '',
             last_name: (userData.name || '').split(' ').slice(1).join(' ') || '',
             address: fullAddress,
+            address_hash: addressHash,
             status: 'pending',
             role: 'user'
           })
@@ -1366,6 +1397,49 @@
     const userId = currentSession.user?.id;
 
     try {
+      // Check if this address already has a verified or pending Home ID
+      // (compared by deterministic hash — see normalizeAndHashAddress)
+      const addressHash = await normalizeAndHashAddress(fullAddress);
+      const checkRes = await fetch(
+        `${SUPABASE_URL}/rest/v1/users?address_hash=eq.${addressHash}&status=in.(verified,pending)&select=id,email,name`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${currentSession.access_token}`
+          }
+        }
+      );
+
+      if (checkRes.ok) {
+        const existing = await checkRes.json();
+        if (existing && existing.length > 0 && existing[0].id !== userId) {
+          // 🚨 BLOCK — Log suspicious activity
+          await fetch(`${SUPABASE_URL}/rest/v1/address_alerts`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${currentSession.access_token}`,
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              address: fullAddress,
+              owner_id: existing[0].id,
+              attempted_by: userId,
+              attempted_email: currentSession.user?.email,
+              alert_type: 'duplicate_registration_attempt',
+              status: 'blocked'
+            })
+          });
+
+          msg.textContent = '🚫 This address is already registered or pending verification for another Home ID. If you live at this address, please contact support.';
+          msg.className = 'addr-msg error';
+          btn.textContent = 'Submit New Address & Notify Partners';
+          btn.disabled = false;
+          return;
+        }
+      }
+
       const res = await fetch(`${SUPABASE_URL}/rest/v1/users?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
@@ -1376,6 +1450,7 @@
         },
         body: JSON.stringify({
           address: await encryptData(fullAddress),
+          address_hash: addressHash,
           status: 'pending',
           home_id: null,
           verification_pin: null
