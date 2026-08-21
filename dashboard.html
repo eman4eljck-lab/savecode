@@ -1003,7 +1003,7 @@
     if (!state) { msg.textContent = 'Please select your state.'; msg.className = 'addr-msg error'; return; }
     if (!zip || zip.length !== 5 || isNaN(zip)) { msg.textContent = 'Please enter a valid 5-digit ZIP code.'; msg.className = 'addr-msg error'; return; }
 
-    btn.textContent = 'Checking address…'; btn.disabled = true;
+    btn.textContent = 'Verifying address…'; btn.disabled = true;
 
     const unit = document.getElementById('addr-unit').value.trim();
     const fullAddress = unit
@@ -1012,9 +1012,43 @@
     const userId = currentSession.user?.id;
 
     try {
-      // ✅ STEP 1: Check if this address already has a verified Home ID
+      // ✅ STEP 0: Verify the address is actually deliverable (Lob.com) before accepting it
+      let verifyData;
+      try {
+        const verifyRes = await fetch('/api/verify-address', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ street, unit, city, state, zip })
+        });
+        verifyData = await verifyRes.json();
+        if (!verifyRes.ok) {
+          msg.textContent = verifyData.error || 'Address verification failed. Please try again.';
+          msg.className = 'addr-msg error';
+          btn.textContent = 'Submit Address & Request PIN';
+          btn.disabled = false;
+          return;
+        }
+      } catch (verifyErr) {
+        msg.textContent = 'Could not verify address right now. Please try again.';
+        msg.className = 'addr-msg error';
+        btn.textContent = 'Submit Address & Request PIN';
+        btn.disabled = false;
+        return;
+      }
+
+      if (!verifyData.deliverable) {
+        msg.textContent = '⚠️ This address could not be verified as deliverable. Please double-check for typos, or contact support if you believe this is an error.';
+        msg.className = 'addr-msg error';
+        btn.textContent = 'Submit Address & Request PIN';
+        btn.disabled = false;
+        return;
+      }
+
+      btn.textContent = 'Checking address…';
+
+      // ✅ STEP 1: Check if this address already has a verified or pending Home ID
       const checkRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/users?address=eq.${encodeURIComponent(fullAddress)}&status=eq.verified&select=id,email,name`,
+        `${SUPABASE_URL}/rest/v1/users?address=eq.${encodeURIComponent(fullAddress)}&status=in.(verified,pending)&select=id,email,name`,
         {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
@@ -1025,7 +1059,7 @@
 
       if (checkRes.ok) {
         const existing = await checkRes.json();
-        // Address already has a VERIFIED owner who is NOT this user
+        // Address already has a verified or pending owner who is NOT this user
         if (existing && existing.length > 0 && existing[0].id !== userId) {
           // 🚨 BLOCK — Log suspicious activity
           await fetch(`${SUPABASE_URL}/rest/v1/address_alerts`, {
@@ -1046,7 +1080,7 @@
             })
           });
 
-          msg.textContent = '🚫 This address is already registered with a verified Home ID. If you live at this address, please contact support.';
+          msg.textContent = '🚫 This address is already registered or pending verification for another Home ID. If you live at this address, please contact support.';
           msg.className = 'addr-msg error';
           btn.textContent = 'Submit Address & Request PIN';
           btn.disabled = false;
