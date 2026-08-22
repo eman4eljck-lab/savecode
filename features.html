@@ -80,6 +80,7 @@
 
     /* FEATURE CARDS */
     .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .feature-grid-4 { grid-template-columns:repeat(4,1fr); }
     .f-card { background:var(--white); border:1px solid var(--gray-mid); padding:26px; transition:box-shadow .2s,border-color .2s; }
     .f-card:hover { box-shadow:0 4px 16px rgba(0,0,0,.07); border-color:var(--blue); }
     .f-card-icon { font-size:22px; margin-bottom:14px; }
@@ -178,7 +179,7 @@
         <p>Protect your home address from unauthorized use. SaveCode gives residents a verified digital identity tied to their physical address — without exposing personal information.</p>
       </div>
     </div>
-    <div class="feature-grid">
+    <div class="feature-grid feature-grid-4">
       <div class="f-card">
         <div class="f-card-icon">🔐</div>
         <h3>Verified Home ID</h3>
@@ -208,6 +209,11 @@
         <div class="f-card-icon">📦</div>
         <h3>Secure Package Delivery</h3>
         <p>SaveCode uses two independent checks before a package is released: confirming the delivery point matches your registered Home ID, and confirming the named recipient is an authorized resident.</p>
+      </div>
+      <div class="f-card">
+        <div class="f-card-icon">📮</div>
+        <h3>Institution Notifications</h3>
+        <p>Choose exactly which institution categories — banks, tax authorities, employers, medical providers, courts, insurance, or government agencies — are notified when you move. You control what's shared, and with whom. Non-selected institutions receive no information. (Coming with full launch)</p>
       </div>
     </div>
     <div class="highlight">
