@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join the SaveCode Pilot</title>
+  <meta name="description" content="Join the SaveCode delivery verification pilot and help test a privacy-first way to verify authorized recipients at delivery." />
+  <style>
+    :root{
+      --navy:#0b1f33;
+      --accent:#2563eb;
+      --bg:#f8fbff;
+      --text:#172033;
+      --muted:#5f6b7a;
+      --card:#ffffff;
+      --ok:#176b4a;
+      --bad:#9e2f2f;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    .wrap{max-width:1100px;margin:auto;padding:0 24px}
+    header{background:#fff;border-bottom:1px solid #e7e9ee}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    .brand{font-weight:800;color:var(--navy);font-size:1.35rem;letter-spacing:.2px}
+    .brand span{color:var(--accent)}
+    .nav a{color:var(--navy);text-decoration:none;font-weight:700}
+    .hero{padding:78px 0 56px;background:linear-gradient(135deg,#ffffff 0%,#eef6ff 55%,#f7fbff 100%)}
+    .eyebrow{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1.2px;font-size:.85rem}
+    h1{font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.05;margin:.3rem 0 1rem;color:var(--navy)}
+    .lead{font-size:1.2rem;max-width:760px;color:var(--muted)}
+    .cta{display:inline-block;margin-top:24px;background:var(--accent);color:#fff;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:800}
+    .cta.alt{background:#fff;color:var(--navy);border:1px solid #bfd2ee;margin-left:8px}
+    section{padding:58px 0}
+    h2{font-size:2rem;color:var(--navy);margin-top:0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid #dfe8f4;border-top:3px solid #8bb7f0;border-radius:16px;padding:24px;box-shadow:0 8px 25px rgba(37,99,235,.06)}
+    .step{font-size:.78rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.9px}
+    .result{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;margin-top:24px}
+    .result div{flex:1;min-width:240px;border-radius:14px;padding:24px;background:#fff;border:1px solid #e4e7ec}
+    .verified{border-left:6px solid var(--ok)!important}
+    .notauth{border-left:6px solid var(--bad)!important}
+    .result strong{display:block;font-size:1.35rem;margin-bottom:4px}
+    .note{background:#eef6ff;border:1px solid #cfe0ff;border-radius:12px;padding:18px;color:#34506f}
+    ul{padding-left:20px}
+    footer{background:#0b1f33;color:#dfe7ef;padding:28px 0;margin-top:30px}
+    footer a{color:#fff}
+    @media(max-width:760px){.grid{grid-template-columns:1fr}.cta.alt{margin-left:0;display:inline-block;margin-top:10px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div class="brand">Save<span>Code</span></div>
+    <a href="https://www.savecode.us/">Back to SaveCode</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Pilot Program</div>
+      <h1>Help Test Safer, Simpler Delivery Verification</h1>
+      <p class="lead">SaveCode is inviting a limited number of households and delivery partners to test a privacy-first way to confirm whether a recipient is authorized at a verified address.</p>
+      <a class="cta" href="https://www.savecode.us/register.html">Join the Pilot</a>
+      <a class="cta alt" href="#partners">For Delivery Partners</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How the Pilot Works</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="step">Step 1</div>
+          <h3>Register Your Address</h3>
+          <p>Create a SaveCode account and register your home address.</p>
+        </div>
+        <div class="card">
+          <div class="step">Step 2</div>
+          <h3>Add Authorized Recipients</h3>
+          <p>Add household members you want to authorize to receive deliveries at your address.</p>
+        </div>
+        <div class="card">
+          <div class="step">Step 3</div>
+          <h3>Simple Driver Check</h3>
+          <p>A participating driver scans the SaveCode QR code or enters the Home ID before handoff.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#f1f7ff">
+    <div class="wrap">
+      <h2>What the Driver Sees</h2>
+      <p>To protect household privacy, the driver receives only a simple verification result.</p>
+      <div class="result">
+        <div class="verified">
+          <strong>VERIFIED ✓</strong>
+          <span>The recipient is authorized for this address.</span>
+        </div>
+        <div class="notauth">
+          <strong>NOT AUTHORIZED ✕</strong>
+          <span>The recipient is not authorized for this address.</span>
+        </div>
+      </div>
+      <p class="note"><strong>Privacy-first:</strong> The driver does not need to see household phone numbers, email addresses, or private account information as part of this verification result.</p>
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="wrap">
+      <h2>For Delivery & Logistics Partners</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Small Scope</h3>
+          <p>Start with a limited number of households and deliveries.</p>
+        </div>
+        <div class="card">
+          <h3>30-Day Test</h3>
+          <p>Evaluate the workflow before discussing a larger integration.</p>
+        </div>
+        <div class="card">
+          <h3>No-Cost Pilot</h3>
+          <p>The goal is to collect real-world feedback and measure usability and delivery confidence.</p>
+        </div>
+      </div>
+      <h3 style="margin-top:34px">What We Want to Learn</h3>
+      <ul>
+        <li>How quickly drivers can complete the verification step</li>
+        <li>Whether the workflow is easy for households and delivery teams</li>
+        <li>Whether it can help reduce misdeliveries or recipient confusion</li>
+        <li>What would be required for a future operational or API integration</li>
+      </ul>
+      <a class="cta" href="https://www.savecode.us/contact.html">Discuss a Pilot Partnership</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Important Pilot Notice</h2>
+      <p>This page describes a pilot concept and testing workflow. Availability, integrations, verification methods, and participating delivery partners may vary during the pilot. SaveCode does not claim that a delivery company or financial institution currently uses or endorses SaveCode unless explicitly stated.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    © 2026 SaveCode · Mangel Technologies LLC · Patent-Pending Technology · <a href="https://www.savecode.us/">savecode.us</a>
+  </div>
+</footer>
+</body>
+</html>
